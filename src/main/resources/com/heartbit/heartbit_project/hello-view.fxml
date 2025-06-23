@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #fff;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.heartbit.heartbit_project.HelloController">
+   <ScrollPane fitToHeight="true" fitToWidth="true" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+   <content>
+            <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #fff;">
+         <children>
+            <HBox prefHeight="52.0" prefWidth="1218.0" spacing="10.0">
+               <children>
+                  <VBox prefHeight="97.0" prefWidth="171.0">
+                     <children>
+                        <Label prefHeight="28.0" prefWidth="79.0" styleClass="dash-welcome" text="Welcome," />
+                        <Label alignment="TOP_LEFT" prefHeight="51.0" prefWidth="164.0" styleClass="dash-name" text="Lorem Ipsum" />
+                     </children>
+                  </VBox>
+                  <Region maxWidth="1.7976931348623157E308" minWidth="100.0" prefHeight="66.0" HBox.hgrow="ALWAYS" />
+                  <VBox fx:id="hamburger" alignment="TOP_RIGHT" onMouseClicked="#enSideBar" prefHeight="59.0" prefWidth="59.0" HBox.hgrow="NEVER">
+                     <children>
+                        <HBox prefHeight="10.0" prefWidth="65.0" styleClass="rec-ham">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin></HBox>
+                        <HBox layoutX="10.0" layoutY="10.0" prefHeight="10.0" prefWidth="65.0" styleClass="rec-ham">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox layoutX="10.0" layoutY="33.0" maxWidth="40.0" prefHeight="10.0" prefWidth="65.0" styleClass="rec-ham" VBox.vgrow="NEVER" />
+                     </children>
+                  </VBox>
+               </children></HBox>
+            <FlowPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <VBox styleClass="form-register">
+                     <children>
+                        <Label styleClass="dash-welcome" text="Real-Time Reading">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font></Label>
+                        <LineChart maxWidth="1000.0" minWidth="200.0" prefWidth="500.0" VBox.vgrow="SOMETIMES">
+                          <xAxis>
+                            <CategoryAxis side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis side="LEFT" />
+                          </yAxis>
+                           <VBox.margin>
+                              <Insets bottom="50.0" top="20.0" />
+                           </VBox.margin>
+                        </LineChart>
+                     </children>
+                     <FlowPane.margin>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </FlowPane.margin>
+                     <padding>
+                        <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+                     </padding></VBox>
+                  <VBox alignment="TOP_CENTER" styleClass="form-register">
+                     <children>
+                        <Label maxWidth="400.0" prefWidth="400.0" styleClass="dash-welcome" text="HeartBit" VBox.vgrow="ALWAYS" />
+                        <VBox alignment="CENTER" maxHeight="150.0" maxWidth="150.0" prefHeight="150.0" prefWidth="150.0" styleClass="circle" VBox.vgrow="ALWAYS">
+                           <VBox.margin>
+                              <Insets top="15.0" />
+                           </VBox.margin>
+                           <children>
+                              <Label alignment="CENTER" maxWidth="200.0" styleClass="bpm" text="78" VBox.vgrow="ALWAYS" />
+                              <Label styleClass="bpm-label" text="bpm" />
+                           </children></VBox>
+                        <HBox alignment="CENTER">
+                           <children>
+                              <Label styleClass="state-label" text="State: " />
+                              <Label styleClass="state-label-state" text="Stable" />
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="15.0" top="15.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <VBox prefHeight="242.0" prefWidth="385.0">
+                           <VBox.margin>
+                              <Insets left="15.0" />
+                           </VBox.margin>
+                           <children>
+                              <Label styleClass="dash-welcome" text="Flags" />
+                              <HBox prefHeight="41.0" prefWidth="385.0">
+                                 <VBox.margin>
+                                    <Insets bottom="15.0" top="15.0" />
+                                 </VBox.margin>
+                                 <children>
+                                    <Pane prefHeight="31.0" prefWidth="61.0" style="-fx-background-color: FBD5D5;" />
+                                    <VBox prefHeight="39.0" prefWidth="309.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Label text="Stable">
+                                             <font>
+                                                <Font name="Tahoma Bold" size="16.0" />
+                                             </font>
+                                          </Label>
+                                          <Label text="60-100 BPM">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                       <padding>
+                                          <Insets left="15.0" />
+                                       </padding>
+                                    </VBox>
+                                 </children>
+                                 <padding>
+                                    <Insets left="15.0" />
+                                 </padding>
+                              </HBox>
+                              <HBox layoutX="10.0" layoutY="45.0" prefHeight="41.0" prefWidth="385.0">
+                                 <children>
+                                    <Pane prefHeight="31.0" prefWidth="61.0" style="-fx-background-color: #FBECD5;" />
+                                    <VBox prefHeight="39.0" prefWidth="309.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Label text="Potencial Risk">
+                                             <font>
+                                                <Font name="Tahoma Bold" size="16.0" />
+                                             </font>
+                                          </Label>
+                                          <Label text="41-129bpm">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                       <padding>
+                                          <Insets left="15.0" />
+                                       </padding>
+                                    </VBox>
+                                 </children>
+                                 <padding>
+                                    <Insets left="15.0" />
+                                 </padding>
+                                 <VBox.margin>
+                                    <Insets bottom="15.0" top="15.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox layoutX="10.0" layoutY="116.0" prefHeight="41.0" prefWidth="385.0">
+                                 <children>
+                                    <Pane prefHeight="31.0" prefWidth="61.0" style="-fx-background-color: #695555;" />
+                                    <VBox prefHeight="39.0" prefWidth="309.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Label text="Critical">
+                                             <font>
+                                                <Font name="Tahoma Bold" size="16.0" />
+                                             </font>
+                                          </Label>
+                                          <Label text="Out of other ranges">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                       <padding>
+                                          <Insets left="15.0" />
+                                       </padding>
+                                    </VBox>
+                                 </children>
+                                 <padding>
+                                    <Insets left="15.0" />
+                                 </padding>
+                                 <VBox.margin>
+                                    <Insets top="15.0" />
+                                 </VBox.margin>
+                              </HBox>
+                           </children></VBox>
+                     </children>
+                     <FlowPane.margin>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </FlowPane.margin>
+                  </VBox>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="20.0" />
+               </padding>
+            </FlowPane>
+         </children>
+         <padding>
+            <Insets bottom="35.0" left="35.0" right="35.0" top="35.0" />
+         </padding></VBox>
+   </content>
+      </ScrollPane>
+   <VBox visible="false" managed="false"  fx:id="dialogBg" style="-fx-background-color: rgba(0,0,0,0.25);" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" />
+
+   <VBox visible="false" managed="false" fx:id="sidebar" alignment="TOP_CENTER" maxWidth="250.0" minWidth="250.0" prefWidth="250.0" styleClass="side-bar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <HBox alignment="TOP_RIGHT" prefHeight="34.0" prefWidth="200.0">
+         <children>
+            <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true" onMouseClicked="#OnDisSideBar">
+               <image>
+                  <Image url="@images/icons/close.png" />
+               </image>
+            </ImageView>
+         </children>
+      </HBox>
+      <HBox alignment="TOP_CENTER" prefHeight="47.0" prefWidth="200.0">
+         <children>
+            <Label styleClass="heart-logo" text="Heart" />
+            <Label styleClass="bit-logo" text="Bit" />
+         </children>
+      </HBox>
+      <HBox fx:id="homeBtn" onMouseClicked="#HomeEnabled">
+         <HBox alignment="CENTER_LEFT">
+            <ImageView fx:id="homeImg" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets right="15.0" />
+               </HBox.margin>
+               <image>
+                  <Image url="@images/icons/enable/Home.png" />
+               </image>
+            </ImageView><Label styleClass="nav-text" text="Home" /></HBox>
+         <VBox.margin>
+            <Insets bottom="30.0" top="30.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox fx:id="accountBtn" layoutX="35.0" layoutY="123.0" onMouseClicked="#AccountEnabled">
+         <children>
+            <HBox alignment="CENTER_LEFT">
+               <children>
+                  <ImageView fx:id="accountImg" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin>
+                     <image>
+                        <Image url="@images/icons/normal/Person.png" />
+                     </image>
+                  </ImageView>
+                  <Label styleClass="nav-text" text="Account" />
+               </children>
+            </HBox>
+         </children>
+      </HBox>
+      <HBox fx:id="resultsBtn" layoutX="35.0" layoutY="187.0" onMouseClicked="#ResultsEnabled">
+         <children>
+            <HBox alignment="CENTER_LEFT">
+               <children>
+                  <ImageView fx:id="resultsImg" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin>
+                     <image>
+                        <Image url="@images/icons/normal/Results.png" />
+                     </image>
+                  </ImageView>
+                  <Label styleClass="nav-text" text="Results" />
+               </children>
+            </HBox>
+         </children>
+         <VBox.margin>
+            <Insets bottom="30.0" top="30.0" />
+         </VBox.margin>
+      </HBox>
+      <Region VBox.vgrow="ALWAYS" />
+      <Button mnemonicParsing="false" prefHeight="63.0" prefWidth="183.0" styleClass="home-btn" text="Sign Out" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin></Button>
+      <Label prefHeight="54.0" prefWidth="183.0" text="© Group 4 PWDAM 2024/2026" textFill="#fb8c8c" wrapText="true">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+   </VBox>
+</AnchorPane>

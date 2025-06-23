@@ -1,0 +1,131 @@
+.lorem{
+    -fx-background-color: #f00;
+}
+
+.home-title{
+    -fx-font-weight: 700;
+    -fx-font-size: 28px;
+}
+
+.home-description{
+    -fx-text-fill: #7D7987;
+    -fx-font-weight: 400;
+    -fx-font-size: 24px;
+}
+
+.home-btn{
+    -fx-background-color: #FB8C8C;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+.form-login{
+    -fx-effect: dropshadow(gaussian, rgba(76, 76, 76, 0.25), 20, 0.25, 0, 0);
+    -fx-border-radius: 50;
+    -fx-background-radius: 50;
+    -fx-background-color: #fff;
+    -fx-padding: 45;
+}
+
+.form-register{
+    -fx-effect: dropshadow(gaussian, rgba(76, 76, 76, 0.25), 20, 0.25, 0, 0);
+    -fx-border-radius: 50;
+    -fx-background-radius: 50;
+    -fx-background-color: #fff;
+    -fx-padding: 25 45 25 45;
+
+}
+
+.form-login-label{
+    -fx-text-fill: #000;
+    -fx-font-size: 28;
+    -fx-font-weight: 700;
+}
+.form-login-input{
+    -fx-text-fill: #000;
+    -fx-font-size: 15;
+}
+
+.dash-welcome{
+    -fx-text-fill: #000;
+    -fx-font-family: Tahoma, Geneva, Verdana, sans-serif;
+    -fx-font-size: 16;
+    -fx-font-weight: 700;
+}
+
+.dash-name{
+    -fx-text-fill: #CF7373;
+    -fx-font-family: Tahoma, Geneva, Verdana, sans-serif;
+    -fx-font-size: 20;
+    -fx-font-weight: 700;
+}
+
+.rec-ham{
+    -fx-background-color: #FBD5D5;
+    -fx-border-radius: 50;
+    -fx-background-radius: 50;
+}
+
+.circle{
+    -fx-border-radius: 200;
+    -fx-background-radius: 200;
+    -fx-border-color: #FBD5D5;       /* Color of the border */
+    -fx-border-width: 6;           /* Width of the border */
+    -fx-border-style: solid;       /* Style: solid, dashed, dotted, etc. */
+}
+
+.bpm{
+    -fx-text-fill: #000;
+    -fx-font-family: Tahoma, Geneva, Verdana, sans-serif;
+    -fx-font-size: 24;
+    -fx-font-weight: 700;
+}
+
+.bpm-label{
+    -fx-text-fill: #000;
+    -fx-font-family: Tahoma, Geneva, Verdana, sans-serif;
+    -fx-font-size: 16;
+}
+
+.state-label{
+    -fx-text-fill: #000;
+    -fx-font-family: Tahoma, Geneva, Verdana, sans-serif;
+    -fx-font-size: 16;
+}
+
+.state-label-state{
+    -fx-text-fill: #FB8C8C;
+    -fx-font-family: Tahoma, Geneva, Verdana, sans-serif;
+    -fx-font-size: 16;
+    -fx-font-weight: 700;
+}
+
+.side-bar{
+    -fx-background-color: #FFF;
+    -fx-border-radius: 0 30 30 0;
+    -fx-background-radius: 0 30 30 0;
+    -fx-padding: 25;
+}
+
+.heart-logo{
+    -fx-text-fill: #000;
+    -fx-font-family: Verdana, Geneva, Verdana, sans-serif;
+    -fx-font-size: 27;
+    -fx-font-weight: 700;
+}
+
+.bit-logo{
+    -fx-text-fill: #C97272;
+    -fx-font-family: Verdana, Geneva, Verdana, sans-serif;
+    -fx-font-size: 27;
+    -fx-font-weight: 700;
+}
+
+.nav-text{
+    -fx-text-fill: #000;
+    -fx-font-family: Verdana, Geneva, Verdana, sans-serif;
+    -fx-font-weight: 700;
+    -fx-font-size: 16;
+}
