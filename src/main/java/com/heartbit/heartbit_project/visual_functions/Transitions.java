@@ -7,11 +7,20 @@ import javafx.util.Duration;
 
 public class Transitions {
 
-    public enum Direction{
+    public enum Direction {
         TO_LEFT, TO_RIGHT, TO_TOP, TO_BOTTOM;
 
-        public void TranslateTo(Node node,double distance){
-            // Set initial position based on direction
+        public Direction getOpposite() {
+            switch (this) {
+                case TO_LEFT: return TO_RIGHT;
+                case TO_RIGHT: return TO_LEFT;
+                case TO_TOP: return TO_BOTTOM;
+                case TO_BOTTOM: return TO_TOP;
+                default: throw new IllegalStateException("Unexpected direction: " + this);
+            }
+        }
+
+        public void TranslateTo(Node node, double distance) {
             switch (this) {
                 case TO_LEFT:
                     node.setTranslateX(distance);
@@ -28,8 +37,7 @@ public class Transitions {
             }
         }
 
-        public void LocateTo(TranslateTransition node,double distance){
-            // Set initial position based on direction
+        public void LocateTo(TranslateTransition node, double distance) {
             switch (this) {
                 case TO_LEFT:
                     node.setByX(distance);
@@ -47,40 +55,29 @@ public class Transitions {
         }
     }
 
-    public static void FadeOutIn(Node currentNode, Node nextNode, double durationMillis, double distanceX) {
-        // Fade out current node
-        FadeTransition fadeOut = new FadeTransition(Duration.millis(durationMillis), currentNode);
+
+    public static void FadeOutIn(Node outNode, Node inNode, double durationMillis, Direction direction, double distance) {
+        // Fade out transition
+        FadeTransition fadeOut = new FadeTransition(Duration.millis(durationMillis), outNode);
         fadeOut.setFromValue(1.0);
         fadeOut.setToValue(0.0);
 
-        TranslateTransition slideLeft = new TranslateTransition(Duration.millis(durationMillis), currentNode);
-        slideLeft.setByX(-distanceX);
+        TranslateTransition translateOut = new TranslateTransition(Duration.millis(durationMillis), outNode);
+        direction.LocateTo(translateOut, distance);
 
-        ParallelTransition hideCurrent = new ParallelTransition(fadeOut, slideLeft);
-        hideCurrent.setOnFinished(e -> {
-            currentNode.setVisible(false); // Hide current node
-            currentNode.setManaged(false);
+        ParallelTransition fadeOutTransition = new ParallelTransition(fadeOut, translateOut);
 
-            // Prepare next node: start slightly to the left and invisible
-            nextNode.setTranslateX(-distanceX);
-            nextNode.setOpacity(0.0);
-            nextNode.setVisible(true);
-            nextNode.setManaged(true);
+        // On fadeOut complete, hide outNode and fade in inNode
+        fadeOutTransition.setOnFinished(event -> {
+            outNode.setVisible(false);
+            outNode.setManaged(false);
 
-            // Fade in and move next node to the right
-            FadeTransition fadeIn = new FadeTransition(Duration.millis(durationMillis), nextNode);
-            fadeIn.setFromValue(0.0);
-            fadeIn.setToValue(1.0);
-
-            TranslateTransition slideRight = new TranslateTransition(Duration.millis(durationMillis), nextNode);
-            slideRight.setToX(0);  // back to natural position
-
-            ParallelTransition showNext = new ParallelTransition(fadeIn, slideRight);
-            showNext.play();
+            FadeIn(inNode, durationMillis, direction, distance);
         });
 
-        hideCurrent.play();
+        fadeOutTransition.play();
     }
+
 
     public static void FadeIn(Node item, double durationMillis, Direction direction, double distance) {
 

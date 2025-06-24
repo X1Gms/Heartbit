@@ -10,18 +10,169 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #fff;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.heartbit.heartbit_project.HelloController">
    <ScrollPane fitToHeight="true" fitToWidth="true" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
    <content>
-            <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #fff;">
-         <children>
-            <HBox prefHeight="52.0" prefWidth="1218.0" spacing="10.0">
+      <VBox style="-fx-background-color: #fff;"><children>
+         <!-- =================== START: Landing Page =================== -->
+
+                  <VBox fx:id="landingPage" style="-fx-background-color: #fff;" VBox.vgrow="ALWAYS">
+                     <children>
+                        <VBox>
+                           <children>
+                              <FlowPane alignment="CENTER" prefHeight="952.0" prefWrapLength="1000.0" VBox.vgrow="ALWAYS">
+
+
+                                 <children>
+                                    <VBox fx:id="myPane" alignment="CENTER_LEFT" minWidth="290.0" prefHeight="500.0" prefWidth="333.0">
+                                       <children>
+                                          <Label prefHeight="97.0" prefWidth="295.0" styleClass="home-title" text="Save Your life with Heartbit" wrapText="true">
+                                             <font>
+                                                <Font name="Tahoma" size="28.0" />
+                                             </font>
+                                          </Label>
+                                          <Label prefHeight="111.0" prefWidth="307.0" styleClass="home-description" text="Every heartbeat you check helps safeguard your life and your loved ones." wrapText="true">
+                                             <font>
+                                                <Font name="Tahoma" size="24.0" />
+                                             </font>
+                                          </Label>
+                                          <Pane prefHeight="14.0" prefWidth="0.0" />
+                                          <Button fx:id="myButton" mnemonicParsing="false" onAction="#AppearLogin" prefHeight="66.0" prefWidth="192.0" styleClass="home-btn" text="Login" textFill="WHITE">
+                                             <font>
+                                                <Font name="Tahoma Bold" size="24.0" />
+                                             </font>
+                                          </Button>
+                                       </children>
+                                    </VBox>
+                                    <VBox fx:id="LoginForm" alignment="TOP_CENTER" layoutX="130.0" layoutY="63.0" managed="false" prefHeight="500.0" prefWidth="351.0" styleClass="form-login" visible="false">
+                                       <children>
+                                          <Label styleClass="form-login-label" text="Login">
+                                             <font>
+                                                <Font name="Tahoma" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Pane prefHeight="22.0" prefWidth="268.0" />
+                                          <VBox prefHeight="93.0" prefWidth="268.0">
+                                             <children>
+                                                <Label styleClass="form-login-input" text="E-mail">
+                                                   <VBox.margin>
+                                                      <Insets left="15.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <TextField prefHeight="47.0" prefWidth="268.0" />
+                                             </children>
+                                          </VBox>
+                                          <VBox layoutX="40.0" layoutY="98.0" prefHeight="100.0" prefWidth="268.0">
+                                             <children>
+                                                <Label styleClass="form-login-input" text="Password">
+                                                   <VBox.margin>
+                                                      <Insets left="15.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <PasswordField prefHeight="47.0" prefWidth="268.0" />
+                                             </children>
+                                          </VBox>
+                                          <Button mnemonicParsing="false" onAction="#enterHomePage" prefHeight="60.0" prefWidth="268.0" styleClass="home-btn" text="Sign In" textFill="WHITE">
+                                             <font>
+                                                <Font name="Tahoma Bold" size="18.0" />
+                                             </font>
+                                          </Button>
+                                          <Label onMouseClicked="#AppearRegister" prefHeight="17.0" prefWidth="255.0" text="Create Account" textFill="#fb8c8c">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </VBox>
+                                    <VBox fx:id="RegisterForm" alignment="TOP_CENTER" managed="false" prefHeight="500.0" prefWidth="351.0" styleClass="form-register" visible="false">
+                                       <children>
+                                          <Label styleClass="form-login-label" text="Register">
+                                             <font>
+                                                <Font name="Tahoma" size="12.0" />
+                                             </font></Label>
+                                          <Pane prefHeight="22.0" prefWidth="268.0" />
+                                          <VBox prefHeight="80.0" prefWidth="268.0">
+                                             <children>
+                                                <Label styleClass="form-login-input" text="Name">
+                                                   <VBox.margin>
+                                                      <Insets left="15.0" />
+                                                   </VBox.margin></Label>
+                                                <TextField prefHeight="47.0" prefWidth="268.0" />
+                                             </children>
+                                          </VBox>
+                                          <VBox layoutX="40.0" layoutY="98.0" prefHeight="80.0" prefWidth="268.0">
+                                             <children>
+                                                <Label styleClass="form-login-input" text="E-mail">
+                                                   <VBox.margin>
+                                                      <Insets left="15.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <TextField prefHeight="47.0" prefWidth="268.0" />
+                                             </children>
+                                          </VBox>
+                                          <VBox layoutX="55.0" layoutY="204.0" prefHeight="90.0" prefWidth="268.0">
+                                             <children>
+                                                <Label styleClass="form-login-input" text="Password">
+                                                   <VBox.margin>
+                                                      <Insets left="15.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <PasswordField prefHeight="47.0" prefWidth="268.0" />
+                                             </children>
+                                          </VBox>
+                                          <VBox layoutX="55.0" layoutY="204.0" prefHeight="90.0" prefWidth="268.0">
+                                             <children>
+                                                <Label styleClass="form-login-input" text="Confirm Password">
+                                                   <VBox.margin>
+                                                      <Insets left="15.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <PasswordField prefHeight="47.0" prefWidth="268.0" />
+                                             </children>
+                                          </VBox>
+                                          <Button mnemonicParsing="false" onAction="#enterHomePage" prefHeight="60.0" prefWidth="268.0" styleClass="home-btn" text="Create Account" textFill="WHITE">
+                                             <font>
+                                                <Font name="Tahoma Bold" size="18.0" />
+                                             </font>
+                                          </Button>
+                                          <Label onMouseClicked="#AppearLoginAgain" prefHeight="17.0" prefWidth="255.0" text="You have an Account?" textFill="#fb8c8c">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </VBox>
+                                    <Pane maxHeight="66.0" prefHeight="66.0" prefWidth="214.0" />
+                                    <ImageView fitHeight="355.0" fitWidth="462.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@images/HeartBit.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </FlowPane>
+                              <Label text="© Group 4 PWDAM 2024/2026" textFill="#fb8c8c">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </children>
+                     <padding>
+                        <Insets bottom="60.0" left="60.0" right="60.0" top="60.0" />
+                     </padding>
+                  </VBox>
+
+         <!-- =================== END: Landing Page =================== -->
+         <!-- =================== START: Navbar =================== -->
+         <VBox fx:id="homePage" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #fff;" visible="false" managed="false">
+            <HBox fx:id="navbar" prefHeight="52.0" prefWidth="1218.0" spacing="10.0">
                <children>
                   <VBox prefHeight="97.0" prefWidth="171.0">
                      <children>
-                        <Label prefHeight="28.0" prefWidth="79.0" styleClass="dash-welcome" text="Welcome," />
-                        <Label alignment="TOP_LEFT" prefHeight="51.0" prefWidth="164.0" styleClass="dash-name" text="Lorem Ipsum" />
+                        <Label minWidth="79.0" prefHeight="28.0" prefWidth="79.0" styleClass="dash-welcome" text="Welcome," />
+                        <Label alignment="TOP_LEFT" minWidth="164.0" prefHeight="51.0" prefWidth="164.0" styleClass="dash-name" text="Lorem Ipsum" />
                      </children>
                   </VBox>
-                  <Region maxWidth="1.7976931348623157E308" minWidth="100.0" prefHeight="66.0" HBox.hgrow="ALWAYS" />
-                  <VBox fx:id="hamburger" alignment="TOP_RIGHT" onMouseClicked="#enSideBar" prefHeight="59.0" prefWidth="59.0" HBox.hgrow="NEVER">
+                  <Region maxWidth="1.7976931348623157E308" minWidth="100.0" prefHeight="52.0" prefWidth="985.0" HBox.hgrow="ALWAYS" />
+                  <VBox fx:id="hamburger" alignment="TOP_RIGHT" minHeight="50.0" minWidth="59.0" onMouseClicked="#enSideBar" prefHeight="50.0" prefWidth="59.0" HBox.hgrow="NEVER">
                      <children>
                         <HBox prefHeight="10.0" prefWidth="65.0" styleClass="rec-ham">
                            <VBox.margin>
@@ -39,165 +190,669 @@
                      </children>
                   </VBox>
                </children></HBox>
-            <FlowPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
-               <children>
-                  <VBox styleClass="form-register">
-                     <children>
-                        <Label styleClass="dash-welcome" text="Real-Time Reading">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font></Label>
-                        <LineChart maxWidth="1000.0" minWidth="200.0" prefWidth="500.0" VBox.vgrow="SOMETIMES">
-                          <xAxis>
-                            <CategoryAxis side="BOTTOM" />
-                          </xAxis>
-                          <yAxis>
-                            <NumberAxis side="LEFT" />
-                          </yAxis>
-                           <VBox.margin>
-                              <Insets bottom="50.0" top="20.0" />
-                           </VBox.margin>
-                        </LineChart>
-                     </children>
-                     <FlowPane.margin>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                     </FlowPane.margin>
-                     <padding>
-                        <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
-                     </padding></VBox>
-                  <VBox alignment="TOP_CENTER" styleClass="form-register">
-                     <children>
-                        <Label maxWidth="400.0" prefWidth="400.0" styleClass="dash-welcome" text="HeartBit" VBox.vgrow="ALWAYS" />
-                        <VBox alignment="CENTER" maxHeight="150.0" maxWidth="150.0" prefHeight="150.0" prefWidth="150.0" styleClass="circle" VBox.vgrow="ALWAYS">
-                           <VBox.margin>
-                              <Insets top="15.0" />
-                           </VBox.margin>
-                           <children>
-                              <Label alignment="CENTER" maxWidth="200.0" styleClass="bpm" text="78" VBox.vgrow="ALWAYS" />
-                              <Label styleClass="bpm-label" text="bpm" />
-                           </children></VBox>
-                        <HBox alignment="CENTER">
-                           <children>
-                              <Label styleClass="state-label" text="State: " />
-                              <Label styleClass="state-label-state" text="Stable" />
-                           </children>
-                           <VBox.margin>
-                              <Insets bottom="15.0" top="15.0" />
-                           </VBox.margin>
-                        </HBox>
-                        <VBox prefHeight="242.0" prefWidth="385.0">
-                           <VBox.margin>
-                              <Insets left="15.0" />
-                           </VBox.margin>
-                           <children>
-                              <Label styleClass="dash-welcome" text="Flags" />
-                              <HBox prefHeight="41.0" prefWidth="385.0">
-                                 <VBox.margin>
-                                    <Insets bottom="15.0" top="15.0" />
-                                 </VBox.margin>
+               <!-- =================== END: Navbar =================== -->
+
+               <VBox alignment="TOP_CENTER" prefHeight="880.0" VBox.vgrow="NEVER">
+                  <children>
+
+
+                     <!-- =================== START: Home =================== -->
+                                 <FlowPane fx:id="home" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" alignment="TOP_CENTER" columnHalignment="CENTER">
+                                    <children>
+                                       <VBox styleClass="form-register">
+                                          <children>
+                                             <Label styleClass="dash-welcome" text="Real-Time Reading">
+                                                <font>
+                                                   <Font name="System Bold" size="12.0" />
+                                                </font></Label>
+                                             <LineChart maxWidth="1000.0" minWidth="200.0" prefWidth="500.0" VBox.vgrow="SOMETIMES">
+                                               <xAxis>
+                                                 <CategoryAxis side="BOTTOM" />
+                                               </xAxis>
+                                               <yAxis>
+                                                 <NumberAxis side="LEFT" />
+                                               </yAxis>
+                                                <VBox.margin>
+                                                   <Insets bottom="50.0" top="20.0" />
+                                                </VBox.margin>
+                                             </LineChart>
+                                          </children>
+                                          <FlowPane.margin>
+                                             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                          </FlowPane.margin>
+                                          <padding>
+                                             <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+                                          </padding></VBox>
+                                       <VBox alignment="TOP_CENTER" styleClass="form-register">
+                                          <children>
+                                             <Label maxWidth="400.0" prefWidth="400.0" styleClass="dash-welcome" text="HeartBit" VBox.vgrow="ALWAYS" />
+                                             <VBox alignment="CENTER" maxHeight="150.0" maxWidth="150.0" prefHeight="150.0" prefWidth="150.0" styleClass="circle" VBox.vgrow="ALWAYS">
+                                                <VBox.margin>
+                                                   <Insets top="15.0" />
+                                                </VBox.margin>
+                                                <children>
+                                                   <Label alignment="CENTER" maxWidth="200.0" styleClass="bpm" text="78" VBox.vgrow="ALWAYS" />
+                                                   <Label styleClass="bpm-label" text="bpm" />
+                                                </children></VBox>
+                                             <HBox alignment="CENTER">
+                                                <children>
+                                                   <Label styleClass="state-label" text="State: " />
+                                                   <Label styleClass="state-label-state" text="Stable" />
+                                                </children>
+                                                <VBox.margin>
+                                                   <Insets bottom="15.0" top="15.0" />
+                                                </VBox.margin>
+                                             </HBox>
+                                             <VBox prefHeight="242.0" prefWidth="385.0">
+                                                <VBox.margin>
+                                                   <Insets left="15.0" />
+                                                </VBox.margin>
+                                                <children>
+                                                   <Label styleClass="dash-welcome" text="Flags" />
+                                                   <HBox prefHeight="41.0" prefWidth="385.0">
+                                                      <VBox.margin>
+                                                         <Insets bottom="15.0" top="15.0" />
+                                                      </VBox.margin>
+                                                      <children>
+                                                         <Pane prefHeight="31.0" prefWidth="61.0" style="-fx-background-color: FBD5D5;" />
+                                                         <VBox prefHeight="39.0" prefWidth="309.0" HBox.hgrow="ALWAYS">
+                                                            <children>
+                                                               <Label text="Stable">
+                                                                  <font>
+                                                                     <Font name="Tahoma Bold" size="16.0" />
+                                                                  </font>
+                                                               </Label>
+                                                               <Label text="60-100 BPM">
+                                                                  <font>
+                                                                     <Font size="14.0" />
+                                                                  </font>
+                                                               </Label>
+                                                            </children>
+                                                            <padding>
+                                                               <Insets left="15.0" />
+                                                            </padding>
+                                                         </VBox>
+                                                      </children>
+                                                      <padding>
+                                                         <Insets left="15.0" />
+                                                      </padding>
+                                                   </HBox>
+                                                   <HBox layoutX="10.0" layoutY="45.0" prefHeight="41.0" prefWidth="385.0">
+                                                      <children>
+                                                         <Pane prefHeight="31.0" prefWidth="61.0" style="-fx-background-color: #FBECD5;" />
+                                                         <VBox prefHeight="39.0" prefWidth="309.0" HBox.hgrow="ALWAYS">
+                                                            <children>
+                                                               <Label text="Potencial Risk">
+                                                                  <font>
+                                                                     <Font name="Tahoma Bold" size="16.0" />
+                                                                  </font>
+                                                               </Label>
+                                                               <Label text="41-129bpm">
+                                                                  <font>
+                                                                     <Font size="14.0" />
+                                                                  </font>
+                                                               </Label>
+                                                            </children>
+                                                            <padding>
+                                                               <Insets left="15.0" />
+                                                            </padding>
+                                                         </VBox>
+                                                      </children>
+                                                      <padding>
+                                                         <Insets left="15.0" />
+                                                      </padding>
+                                                      <VBox.margin>
+                                                         <Insets bottom="15.0" top="15.0" />
+                                                      </VBox.margin>
+                                                   </HBox>
+                                                   <HBox layoutX="10.0" layoutY="116.0" prefHeight="41.0" prefWidth="385.0">
+                                                      <children>
+                                                         <Pane prefHeight="31.0" prefWidth="61.0" style="-fx-background-color: #695555;" />
+                                                         <VBox prefHeight="39.0" prefWidth="309.0" HBox.hgrow="ALWAYS">
+                                                            <children>
+                                                               <Label text="Critical">
+                                                                  <font>
+                                                                     <Font name="Tahoma Bold" size="16.0" />
+                                                                  </font>
+                                                               </Label>
+                                                               <Label text="Out of other ranges">
+                                                                  <font>
+                                                                     <Font size="14.0" />
+                                                                  </font>
+                                                               </Label>
+                                                            </children>
+                                                            <padding>
+                                                               <Insets left="15.0" />
+                                                            </padding>
+                                                         </VBox>
+                                                      </children>
+                                                      <padding>
+                                                         <Insets left="15.0" />
+                                                      </padding>
+                                                      <VBox.margin>
+                                                         <Insets top="15.0" />
+                                                      </VBox.margin>
+                                                   </HBox>
+                                                </children></VBox>
+                                          </children>
+                                          <FlowPane.margin>
+                                             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                          </FlowPane.margin>
+                                       </VBox>
+                                    </children>
+                                    <padding>
+                                       <Insets bottom="10.0" left="10.0" right="10.0" top="20.0" />
+                                    </padding>
+                                 </FlowPane>
+
+                     <!-- =================== END: Home =================== -->
+                     <!-- =================== START: Account =================== -->
+
+                     <FlowPane fx:id="account" alignment="TOP_CENTER" columnHalignment="CENTER" managed="false" maxHeight="525.0" maxWidth="900.0" minHeight="525.0" orientation="VERTICAL" prefHeight="550.0" prefWidth="900.0" styleClass="form-eda" visible="false" VBox.vgrow="SOMETIMES">
+                        <VBox.margin>
+                           <Insets bottom="80.0" top="30.0" />
+                        </VBox.margin>
+                        <children>
+                           <FlowPane alignment="TOP_CENTER">
+                              <children>
+                                 <Label maxWidth="1.7976931348623157E308" prefWidth="200.0" text="Edit Account Information" textAlignment="CENTER" textFill="#cf7373" wrapText="true">
+                                    <font>
+                                       <Font name="Tahoma Bold" size="25.0" />
+                                    </font>
+                                 </Label>
+                              </children>
+                              <FlowPane.margin>
+                                 <Insets bottom="20.0" />
+                              </FlowPane.margin>
+                           </FlowPane>
+                           <FlowPane alignment="TOP_CENTER" columnHalignment="CENTER" maxWidth="700.0" prefHeight="160.0" prefWidth="587.0">
+                              <children>
+                                 <VBox prefHeight="80.0" prefWidth="268.0">
+                                    <children>
+                                       <Label styleClass="form-login-input" text="Name">
+                                          <VBox.margin>
+                                             <Insets left="15.0" />
+                                          </VBox.margin>
+                                       </Label>
+                                       <TextField prefHeight="47.0" prefWidth="268.0" />
+                                    </children>
+                                 </VBox>
+                                 <Region prefHeight="100.0" prefWidth="51.0" />
+                                 <VBox prefHeight="80.0" prefWidth="268.0">
+                                    <children>
+                                       <Label styleClass="form-login-input" text="E-mail">
+                                          <VBox.margin>
+                                             <Insets left="15.0" />
+                                          </VBox.margin>
+                                       </Label>
+                                       <TextField prefHeight="47.0" prefWidth="268.0" />
+                                    </children>
+                                 </VBox>
+                                 <VBox layoutX="12.0" layoutY="10.0" prefHeight="80.0" prefWidth="268.0">
+                                    <children>
+                                       <Label styleClass="form-login-input" text="Phone Number">
+                                          <VBox.margin>
+                                             <Insets left="15.0" />
+                                          </VBox.margin>
+                                       </Label>
+                                       <TextField prefHeight="47.0" prefWidth="268.0" />
+                                    </children>
+                                 </VBox>
+                                 <Region prefHeight="100.0" prefWidth="51.0" />
+                                 <VBox layoutX="171.0" layoutY="90.0" prefHeight="80.0" prefWidth="268.0">
+                                    <children>
+                                       <Label styleClass="form-login-input" text="Emergency Number">
+                                          <VBox.margin>
+                                             <Insets left="15.0" />
+                                          </VBox.margin>
+                                       </Label>
+                                       <TextField prefHeight="47.0" prefWidth="268.0" />
+                                    </children>
+                                 </VBox>
+                                 <VBox layoutX="12.0" layoutY="90.0" prefHeight="80.0" prefWidth="268.0">
+                                    <children>
+                                       <Label styleClass="form-login-input" text="Password">
+                                          <VBox.margin>
+                                             <Insets left="15.0" />
+                                          </VBox.margin>
+                                       </Label>
+                                       <PasswordField prefHeight="47.0" prefWidth="268.0" />
+                                    </children>
+                                 </VBox>
+                                 <Region layoutX="280.0" layoutY="90.0" prefHeight="100.0" prefWidth="51.0" />
+                                 <VBox layoutX="331.0" layoutY="90.0" prefHeight="80.0" prefWidth="268.0">
+                                    <children>
+                                       <Label styleClass="form-login-input" text="Confirm Password">
+                                          <VBox.margin>
+                                             <Insets left="15.0" />
+                                          </VBox.margin>
+                                       </Label>
+                                       <PasswordField prefHeight="47.0" prefWidth="268.0" />
+                                    </children>
+                                 </VBox>
+                              </children></FlowPane>
+                           <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="160.0" styleClass="home-btn" text="Submit" textFill="WHITE">
+                              <font>
+                                 <Font name="Tahoma Bold" size="20.0" />
+                              </font>
+                           </Button>
+                        </children>
+                     </FlowPane>
+
+                     <!-- =================== END: Account =================== -->
+                     <!-- =================== START: Results =================== -->
+                     <FlowPane fx:id="results" alignment="CENTER" VBox.vgrow="ALWAYS" managed="false" visible="false">
+                        <VBox.margin>
+                           <Insets />
+                        </VBox.margin>
+                        <padding>
+                           <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+                        </padding>
+                        <children>
+                           <VBox minWidth="0.0" prefHeight="550.0" prefWidth="380.0">
+                              <FlowPane.margin>
+                                 <Insets bottom="25.0" left="25.0" right="25.0" />
+                              </FlowPane.margin>
                                  <children>
-                                    <Pane prefHeight="31.0" prefWidth="61.0" style="-fx-background-color: FBD5D5;" />
-                                    <VBox prefHeight="39.0" prefWidth="309.0" HBox.hgrow="ALWAYS">
+                                    <VBox alignment="TOP_CENTER" prefHeight="260.0" prefWidth="480.0" styleClass="form-eda">
+                                       <VBox.margin>
+                                          <Insets bottom="30.0" />
+                                       </VBox.margin>
                                        <children>
-                                          <Label text="Stable">
+                                          <Label maxWidth="1.7976931348623157E308" text="HeartBeat" VBox.vgrow="ALWAYS">
                                              <font>
-                                                <Font name="Tahoma Bold" size="16.0" />
+                                                <Font name="Tahoma Bold" size="14.0" />
                                              </font>
                                           </Label>
-                                          <Label text="60-100 BPM">
+                                          <VBox alignment="CENTER" maxHeight="130.0" maxWidth="130.0" prefHeight="130.0" prefWidth="130.0" styleClass="circle" VBox.vgrow="ALWAYS">
+                                             <VBox.margin>
+                                                <Insets top="15.0" />
+                                             </VBox.margin>
+                                             <children>
+                                                <Label alignment="CENTER" maxWidth="200.0" text="78" VBox.vgrow="ALWAYS">
+                                                   <font>
+                                                      <Font name="System Bold" size="22.0" />
+                                                   </font></Label>
+                                                <Label text="bpm">
+                                                   <font>
+                                                      <Font name="Tahoma" size="14.0" />
+                                                   </font></Label>
+                                             </children></VBox>
+                                          <HBox alignment="CENTER">
+                                             <children>
+                                                <Label styleClass="state-label" text="State: " />
+                                                <Label styleClass="state-label-state" text="Stable" />
+                                             </children>
+                                             <VBox.margin>
+                                                <Insets bottom="15.0" top="15.0" />
+                                             </VBox.margin>
+                                          </HBox>
+                                       </children></VBox>
+                                    <VBox prefHeight="260.0" prefWidth="100.0" styleClass="form-eda">
+                                       <children>
+                                          <Label maxWidth="1.7976931348623157E308" text="BPM Status">
                                              <font>
-                                                <Font size="14.0" />
+                                                <Font name="Tahoma Bold" size="14.0" />
                                              </font>
                                           </Label>
-                                       </children>
-                                       <padding>
-                                          <Insets left="15.0" />
-                                       </padding>
-                                    </VBox>
+                                          <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                                             <VBox.margin>
+                                                <Insets left="20.0" top="20.0" />
+                                             </VBox.margin>
+                                             <children>
+                                                <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="310.0">
+                                                   <children>
+                                                      <Label alignment="TOP_LEFT" text="Max. BPM: ">
+                                                         <font>
+                                                            <Font name="Tahoma Bold" size="16.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Pane prefHeight="35.0" prefWidth="9.0" />
+                                                      <Label alignment="TOP_RIGHT" prefHeight="20.0" text="80">
+                                                         <font>
+                                                            <Font name="Tahoma Bold" size="16.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label alignment="TOP_RIGHT" prefHeight="15.0" prefWidth="33.0" text="bpm">
+                                                         <font>
+                                                            <Font name="Tahoma Bold" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Pane prefWidth="65.0" style="-fx-background-color: FBD5D5;">
+                                                         <HBox.margin>
+                                                            <Insets left="20.0" />
+                                                         </HBox.margin></Pane>
+                                                   </children>
+                                                   <VBox.margin>
+                                                      <Insets bottom="20.0" />
+                                                   </VBox.margin>
+                                                </HBox>
+                                                <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="35.0" prefWidth="310.0">
+                                                   <children>
+                                                      <Label alignment="TOP_LEFT" text="Min. BPM: ">
+                                                         <font>
+                                                            <Font name="Tahoma Bold" size="16.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Pane prefHeight="35.0" prefWidth="13.0" />
+                                                      <Label alignment="TOP_RIGHT" prefHeight="20.0" text="55">
+                                                         <font>
+                                                            <Font name="Tahoma Bold" size="16.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label alignment="TOP_RIGHT" prefHeight="15.0" prefWidth="33.0" text="bpm">
+                                                         <font>
+                                                            <Font name="Tahoma Bold" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Pane prefWidth="65.0" style="-fx-background-color: FBECD5;">
+                                                         <HBox.margin>
+                                                            <Insets left="20.0" />
+                                                         </HBox.margin>
+                                                      </Pane>
+                                                   </children>
+                                                   <VBox.margin>
+                                                      <Insets bottom="20.0" />
+                                                   </VBox.margin>
+                                                </HBox>
+                                                <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="45.0" prefHeight="35.0" prefWidth="310.0">
+                                                   <children>
+                                                      <Label alignment="TOP_LEFT" text="Avg. BPM: ">
+                                                         <font>
+                                                            <Font name="Tahoma Bold" size="16.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Pane prefHeight="35.0" prefWidth="12.0" />
+                                                      <Label alignment="TOP_RIGHT" prefHeight="20.0" text="55">
+                                                         <font>
+                                                            <Font name="Tahoma Bold" size="16.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label alignment="TOP_RIGHT" prefHeight="15.0" prefWidth="33.0" text="bpm">
+                                                         <font>
+                                                            <Font name="Tahoma Bold" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Pane prefWidth="65.0" style="-fx-background-color: FBD5D5;">
+                                                         <HBox.margin>
+                                                            <Insets left="20.0" />
+                                                         </HBox.margin>
+                                                      </Pane>
+                                                   </children>
+                                                   <VBox.margin>
+                                                      <Insets bottom="20.0" />
+                                                   </VBox.margin>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children></VBox>
                                  </children>
-                                 <padding>
-                                    <Insets left="15.0" />
-                                 </padding>
-                              </HBox>
-                              <HBox layoutX="10.0" layoutY="45.0" prefHeight="41.0" prefWidth="385.0">
+                           </VBox>
+                           <VBox minWidth="0.0" prefHeight="550.0" prefWidth="479.0" styleClass="form-eda">
+                              <FlowPane.margin>
+                                 <Insets bottom="25.0" left="25.0" right="25.0" />
+                              </FlowPane.margin>
                                  <children>
-                                    <Pane prefHeight="31.0" prefWidth="61.0" style="-fx-background-color: #FBECD5;" />
-                                    <VBox prefHeight="39.0" prefWidth="309.0" HBox.hgrow="ALWAYS">
-                                       <children>
-                                          <Label text="Potencial Risk">
-                                             <font>
-                                                <Font name="Tahoma Bold" size="16.0" />
-                                             </font>
-                                          </Label>
-                                          <Label text="41-129bpm">
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                       <padding>
-                                          <Insets left="15.0" />
-                                       </padding>
-                                    </VBox>
+                                    <Label maxWidth="1.7976931348623157E308" text="BPM Events">
+                                       <font>
+                                          <Font name="Tahoma Bold" size="14.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets bottom="30.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <ScrollPane prefHeight="440.0" style="-fx-border-color: transparent; -fx-background-insets: 0; -fx-padding: 0; -fx-effect: null;">
+                                       <content>
+                                          <VBox prefHeight="437.0" prefWidth="406.0" style="-fx-background-color: #fff;">
+                                             <children>
+                                                <VBox prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
+                                                   <children>
+                                                      <HBox alignment="CENTER" prefHeight="51.0" prefWidth="426.0" style="-fx-background-color: FF6E6E;">
+                                                         <children>
+                                                            <Label alignment="CENTER" minWidth="55.0" text="Event" textFill="WHITE">
+                                                               <font>
+                                                                  <Font name="Tahoma Bold" size="18.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Region prefHeight="200.0" prefWidth="200.0" />
+                                                            <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" minWidth="45.0" text="BPM" textAlignment="CENTER" textFill="WHITE">
+                                                               <font>
+                                                                  <Font name="Tahoma Bold" size="18.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Region prefHeight="200.0" prefWidth="200.0" />
+                                                            <Label alignment="CENTER" layoutX="62.0" layoutY="10.0" minWidth="45.0" text="Time" textFill="WHITE">
+                                                               <font>
+                                                                  <Font name="Tahoma Bold" size="18.0" />
+                                                               </font>
+                                                            </Label>
+                                                         </children>
+                                                         <padding>
+                                                            <Insets left="30.0" right="30.0" />
+                                                         </padding></HBox>
+                                                      <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="51.0" prefWidth="426.0" style="-fx-background-color: FFF3F3;">
+                                                         <children>
+                                                            <Label alignment="CENTER" minWidth="80.0" prefHeight="23.0" text="Potencial Risk">
+                                                               <font>
+                                                                  <Font name="Tahoma" size="12.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Region prefHeight="51.0" prefWidth="169.0" />
+                                                            <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" minWidth="20.0" prefHeight="23.0" prefWidth="137.0" text="56">
+                                                               <font>
+                                                                  <Font name="Tahoma" size="16.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Region prefHeight="51.0" prefWidth="159.0" />
+                                                            <Label alignment="CENTER" contentDisplay="TOP" layoutX="62.0" layoutY="10.0" minWidth="80.0" text="09/09/2025 14:09" textAlignment="CENTER" wrapText="true">
+                                                               <font>
+                                                                  <Font name="Tahoma" size="14.0" />
+                                                               </font>
+                                                            </Label>
+                                                         </children>
+                                                         <padding>
+                                                            <Insets left="20.0" right="20.0" />
+                                                         </padding>
+                                                      </HBox>
+                                                      <HBox alignment="CENTER" layoutX="10.0" layoutY="61.0" prefHeight="51.0" prefWidth="426.0" style="-fx-background-color: FFDFDF;">
+                                                         <children>
+                                                            <Label alignment="CENTER" minWidth="80.0" prefHeight="23.0" text="Potencial Risk">
+                                                               <font>
+                                                                  <Font name="Tahoma" size="12.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Region prefHeight="51.0" prefWidth="169.0" />
+                                                            <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" minWidth="20.0" prefHeight="23.0" prefWidth="137.0" text="58">
+                                                               <font>
+                                                                  <Font name="Tahoma" size="16.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Region prefHeight="51.0" prefWidth="159.0" />
+                                                            <Label alignment="CENTER" contentDisplay="TOP" layoutX="62.0" layoutY="10.0" minWidth="80.0" text="09/09/2025 18:03" textAlignment="CENTER" wrapText="true">
+                                                               <font>
+                                                                  <Font name="Tahoma" size="14.0" />
+                                                               </font>
+                                                            </Label>
+                                                         </children>
+                                                         <padding>
+                                                            <Insets left="20.0" right="20.0" />
+                                                         </padding>
+                                                      </HBox>
+                                                      <HBox alignment="CENTER" layoutX="10.0" layoutY="61.0" prefHeight="51.0" prefWidth="426.0" style="-fx-background-color: FFF3F3;">
+                                                         <children>
+                                                            <Label alignment="CENTER" minWidth="80.0" prefHeight="23.0" text="Potencial Risk">
+                                                               <font>
+                                                                  <Font name="Tahoma" size="12.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Region prefHeight="51.0" prefWidth="169.0" />
+                                                            <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" minWidth="20.0" prefHeight="23.0" prefWidth="137.0" text="54">
+                                                               <font>
+                                                                  <Font name="Tahoma" size="16.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Region prefHeight="51.0" prefWidth="159.0" />
+                                                            <Label alignment="CENTER" contentDisplay="TOP" layoutX="62.0" layoutY="10.0" minWidth="80.0" text="12/09/2025 10:45" textAlignment="CENTER" wrapText="true">
+                                                               <font>
+                                                                  <Font name="Tahoma" size="14.0" />
+                                                               </font>
+                                                            </Label>
+                                                         </children>
+                                                         <padding>
+                                                            <Insets left="20.0" right="20.0" />
+                                                         </padding>
+                                                      </HBox>
+                                                      <HBox alignment="CENTER" layoutX="10.0" layoutY="112.0" prefHeight="51.0" prefWidth="426.0" style="-fx-background-color: FFDFDF;">
+                                                         <children>
+                                                            <Label alignment="CENTER" minWidth="80.0" prefHeight="23.0" text="Potencial Risk">
+                                                               <font>
+                                                                  <Font name="Tahoma" size="12.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Region prefHeight="51.0" prefWidth="169.0" />
+                                                            <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" minWidth="20.0" prefHeight="23.0" prefWidth="137.0" text="59">
+                                                               <font>
+                                                                  <Font name="Tahoma" size="16.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Region prefHeight="51.0" prefWidth="159.0" />
+                                                            <Label alignment="CENTER" contentDisplay="TOP" layoutX="62.0" layoutY="10.0" minWidth="80.0" text="12/09/2025 11:24" textAlignment="CENTER" wrapText="true">
+                                                               <font>
+                                                                  <Font name="Tahoma" size="14.0" />
+                                                               </font>
+                                                            </Label>
+                                                         </children>
+                                                         <padding>
+                                                            <Insets left="20.0" right="20.0" />
+                                                         </padding>
+                                                      </HBox>
+                                                      <HBox alignment="CENTER" layoutX="10.0" layoutY="163.0" prefHeight="51.0" prefWidth="426.0" style="-fx-background-color: FFF3F3;">
+                                                         <children>
+                                                            <Label alignment="CENTER" minWidth="80.0" prefHeight="23.0" text="Potencial Risk">
+                                                               <font>
+                                                                  <Font name="Tahoma" size="12.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Region prefHeight="51.0" prefWidth="169.0" />
+                                                            <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" minWidth="20.0" prefHeight="23.0" prefWidth="137.0" text="56">
+                                                               <font>
+                                                                  <Font name="Tahoma" size="16.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Region prefHeight="51.0" prefWidth="159.0" />
+                                                            <Label alignment="CENTER" contentDisplay="TOP" layoutX="62.0" layoutY="10.0" minWidth="80.0" text="12/09/2025 11:24" textAlignment="CENTER" wrapText="true">
+                                                               <font>
+                                                                  <Font name="Tahoma" size="14.0" />
+                                                               </font>
+                                                            </Label>
+                                                         </children>
+                                                         <padding>
+                                                            <Insets left="20.0" right="20.0" />
+                                                         </padding>
+                                                      </HBox>
+                                                      <HBox alignment="CENTER" layoutX="10.0" layoutY="214.0" prefHeight="51.0" prefWidth="426.0" style="-fx-background-color: FFDFDF;">
+                                                         <children>
+                                                            <Label alignment="CENTER" minWidth="80.0" prefHeight="23.0" text="Potencial Risk">
+                                                               <font>
+                                                                  <Font name="Tahoma" size="12.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Region prefHeight="51.0" prefWidth="169.0" />
+                                                            <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" minWidth="20.0" prefHeight="23.0" prefWidth="137.0" text="55">
+                                                               <font>
+                                                                  <Font name="Tahoma" size="16.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Region prefHeight="51.0" prefWidth="159.0" />
+                                                            <Label alignment="CENTER" contentDisplay="TOP" layoutX="62.0" layoutY="10.0" minWidth="80.0" text="20/09/2025 03:15" textAlignment="CENTER" wrapText="true">
+                                                               <font>
+                                                                  <Font name="Tahoma" size="14.0" />
+                                                               </font>
+                                                            </Label>
+                                                         </children>
+                                                         <padding>
+                                                            <Insets left="20.0" right="20.0" />
+                                                         </padding>
+                                                      </HBox>
+                                                      <HBox alignment="CENTER" layoutX="10.0" layoutY="265.0" prefHeight="51.0" prefWidth="426.0" style="-fx-background-color: FFF3F3;">
+                                                         <children>
+                                                            <Label alignment="CENTER" minWidth="80.0" prefHeight="23.0" text="Potencial Risk">
+                                                               <font>
+                                                                  <Font name="Tahoma" size="12.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Region prefHeight="51.0" prefWidth="169.0" />
+                                                            <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" minWidth="20.0" prefHeight="23.0" prefWidth="137.0" text="53">
+                                                               <font>
+                                                                  <Font name="Tahoma" size="16.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Region prefHeight="51.0" prefWidth="159.0" />
+                                                            <Label alignment="CENTER" contentDisplay="TOP" layoutX="62.0" layoutY="10.0" minWidth="80.0" text="21/09/2025 18:15" textAlignment="CENTER" wrapText="true">
+                                                               <font>
+                                                                  <Font name="Tahoma" size="14.0" />
+                                                               </font>
+                                                            </Label>
+                                                         </children>
+                                                         <padding>
+                                                            <Insets left="20.0" right="20.0" />
+                                                         </padding>
+                                                      </HBox>
+                                                      <HBox alignment="CENTER" layoutX="10.0" layoutY="316.0" prefHeight="51.0" prefWidth="426.0" style="-fx-background-color: FFDFDF;">
+                                                         <children>
+                                                            <Label alignment="CENTER" minWidth="80.0" prefHeight="23.0" text="Potencial Risk">
+                                                               <font>
+                                                                  <Font name="Tahoma" size="12.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Region prefHeight="51.0" prefWidth="169.0" />
+                                                            <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" minWidth="20.0" prefHeight="23.0" prefWidth="137.0" text="59">
+                                                               <font>
+                                                                  <Font name="Tahoma" size="16.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Region prefHeight="51.0" prefWidth="159.0" />
+                                                            <Label alignment="CENTER" contentDisplay="TOP" layoutX="62.0" layoutY="10.0" minWidth="80.0" text="25/09/2025 21:35" textAlignment="CENTER" wrapText="true">
+                                                               <font>
+                                                                  <Font name="Tahoma" size="14.0" />
+                                                               </font>
+                                                            </Label>
+                                                         </children>
+                                                         <padding>
+                                                            <Insets left="20.0" right="20.0" />
+                                                         </padding>
+                                                      </HBox>
+                                                   </children>
+                                                </VBox>
+                                             </children></VBox>
+                                       </content>
+                                       <VBox.margin>
+                                          <Insets left="10.0" right="10.0" />
+                                       </VBox.margin></ScrollPane>
+
                                  </children>
-                                 <padding>
-                                    <Insets left="15.0" />
-                                 </padding>
-                                 <VBox.margin>
-                                    <Insets bottom="15.0" top="15.0" />
-                                 </VBox.margin>
-                              </HBox>
-                              <HBox layoutX="10.0" layoutY="116.0" prefHeight="41.0" prefWidth="385.0">
-                                 <children>
-                                    <Pane prefHeight="31.0" prefWidth="61.0" style="-fx-background-color: #695555;" />
-                                    <VBox prefHeight="39.0" prefWidth="309.0" HBox.hgrow="ALWAYS">
-                                       <children>
-                                          <Label text="Critical">
-                                             <font>
-                                                <Font name="Tahoma Bold" size="16.0" />
-                                             </font>
-                                          </Label>
-                                          <Label text="Out of other ranges">
-                                             <font>
-                                                <Font size="14.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                       <padding>
-                                          <Insets left="15.0" />
-                                       </padding>
-                                    </VBox>
-                                 </children>
-                                 <padding>
-                                    <Insets left="15.0" />
-                                 </padding>
-                                 <VBox.margin>
-                                    <Insets top="15.0" />
-                                 </VBox.margin>
-                              </HBox>
-                           </children></VBox>
-                     </children>
-                     <FlowPane.margin>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                     </FlowPane.margin>
-                  </VBox>
-               </children>
-               <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="20.0" />
-               </padding>
-            </FlowPane>
-         </children>
+                           </VBox>
+                        </children>
+                     </FlowPane>
+
+
+
+                  </children>
+               </VBox>
+
          <padding>
             <Insets bottom="35.0" left="35.0" right="35.0" top="35.0" />
-         </padding></VBox>
+         </padding>
+            </VBox>
+      </children></VBox>
    </content>
       </ScrollPane>
-   <VBox visible="false" managed="false"  fx:id="dialogBg" style="-fx-background-color: rgba(0,0,0,0.25);" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" />
+   <VBox fx:id="dialogBg" managed="false" style="-fx-background-color: rgba(0,0,0,0.25);" visible="false" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" />
 
-   <VBox visible="false" managed="false" fx:id="sidebar" alignment="TOP_CENTER" maxWidth="250.0" minWidth="250.0" prefWidth="250.0" styleClass="side-bar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+   <VBox fx:id="sidebar" alignment="TOP_CENTER" managed="false" maxWidth="250.0" minWidth="250.0" prefWidth="250.0" styleClass="side-bar" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
       <HBox alignment="TOP_RIGHT" prefHeight="34.0" prefWidth="200.0">
          <children>
-            <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true" onMouseClicked="#OnDisSideBar">
+            <ImageView fitHeight="26.0" fitWidth="26.0" onMouseClicked="#OnDisSideBar" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/icons/close.png" />
                </image>
@@ -262,7 +917,7 @@
          </VBox.margin>
       </HBox>
       <Region VBox.vgrow="ALWAYS" />
-      <Button mnemonicParsing="false" prefHeight="63.0" prefWidth="183.0" styleClass="home-btn" text="Sign Out" textFill="WHITE">
+      <Button mnemonicParsing="false" prefHeight="63.0" prefWidth="183.0" styleClass="home-btn" text="Sign Out" textFill="WHITE" onAction="#exitHomePage">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>

@@ -29,6 +29,15 @@
     -fx-padding: 45;
 }
 
+.form-eda{
+    -fx-effect: dropshadow(gaussian, rgba(76, 76, 76, 0.25), 20, 0.25, 0, 0);
+    -fx-border-radius: 25;
+    -fx-background-radius: 50;
+    -fx-background-color: #fff;
+    -fx-padding: 25;
+}
+
+
 .form-register{
     -fx-effect: dropshadow(gaussian, rgba(76, 76, 76, 0.25), 20, 0.25, 0, 0);
     -fx-border-radius: 50;
@@ -128,4 +137,10 @@
     -fx-font-family: Verdana, Geneva, Verdana, sans-serif;
     -fx-font-weight: 700;
     -fx-font-size: 16;
+}
+
+.table{
+    -fx-background-color: #FFF3F3;
+    -fx-border-radius: 30;
+    -fx-background-radius: 30;
 }
