@@ -37,6 +37,14 @@
     -fx-padding: 25;
 }
 
+.form-ble{
+    -fx-effect: dropshadow(gaussian, rgba(76, 76, 76, 0.25), 20, 0.25, 0, 0);
+    -fx-border-radius: 25;
+    -fx-background-radius: 50;
+    -fx-background-color: #fff;
+    -fx-padding: 35;
+}
+
 
 .form-register{
     -fx-effect: dropshadow(gaussian, rgba(76, 76, 76, 0.25), 20, 0.25, 0, 0);
@@ -80,9 +88,17 @@
 .circle{
     -fx-border-radius: 200;
     -fx-background-radius: 200;
-    -fx-border-color: #FBD5D5;       /* Color of the border */
     -fx-border-width: 6;           /* Width of the border */
     -fx-border-style: solid;       /* Style: solid, dashed, dotted, etc. */
+}
+
+.i-circle{
+    -fx-border-radius: 25;
+    -fx-background-radius: 25;
+    -fx-border-width: 2;           /* Width of the border */
+    -fx-border-style: solid;       /* Style: solid, dashed, dotted, etc. */
+    -fx-border-color: FE9F9F;
+    -fx-background-color: FFF;
 }
 
 .bpm{
@@ -105,7 +121,6 @@
 }
 
 .state-label-state{
-    -fx-text-fill: #FB8C8C;
     -fx-font-family: Tahoma, Geneva, Verdana, sans-serif;
     -fx-font-size: 16;
     -fx-font-weight: 700;
@@ -143,4 +158,66 @@
     -fx-background-color: #FFF3F3;
     -fx-border-radius: 30;
     -fx-background-radius: 30;
+}
+
+.text-field{
+    -fx-background-color: FFF;
+    -fx-border-radius: 7;
+    -fx-border-width: 2;
+    -fx-border-style: solid;
+    -fx-border-color: FBD5D5;
+    -fx-font-size: 16;
+}
+
+/* Estilo base do CheckComboBox (herda de combo-box) */
+.check-combo-box,
+.check-combo-box .combo-box,
+.check-combo-box .combo-box-base {
+    -fx-background-color: white;
+    -fx-border-color: black;
+    -fx-border-width: 2px;
+    -fx-border-style: solid;
+}
+
+/* Estiliza o botão da seta */
+.check-combo-box .arrow-button {
+    -fx-background-color: white;
+}
+
+/* Estiliza a própria seta */
+.check-combo-box .arrow {
+    -fx-background-color: black;
+}
+
+/* Estilizando o dropdown popup */
+.check-combo-box .combo-box-popup .list-view {
+    -fx-background-color: white;
+}
+
+/* Estilizando cada item da lista */
+.check-combo-box .combo-box-popup .list-cell {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+}
+
+.multidrop{
+    -fx-border-color: FBD5D5;
+    -fx-border-width: 2;
+    -fx-border-style: solid;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+
+.tooltip {
+    -fx-background-color: FFF;      /* background */
+    -fx-text-fill: #000;                  /* text color */
+    -fx-font: 14px "Tahoma";              /* font */
+    -fx-padding: 8px;                    /* spacing */
+    -fx-border-color: #333;
+    -fx-border-width: 1px;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.5) , 5,0,0,1);
+    -fx-show-delay: 0.1s;                /* delay before showing */
+    -fx-show-duration: 60s;             /* how long it stays visible */
 }

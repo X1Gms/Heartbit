@@ -7,21 +7,31 @@ public class Images {
 
     private static final String pakage = "/com/heartbit/heartbit_project";
 
-    public static void HomeEnabled(ImageView image1, ImageView image2, ImageView image3) {
-        image1.setImage(new Image(Objects.requireNonNull(Images.class.getResource(pakage+"/images/icons/enable/Home.png")).toExternalForm()));
-        image2.setImage(new Image(Objects.requireNonNull(Images.class.getResource(pakage+"/images/icons/normal/Person.png")).toExternalForm()));
-        image3.setImage(new Image(Objects.requireNonNull(Images.class.getResource(pakage+"/images/icons/normal/Results.png")).toExternalForm()));
+    public static void HomeEnabled(ImageView homeImg, ImageView accountImg, ImageView resultsImg, ImageView bluetoothImg) {
+        homeImg.setImage(new Image(Objects.requireNonNull(Images.class.getResource(pakage+"/images/icons/enable/Home.png")).toExternalForm()));
+        accountImg.setImage(new Image(Objects.requireNonNull(Images.class.getResource(pakage+"/images/icons/normal/Person.png")).toExternalForm()));
+        resultsImg.setImage(new Image(Objects.requireNonNull(Images.class.getResource(pakage+"/images/icons/normal/Results.png")).toExternalForm()));
+        bluetoothImg.setImage(new Image(Objects.requireNonNull(Images.class.getResource(pakage+"/images/icons/normal/Bluetooth.png")).toExternalForm()));
     }
 
-    public static void AccountEnabled(ImageView image1, ImageView image2, ImageView image3) {
-        image1.setImage(new Image(Objects.requireNonNull(Images.class.getResource(pakage+"/images/icons/normal/Home.png")).toExternalForm()));
-        image2.setImage(new Image(Objects.requireNonNull(Images.class.getResource(pakage+"/images/icons/enable/Person.png")).toExternalForm()));
-        image3.setImage(new Image(Objects.requireNonNull(Images.class.getResource(pakage+"/images/icons/normal/Results.png")).toExternalForm()));
+    public static void AccountEnabled(ImageView homeImg, ImageView accountImg, ImageView resultsImg, ImageView bluetoothImg) {
+        homeImg.setImage(new Image(Objects.requireNonNull(Images.class.getResource(pakage+"/images/icons/normal/Home.png")).toExternalForm()));
+        accountImg.setImage(new Image(Objects.requireNonNull(Images.class.getResource(pakage+"/images/icons/enable/Person.png")).toExternalForm()));
+        resultsImg.setImage(new Image(Objects.requireNonNull(Images.class.getResource(pakage+"/images/icons/normal/Results.png")).toExternalForm()));
+        bluetoothImg.setImage(new Image(Objects.requireNonNull(Images.class.getResource(pakage+"/images/icons/normal/Bluetooth.png")).toExternalForm()));
     }
 
-    public static void ResultsEnabled(ImageView image1, ImageView image2, ImageView image3) {
-        image1.setImage(new Image(Objects.requireNonNull(Images.class.getResource(pakage+"/images/icons/normal/Home.png")).toExternalForm()));
-        image2.setImage(new Image(Objects.requireNonNull(Images.class.getResource(pakage+"/images/icons/normal/Person.png")).toExternalForm()));
-        image3.setImage(new Image(Objects.requireNonNull(Images.class.getResource(pakage+"/images/icons/enable/Results.png")).toExternalForm()));
+    public static void ResultsEnabled(ImageView homeImg, ImageView accountImg, ImageView resultsImg, ImageView bluetoothImg) {
+        homeImg.setImage(new Image(Objects.requireNonNull(Images.class.getResource(pakage+"/images/icons/normal/Home.png")).toExternalForm()));
+        accountImg.setImage(new Image(Objects.requireNonNull(Images.class.getResource(pakage+"/images/icons/normal/Person.png")).toExternalForm()));
+        resultsImg.setImage(new Image(Objects.requireNonNull(Images.class.getResource(pakage+"/images/icons/enable/Results.png")).toExternalForm()));
+        bluetoothImg.setImage(new Image(Objects.requireNonNull(Images.class.getResource(pakage+"/images/icons/normal/Bluetooth.png")).toExternalForm()));
+    }
+
+    public static void BluetoothEnabled(ImageView homeImg, ImageView accountImg, ImageView resultsImg, ImageView bluetoothImg) {
+        homeImg.setImage(new Image(Objects.requireNonNull(Images.class.getResource(pakage+"/images/icons/normal/Home.png")).toExternalForm()));
+        accountImg.setImage(new Image(Objects.requireNonNull(Images.class.getResource(pakage+"/images/icons/normal/Person.png")).toExternalForm()));
+        resultsImg.setImage(new Image(Objects.requireNonNull(Images.class.getResource(pakage+"/images/icons/normal/Results.png")).toExternalForm()));
+        bluetoothImg.setImage(new Image(Objects.requireNonNull(Images.class.getResource(pakage+"/images/icons/enable/Bluetooth.png")).toExternalForm()));
     }
 }
