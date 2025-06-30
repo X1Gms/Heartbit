@@ -6,13 +6,19 @@ import com.heartbit.heartbit_project.visual_functions.Transitions;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 import java.net.URL;
 import java.util.List;
@@ -63,9 +69,10 @@ public class HelloController implements Initializable {
     @FXML
     private Pane paneEditAccount;
     @FXML
-    private HBox sucessToast;
+    private VBox ed_add_textfields;
 
     private List<String> dropdownItems;
+
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -78,6 +85,44 @@ public class HelloController implements Initializable {
         );
 
         multiDropdown.setItems(dropdownItems);
+    }
+
+    @FXML
+    private void AddTextField(ActionEvent event) {
+        // Criar o Label
+        Label label = new Label("Other Disease");
+        label.setPrefWidth(240.0);
+        label.getStyleClass().add("form-login-input");
+        VBox.setMargin(label, new Insets(30, 0, 0, 15));
+
+        // Criar o TextField
+        TextField textField = new TextField();
+        textField.setPrefHeight(47.0);
+        textField.setPrefWidth(268.0);
+        textField.getStyleClass().add("text-field");
+
+        // Botão para remover
+        Button removeBtn = new Button("-");
+        removeBtn.setPrefSize(52, 52);
+        removeBtn.setMinWidth(52);
+        removeBtn.setMinHeight(52);
+        removeBtn.getStyleClass().add("home-btn");
+        removeBtn.setTextFill(Color.WHITE);
+        removeBtn.setFont(Font.font("Tahoma", 20));
+
+        // HBox contêiner
+        HBox hbox = new HBox(10, new VBox(label, textField), removeBtn);
+        hbox.setAlignment(Pos.BOTTOM_LEFT);
+        hbox.setPrefSize(200,100);
+
+        // Associar ação de remover
+        removeBtn.setOnAction(e -> {
+            VBox parentVBox = (VBox) hbox.getParent();
+            parentVBox.getChildren().remove(hbox);
+        });
+
+        // Adicionar ao container principal
+        ed_add_textfields.getChildren().add(hbox);
     }
 
     //Login/Register

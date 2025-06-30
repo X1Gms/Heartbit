@@ -182,7 +182,7 @@
 
          <!-- =================== END: Landing Page =================== -->
          <!-- =================== START: Navbar =================== -->
-         <VBox fx:id="homePage" managed="false" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #fff;" visible="false">
+         <VBox fx:id="homePage" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #fff;" managed="false" visible="false">
             <HBox fx:id="navbar" prefHeight="52.0" prefWidth="1218.0" spacing="10.0">
                <children>
                   <VBox fx:id="hamburger" minHeight="50.0" minWidth="59.0" onMouseClicked="#enSideBar" prefHeight="50.0" prefWidth="59.0" HBox.hgrow="NEVER">
@@ -214,6 +214,184 @@
 
                <VBox alignment="TOP_CENTER" prefHeight="880.0" VBox.vgrow="ALWAYS">
                   <children>
+                     <!-- =================== END: Bluetooth =================== -->
+                     <!-- =================== START: Account =================== -->
+
+                     <FlowPane fx:id="account" alignment="TOP_CENTER" maxWidth="600.0" prefWidth="637.0" styleClass="form-eda" VBox.vgrow="ALWAYS" visible="false" managed="false">
+                        <VBox.margin>
+                           <Insets bottom="80.0" top="30.0" />
+                        </VBox.margin>
+                        <children>
+                              <HBox prefHeight="38.0" prefWidth="579.0">
+                                 <children>
+                                    <Region maxWidth="50.0" minWidth="50.0" />
+                                    <VBox alignment="TOP_CENTER" onMouseClicked="#EditAccountClick" prefHeight="200.0" prefWidth="180.0">
+                                       <children>
+                                          <Label text="Edit Account">
+                                             <font>
+                                                <Font name="Tahoma Bold" size="20.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets bottom="6.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <Pane fx:id="paneEditAccount" prefHeight="7.0" prefWidth="180.0" styleClass="home-btn">
+                                             <VBox.margin>
+                                                <Insets />
+                                             </VBox.margin>
+                                          </Pane>
+                                       </children>
+                                    </VBox>
+                                    <Region HBox.hgrow="ALWAYS" />
+                                    <VBox alignment="TOP_CENTER" onMouseClicked="#EditDiseasesClick" prefHeight="44.0" prefWidth="180.0">
+                                       <children>
+                                          <Label text="Edit Diseases">
+                                             <font>
+                                                <Font name="Tahoma Bold" size="20.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets bottom="6.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <Pane fx:id="paneEditDiseases" prefHeight="7.0" prefWidth="180.0" styleClass="home-btn" visible="false" />
+                                       </children>
+                                    </VBox>
+                                    <Region maxWidth="50.0" HBox.hgrow="ALWAYS" />
+                                 </children>
+                                 <FlowPane.margin>
+                                    <Insets bottom="40.0" />
+                                 </FlowPane.margin></HBox>
+                           <!-- =================== START: Edit Account =================== -->
+                           <FlowPane fx:id="editAccount" alignment="TOP_CENTER" columnHalignment="CENTER" maxWidth="700.0" prefHeight="160.0" prefWidth="587.0">
+                              <children>
+                                 <VBox prefHeight="80.0" prefWidth="230.0">
+                                    <children>
+                                       <Label styleClass="form-login-input" text="Name">
+                                          <VBox.margin>
+                                             <Insets left="15.0" />
+                                          </VBox.margin>
+                                       </Label>
+                                       <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" />
+                                    </children>
+                                 </VBox>
+                                 <Region prefHeight="100.0" prefWidth="51.0" />
+                                 <VBox prefHeight="80.0" prefWidth="230.0">
+                                    <children>
+                                       <Label styleClass="form-login-input" text="E-mail">
+                                          <VBox.margin>
+                                             <Insets left="15.0" />
+                                          </VBox.margin>
+                                       </Label>
+                                       <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" />
+                                    </children>
+                                 </VBox>
+                                 <VBox layoutX="12.0" layoutY="10.0" prefHeight="80.0" prefWidth="230.0">
+                                    <children>
+                                       <Label styleClass="form-login-input" text="Phone Number">
+                                          <VBox.margin>
+                                             <Insets left="15.0" />
+                                          </VBox.margin>
+                                       </Label>
+                                       <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" />
+                                    </children>
+                                 </VBox>
+                                 <Region prefHeight="100.0" prefWidth="51.0" />
+                                 <VBox layoutX="171.0" layoutY="90.0" prefHeight="80.0" prefWidth="230.0">
+                                    <children>
+                                       <Label styleClass="form-login-input" text="Emergency Number">
+                                          <VBox.margin>
+                                             <Insets left="15.0" />
+                                          </VBox.margin>
+                                       </Label>
+                                       <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" />
+                                    </children>
+                                 </VBox>
+                                 <VBox layoutX="12.0" layoutY="90.0" prefHeight="80.0" prefWidth="230.0">
+                                    <children>
+                                          <HBox alignment="BOTTOM_LEFT" prefHeight="26.0" prefWidth="230.0">
+                                             <children>
+                                             <Label minHeight="25.0" minWidth="63.0" styleClass="form-login-input" text="Password">
+                                                   <HBox.margin>
+                                                      <Insets left="15.0" />
+                                                   </HBox.margin>
+                                             </Label>
+                                                <Region prefHeight="200.0" prefWidth="200.0" />
+                                                <Button minHeight="25.0" minWidth="25.0" mnemonicParsing="false" styleClass="i-circle" text="i">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font>
+                                                   <tooltip>
+                                                      <Tooltip text="Password must have 8 characters,&#10;numbers and special characters" />
+                                                   </tooltip>
+                                                </Button>
+                                             </children>
+                                             <VBox.margin>
+                                                <Insets bottom="2.0" />
+                                             </VBox.margin>
+                                          </HBox>
+                                       <PasswordField prefHeight="47.0" prefWidth="268.0" />
+                                    </children>
+                                 </VBox>
+                                 <Region layoutX="280.0" layoutY="90.0" prefHeight="120.0" prefWidth="51.0" />
+                                 <VBox layoutX="331.0" layoutY="90.0" prefHeight="80.0" prefWidth="230.0">
+                                    <children>
+                                       <Label minHeight="25.0" styleClass="form-login-input" text="Confirm Password">
+                                          <VBox.margin>
+                                             <Insets bottom="2.0" left="15.0" />
+                                          </VBox.margin>
+                                       </Label>
+                                       <PasswordField prefHeight="47.0" prefWidth="268.0" />
+                                    </children>
+                                 </VBox>
+                                 <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="160.0" styleClass="home-btn" text="Submit" textFill="WHITE">
+                                    <font>
+                                       <Font name="Tahoma Bold" size="20.0" />
+                                    </font>
+                                 </Button>
+                              </children></FlowPane>
+                           <!-- =================== START: Edit Diseases =================== -->
+                           <VBox fx:id="editDiseases" alignment="TOP_CENTER" maxWidth="260.0" prefWidth="260.0" managed="false" visible="false">
+                                 <VBox prefHeight="30.0" prefWidth="240.0" />
+                              <MultiDropdown fx:id="multiDropdown" maxWidth="260.0" />
+                                 <HBox alignment="BOTTOM_LEFT" prefHeight="100.0" prefWidth="200.0">
+                                    <children>
+                                       <VBox prefWidth="100.0" HBox.hgrow="ALWAYS">
+                                          <children>
+                                             <Label prefWidth="240.0" styleClass="form-login-input" text="Other Disease">
+                                                <VBox.margin>
+                                                   <Insets left="15.0" top="30.0" />
+                                                </VBox.margin>
+                                             </Label>
+                                             <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" />
+                                          </children>
+                                       </VBox>
+                                       <Button mnemonicParsing="false" onAction="#AddTextField" prefHeight="52.0" prefWidth="52.0" styleClass="home-btn" text="+" textFill="WHITE">
+                                          <font>
+                                             <Font name="Tahoma" size="20.0" />
+                                          </font>
+                                          <HBox.margin>
+                                             <Insets left="10.0" />
+                                          </HBox.margin></Button>
+                                    </children>
+                                    <VBox.margin>
+                                       <Insets />
+                                    </VBox.margin></HBox>
+                                 <VBox layoutX="10.0" layoutY="111.0" prefWidth="240.0">
+                                    <children>
+                                       <VBox fx:id="ed_add_textfields" />
+                                    </children></VBox>
+                                 <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="145.0" styleClass="home-btn" text="Submit" textFill="WHITE">
+                                    <VBox.margin>
+                                       <Insets top="80.0" />
+                                    </VBox.margin>
+                                    <font>
+                                       <Font name="System Bold" size="20.0" />
+                                    </font>
+                                 </Button>
+                                 <VBox layoutX="10.0" layoutY="10.0" prefHeight="47.0" prefWidth="240.0" />
+                           </VBox>
+                        </children>
+                     </FlowPane>
 
 
                      <!-- =================== START: Home =================== -->
@@ -419,164 +597,6 @@
                                  </children>
                               </VBox>
                            </children></FlowPane>
-                     <!-- =================== END: Bluetooth =================== -->
-                     <!-- =================== START: Account =================== -->
-
-                     <FlowPane fx:id="account" alignment="TOP_CENTER" managed="false" maxWidth="600.0" prefWidth="637.0" styleClass="form-eda" visible="false" VBox.vgrow="ALWAYS">
-                        <VBox.margin>
-                           <Insets bottom="80.0" top="30.0" />
-                        </VBox.margin>
-                        <children>
-                              <HBox prefHeight="38.0" prefWidth="579.0">
-                                 <children>
-                                    <Region maxWidth="50.0" minWidth="50.0" />
-                                    <VBox alignment="TOP_CENTER" onMouseClicked="#EditAccountClick" prefHeight="200.0" prefWidth="180.0">
-                                       <children>
-                                          <Label text="Edit Account">
-                                             <font>
-                                                <Font name="Tahoma Bold" size="20.0" />
-                                             </font>
-                                             <VBox.margin>
-                                                <Insets bottom="6.0" />
-                                             </VBox.margin>
-                                          </Label>
-                                          <Pane fx:id="paneEditAccount" prefHeight="7.0" prefWidth="180.0" styleClass="home-btn">
-                                             <VBox.margin>
-                                                <Insets />
-                                             </VBox.margin>
-                                          </Pane>
-                                       </children>
-                                    </VBox>
-                                    <Region HBox.hgrow="ALWAYS" />
-                                    <VBox alignment="TOP_CENTER" onMouseClicked="#EditDiseasesClick" prefHeight="44.0" prefWidth="180.0">
-                                       <children>
-                                          <Label text="Edit Diseases">
-                                             <font>
-                                                <Font name="Tahoma Bold" size="20.0" />
-                                             </font>
-                                             <VBox.margin>
-                                                <Insets bottom="6.0" />
-                                             </VBox.margin>
-                                          </Label>
-                                          <Pane fx:id="paneEditDiseases" prefHeight="7.0" prefWidth="180.0" styleClass="home-btn" visible="false" />
-                                       </children>
-                                    </VBox>
-                                    <Region maxWidth="50.0" HBox.hgrow="ALWAYS" />
-                                 </children>
-                                 <FlowPane.margin>
-                                    <Insets bottom="40.0" />
-                                 </FlowPane.margin></HBox>
-                           <!-- =================== START: Edit Account =================== -->
-                           <FlowPane fx:id="editAccount" alignment="TOP_CENTER" columnHalignment="CENTER" maxWidth="700.0" prefHeight="160.0" prefWidth="587.0">
-                              <children>
-                                 <VBox prefHeight="80.0" prefWidth="230.0">
-                                    <children>
-                                       <Label styleClass="form-login-input" text="Name">
-                                          <VBox.margin>
-                                             <Insets left="15.0" />
-                                          </VBox.margin>
-                                       </Label>
-                                       <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" />
-                                    </children>
-                                 </VBox>
-                                 <Region prefHeight="100.0" prefWidth="51.0" />
-                                 <VBox prefHeight="80.0" prefWidth="230.0">
-                                    <children>
-                                       <Label styleClass="form-login-input" text="E-mail">
-                                          <VBox.margin>
-                                             <Insets left="15.0" />
-                                          </VBox.margin>
-                                       </Label>
-                                       <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" />
-                                    </children>
-                                 </VBox>
-                                 <VBox layoutX="12.0" layoutY="10.0" prefHeight="80.0" prefWidth="230.0">
-                                    <children>
-                                       <Label styleClass="form-login-input" text="Phone Number">
-                                          <VBox.margin>
-                                             <Insets left="15.0" />
-                                          </VBox.margin>
-                                       </Label>
-                                       <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" />
-                                    </children>
-                                 </VBox>
-                                 <Region prefHeight="100.0" prefWidth="51.0" />
-                                 <VBox layoutX="171.0" layoutY="90.0" prefHeight="80.0" prefWidth="230.0">
-                                    <children>
-                                       <Label styleClass="form-login-input" text="Emergency Number">
-                                          <VBox.margin>
-                                             <Insets left="15.0" />
-                                          </VBox.margin>
-                                       </Label>
-                                       <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" />
-                                    </children>
-                                 </VBox>
-                                 <VBox layoutX="12.0" layoutY="90.0" prefHeight="80.0" prefWidth="230.0">
-                                    <children>
-                                          <HBox alignment="BOTTOM_LEFT" prefHeight="26.0" prefWidth="230.0">
-                                             <children>
-                                             <Label minHeight="25.0" minWidth="63.0" styleClass="form-login-input" text="Password">
-                                                   <HBox.margin>
-                                                      <Insets left="15.0" />
-                                                   </HBox.margin>
-                                             </Label>
-                                                <Region prefHeight="200.0" prefWidth="200.0" />
-                                                <Button minHeight="25.0" minWidth="25.0" mnemonicParsing="false" styleClass="i-circle" text="i">
-                                                   <font>
-                                                      <Font name="System Bold" size="12.0" />
-                                                   </font>
-                                                   <tooltip>
-                                                      <Tooltip text="Password must have 8 characters,&#10;numbers and special characters" />
-                                                   </tooltip>
-                                                </Button>
-                                             </children>
-                                             <VBox.margin>
-                                                <Insets bottom="2.0" />
-                                             </VBox.margin>
-                                          </HBox>
-                                       <PasswordField prefHeight="47.0" prefWidth="268.0" />
-                                    </children>
-                                 </VBox>
-                                 <Region layoutX="280.0" layoutY="90.0" prefHeight="120.0" prefWidth="51.0" />
-                                 <VBox layoutX="331.0" layoutY="90.0" prefHeight="80.0" prefWidth="230.0">
-                                    <children>
-                                       <Label minHeight="25.0" styleClass="form-login-input" text="Confirm Password">
-                                          <VBox.margin>
-                                             <Insets bottom="2.0" left="15.0" />
-                                          </VBox.margin>
-                                       </Label>
-                                       <PasswordField prefHeight="47.0" prefWidth="268.0" />
-                                    </children>
-                                 </VBox>
-                                 <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="160.0" styleClass="home-btn" text="Submit" textFill="WHITE">
-                                    <font>
-                                       <Font name="Tahoma Bold" size="20.0" />
-                                    </font>
-                                 </Button>
-                              </children></FlowPane>
-                           <!-- =================== START: Edit Diseases =================== -->
-                           <VBox fx:id="editDiseases" alignment="TOP_CENTER" managed="false" maxWidth="240.0" prefWidth="240.0" visible="false">
-                                 <VBox prefHeight="30.0" prefWidth="240.0" />
-                              <MultiDropdown fx:id="multiDropdown" maxWidth="240.0" />
-                                 <Label prefWidth="240.0" styleClass="form-login-input" text="Other">
-                                    <VBox.margin>
-                                       <Insets left="15.0" top="30.0" />
-                                    </VBox.margin>
-                                 </Label>
-                                 <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" />
-                                 <VBox layoutX="10.0" layoutY="111.0" prefHeight="16.0" prefWidth="240.0" />
-                                 <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="145.0" styleClass="home-btn" text="Submit" textFill="WHITE">
-                                    <VBox.margin>
-                                       <Insets top="80.0" />
-                                    </VBox.margin>
-                                    <font>
-                                       <Font name="System Bold" size="20.0" />
-                                    </font>
-                                 </Button>
-                                 <VBox layoutX="10.0" layoutY="10.0" prefHeight="47.0" prefWidth="240.0" />
-                           </VBox>
-                        </children>
-                     </FlowPane>
 
                      <!-- =================== END: Account =================== -->
                      <!-- =================== START: Results =================== -->
@@ -1015,7 +1035,7 @@
 
    <!-- =================== START: Success Toast =================== -->
 
-   <HBox fx:id="sucessToast" alignment="CENTER_LEFT" minHeight="69.0" minWidth="200.0" prefHeight="73.0" prefWidth="324.0" style="-fx-background-color: #fff; -fx-border-radius: 10; -fx-background-radius: 10;" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" managed="false" visible="false">
+   <HBox fx:id="sucessToast" alignment="CENTER_LEFT" managed="false" minHeight="69.0" minWidth="200.0" prefHeight="73.0" prefWidth="324.0" style="-fx-background-color: #fff; -fx-border-radius: 10; -fx-background-radius: 10;" visible="false" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
       <effect>
          <DropShadow height="30.0" radius="14.5" width="30.0">
             <color>
@@ -1054,7 +1074,7 @@
 
    <!-- =================== START: Error Toast =================== -->
 
-   <HBox fx:id="errorToast" alignment="CENTER_LEFT" minHeight="69.0" minWidth="200.0" prefHeight="73.0" prefWidth="324.0" style="-fx-background-color: #fff; -fx-border-radius: 10; -fx-background-radius: 10;" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" managed="false" visible="false">
+   <HBox fx:id="errorToast" alignment="CENTER_LEFT" managed="false" minHeight="69.0" minWidth="200.0" prefHeight="73.0" prefWidth="324.0" style="-fx-background-color: #fff; -fx-border-radius: 10; -fx-background-radius: 10;" visible="false" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
       <effect>
          <DropShadow height="30.0" radius="14.5" width="30.0">
             <color>
@@ -1180,7 +1200,7 @@
             <Insets bottom="30.0" top="30.0" />
          </VBox.margin>
       </HBox>
-      <HBox fx:id="exportBtn" layoutX="35.0" layoutY="187.0" managed="false" visible="false">
+      <HBox fx:id="exportBtn" layoutX="35.0" layoutY="187.0">
          <children>
             <HBox alignment="CENTER_LEFT">
                <children>

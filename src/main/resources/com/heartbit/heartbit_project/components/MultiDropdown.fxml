@@ -15,7 +15,7 @@
                         <Font name="Tahoma Bold" size="16.0" />
                     </font>
                 </Label>
-                <Region prefHeight="49.0" prefWidth="29.0" />
+                <Region HBox.hgrow="ALWAYS" />
                 <ImageView fx:id="arrow" fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../images/icons/Arrow.png" />
