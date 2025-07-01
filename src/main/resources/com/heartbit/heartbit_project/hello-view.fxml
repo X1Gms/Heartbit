@@ -214,7 +214,6 @@
 
                <VBox alignment="TOP_CENTER" prefHeight="880.0" VBox.vgrow="ALWAYS">
                   <children>
-                     <!-- =================== END: Bluetooth =================== -->
                      <!-- =================== START: Account =================== -->
 
                      <FlowPane fx:id="account" alignment="TOP_CENTER" maxWidth="600.0" prefWidth="637.0" styleClass="form-eda" VBox.vgrow="ALWAYS" visible="false" managed="false">
@@ -544,60 +543,6 @@
                                  </FlowPane>
 
                      <!-- =================== END: Home =================== -->
-                     <!-- =================== START: Bluetooth =================== -->
-                     <FlowPane fx:id="bluetooth" alignment="TOP_CENTER" columnHalignment="CENTER" managed="false" maxHeight="1.7976931348623157E308" maxWidth="900.0" minHeight="525.0" prefWidth="900.0" styleClass="form-ble" visible="false" VBox.vgrow="ALWAYS">
-                           <VBox.margin>
-                              <Insets top="30.0" />
-                           </VBox.margin>
-                           <children>
-                              <VBox alignment="TOP_CENTER" prefHeight="455.0" prefWidth="468.0">
-                                 <children>
-                                    <Label alignment="CENTER" prefHeight="38.0" prefWidth="592.0" text="Connections" textFill="#cf7373" VBox.vgrow="ALWAYS">
-                                       <font>
-                                          <Font name="Tahoma Bold" size="30.0" />
-                                       </font>
-                                       <VBox.margin>
-                                          <Insets bottom="20.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                    <VBox prefHeight="80.0" prefWidth="432.0" VBox.vgrow="ALWAYS">
-                                       <children>
-                                          <Label styleClass="form-login-input" text="IP Address">
-                                             <VBox.margin>
-                                                <Insets left="15.0" />
-                                             </VBox.margin>
-                                          </Label>
-                                          <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" VBox.vgrow="ALWAYS" />
-                                       </children>
-                                    </VBox>
-                                    <VBox prefHeight="80.0" prefWidth="432.0" VBox.vgrow="ALWAYS">
-                                       <children>
-                                          <Label styleClass="form-login-input" text="Port">
-                                             <VBox.margin>
-                                                <Insets left="15.0" />
-                                             </VBox.margin>
-                                          </Label>
-                                          <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" VBox.vgrow="ALWAYS" />
-                                       </children>
-                                    </VBox>
-                                    <VBox prefHeight="80.0" prefWidth="468.0" VBox.vgrow="ALWAYS">
-                                       <children>
-                                          <Label styleClass="form-login-input" text="Topic">
-                                             <VBox.margin>
-                                                <Insets left="15.0" />
-                                             </VBox.margin>
-                                          </Label>
-                                          <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" VBox.vgrow="ALWAYS" />
-                                       </children>
-                                    </VBox>
-                                    <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="161.0" styleClass="home-btn" text="Activate" textFill="WHITE">
-                                       <font>
-                                          <Font name="Tahoma Bold" size="20.0" />
-                                       </font></Button>
-                                 </children>
-                              </VBox>
-                           </children></FlowPane>
-
                      <!-- =================== END: Account =================== -->
                      <!-- =================== START: Results =================== -->
                      <FlowPane fx:id="results" alignment="CENTER" managed="false" visible="false" VBox.vgrow="ALWAYS">
@@ -1145,22 +1090,6 @@
             </ImageView><Label styleClass="nav-text" text="Home" /></HBox>
          <VBox.margin>
             <Insets bottom="30.0" top="30.0" />
-         </VBox.margin>
-      </HBox>
-      <HBox fx:id="bluetoothBtn" layoutX="35.0" layoutY="123.0" onMouseClicked="#BluetoothEnabled">
-         <children>
-            <HBox alignment="CENTER_LEFT">
-               <ImageView fx:id="bluetoothImg" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
-                  <HBox.margin>
-                     <Insets right="15.0" />
-                  </HBox.margin>
-                  <Image url="@images/icons/normal/Bluetooth.png" />
-               </ImageView>
-               <Label styleClass="nav-text" text="Bluetooth" />
-            </HBox>
-         </children>
-         <VBox.margin>
-            <Insets bottom="30.0" />
          </VBox.margin>
       </HBox>
       <HBox fx:id="accountBtn" layoutX="35.0" layoutY="123.0" onMouseClicked="#AccountEnabled">

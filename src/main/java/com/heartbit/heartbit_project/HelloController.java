@@ -55,10 +55,6 @@ public class HelloController implements Initializable {
     @FXML
     private FlowPane results;
     @FXML
-    private FlowPane bluetooth;
-    @FXML
-    private ImageView bluetoothImg;
-    @FXML
     private MultiDropdown multiDropdown;
     @FXML
     private FlowPane editAccount;
@@ -152,7 +148,6 @@ public class HelloController implements Initializable {
         disSidebar();
         Transitions.FadeOut(account,0,Transitions.Direction.TO_LEFT,0);
         Transitions.FadeOut(results,0,Transitions.Direction.TO_LEFT,0);
-        Transitions.FadeOut(bluetooth,0,Transitions.Direction.TO_LEFT,0);
         Transitions.FadeOut(home,0,Transitions.Direction.TO_LEFT,0);
         Transitions.FadeOut(RegisterForm,0,Transitions.Direction.TO_LEFT,0);
         Transitions.FadeOut(LoginForm,0,Transitions.Direction.TO_LEFT,0);
@@ -183,41 +178,28 @@ public class HelloController implements Initializable {
 
     @FXML
     private void HomeEnabled(MouseEvent event) {
-        Images.HomeEnabled(homeImg,accountImg,resultsImg, bluetoothImg);
+        Images.HomeEnabled(homeImg,accountImg,resultsImg);
         Transitions.FadeOut(account,0,Transitions.Direction.TO_LEFT,0);
         Transitions.FadeOut(results,0,Transitions.Direction.TO_LEFT,0);
-        Transitions.FadeOut(bluetooth,0,Transitions.Direction.TO_LEFT,0);
         Transitions.FadeIn(home,700,Transitions.Direction.TO_LEFT,500);
         disSidebar();
     }
 
     @FXML
     private void AccountEnabled(MouseEvent event) {
-        Images.AccountEnabled(homeImg,accountImg,resultsImg, bluetoothImg);
+        Images.AccountEnabled(homeImg,accountImg,resultsImg);
         Transitions.FadeOut(home,0,Transitions.Direction.TO_LEFT,0);
         Transitions.FadeOut(results,0,Transitions.Direction.TO_LEFT,0);
-        Transitions.FadeOut(bluetooth,0,Transitions.Direction.TO_LEFT,0);
         Transitions.FadeIn(account,700,Transitions.Direction.TO_LEFT,500);
         disSidebar();
     }
 
     @FXML
     private void ResultsEnabled(MouseEvent event) {
-        Images.ResultsEnabled(homeImg,accountImg,resultsImg, bluetoothImg);
+        Images.ResultsEnabled(homeImg,accountImg,resultsImg);
         Transitions.FadeOut(home,0,Transitions.Direction.TO_LEFT,0);
         Transitions.FadeOut(account,0,Transitions.Direction.TO_LEFT,0);
-        Transitions.FadeOut(bluetooth,0,Transitions.Direction.TO_LEFT,0);
         Transitions.FadeIn(results,700,Transitions.Direction.TO_LEFT,500);
-        disSidebar();
-    }
-
-    @FXML
-    private void BluetoothEnabled(MouseEvent event) {
-        Images.BluetoothEnabled(homeImg,accountImg,resultsImg, bluetoothImg);
-        Transitions.FadeOut(home,0,Transitions.Direction.TO_LEFT,0);
-        Transitions.FadeOut(account,0,Transitions.Direction.TO_LEFT,0);
-        Transitions.FadeOut(results,0,Transitions.Direction.TO_LEFT,0);
-        Transitions.FadeIn(bluetooth,700,Transitions.Direction.TO_LEFT,500);
         disSidebar();
     }
 
