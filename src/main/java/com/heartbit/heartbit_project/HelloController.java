@@ -153,6 +153,7 @@ public class HelloController implements Initializable {
         Transitions.FadeOut(LoginForm,0,Transitions.Direction.TO_LEFT,0);
         Transitions.FadeIn(myPane,1,Transitions.Direction.TO_LEFT,0);
         Transitions.FadeOutIn(homePage, landingPage,650, Transitions.Direction.TO_TOP, 500);
+        Images.HomeEnabled(homeImg,accountImg,resultsImg);
     }
 
 

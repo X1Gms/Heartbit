@@ -183,7 +183,6 @@
 .check-combo-box .arrow-button {
     -fx-background-color: white;
 }
-
 /* Estiliza a própria seta */
 .check-combo-box .arrow {
     -fx-background-color: black;

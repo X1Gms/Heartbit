@@ -123,7 +123,7 @@
                                                             <Font name="System Bold" size="12.0" />
                                                          </font>
                                                          <tooltip>
-                                                            <Tooltip text="Password must have 8 characters,&#10;numbers and special characters" />
+                                                            <Tooltip text="Password must have 12 characters,&#10;numbers and special characters" />
                                                          </tooltip>
                                                       </Button>
                                                    </children>
@@ -320,7 +320,7 @@
                                                       <Font name="System Bold" size="12.0" />
                                                    </font>
                                                    <tooltip>
-                                                      <Tooltip text="Password must have 8 characters,&#10;numbers and special characters" />
+                                                      <Tooltip text="Password must have 12 characters,&#10;numbers and special characters" />
                                                    </tooltip>
                                                 </Button>
                                              </children>
@@ -898,7 +898,7 @@
                                                                </font>
                                                             </Label>
                                                             <Region minWidth="60.0" prefHeight="51.0" />
-                                                            <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" minWidth="45.0" text="56">
+                                                            <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" minWidth="45.0" text="16">
                                                                <font>
                                                                   <Font name="Tahoma" size="16.0" />
                                                                </font>
