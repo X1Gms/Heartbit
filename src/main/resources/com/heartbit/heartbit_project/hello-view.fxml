@@ -57,7 +57,7 @@
                                                       <Insets left="15.0" />
                                                    </VBox.margin>
                                                 </Label>
-                                                <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" />
+                                                <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" fx:id="loginEmail" />
                                              </children>
                                           </VBox>
                                           <VBox layoutX="40.0" layoutY="98.0" prefHeight="100.0" prefWidth="268.0">
@@ -67,7 +67,7 @@
                                                       <Insets left="15.0" />
                                                    </VBox.margin>
                                                 </Label>
-                                                <PasswordField prefHeight="47.0" prefWidth="268.0" />
+                                                <PasswordField prefHeight="47.0" prefWidth="268.0" fx:id="loginPassword"/>
                                              </children>
                                           </VBox>
                                           <Button mnemonicParsing="false" onAction="#enterHomePage" prefHeight="60.0" prefWidth="268.0" styleClass="home-btn" text="Sign In" textFill="WHITE">
@@ -95,7 +95,7 @@
                                                    <VBox.margin>
                                                       <Insets left="15.0" />
                                                    </VBox.margin></Label>
-                                                <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" />
+                                                <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" fx:id="registerName"/>
                                              </children>
                                           </VBox>
                                           <VBox layoutX="40.0" layoutY="98.0" prefHeight="80.0" prefWidth="268.0">
@@ -105,7 +105,7 @@
                                                       <Insets left="15.0" />
                                                    </VBox.margin>
                                                 </Label>
-                                                <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" />
+                                                <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" fx:id="registerEmail"/>
                                              </children>
                                           </VBox>
                                           <VBox layoutX="12.0" layoutY="90.0" prefHeight="90.0" prefWidth="268.0">
@@ -131,7 +131,7 @@
                                                       <Insets bottom="2.0" />
                                                    </VBox.margin>
                                                 </HBox>
-                                                <PasswordField prefHeight="47.0" prefWidth="268.0" />
+                                                <PasswordField prefHeight="47.0" prefWidth="268.0" fx:id="registerPassword"/>
                                              </children>
                                           </VBox>
                                           <VBox layoutX="55.0" layoutY="204.0" prefHeight="90.0" prefWidth="268.0">
@@ -141,7 +141,7 @@
                                                       <Insets left="15.0" />
                                                    </VBox.margin>
                                                 </Label>
-                                                <PasswordField prefHeight="47.0" prefWidth="268.0" />
+                                                <PasswordField prefHeight="47.0" prefWidth="268.0" fx:id="registerCPassword"/>
                                              </children>
                                           </VBox>
                                           <Button mnemonicParsing="false" onAction="#enterHomePage" prefHeight="60.0" prefWidth="268.0" styleClass="home-btn" text="Create Account" textFill="WHITE">
@@ -270,7 +270,7 @@
                                              <Insets left="15.0" />
                                           </VBox.margin>
                                        </Label>
-                                       <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" />
+                                       <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" fx:id="edName"/>
                                     </children>
                                  </VBox>
                                  <Region prefHeight="100.0" prefWidth="51.0" />
@@ -281,7 +281,7 @@
                                              <Insets left="15.0" />
                                           </VBox.margin>
                                        </Label>
-                                       <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" />
+                                       <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" fx:id="edEmail"/>
                                     </children>
                                  </VBox>
                                  <VBox layoutX="12.0" layoutY="10.0" prefHeight="80.0" prefWidth="230.0">
@@ -291,7 +291,7 @@
                                              <Insets left="15.0" />
                                           </VBox.margin>
                                        </Label>
-                                       <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" />
+                                       <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" fx:id="edPhN"/>
                                     </children>
                                  </VBox>
                                  <Region prefHeight="100.0" prefWidth="51.0" />
@@ -302,7 +302,7 @@
                                              <Insets left="15.0" />
                                           </VBox.margin>
                                        </Label>
-                                       <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" />
+                                       <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" fx:id="edEPhN"/>
                                     </children>
                                  </VBox>
                                  <VBox layoutX="12.0" layoutY="90.0" prefHeight="80.0" prefWidth="230.0">
@@ -328,7 +328,7 @@
                                                 <Insets bottom="2.0" />
                                              </VBox.margin>
                                           </HBox>
-                                       <PasswordField prefHeight="47.0" prefWidth="268.0" />
+                                       <PasswordField prefHeight="47.0" prefWidth="268.0" fx:id="edPassword"/>
                                     </children>
                                  </VBox>
                                  <Region layoutX="280.0" layoutY="90.0" prefHeight="120.0" prefWidth="51.0" />
@@ -339,7 +339,7 @@
                                              <Insets bottom="2.0" left="15.0" />
                                           </VBox.margin>
                                        </Label>
-                                       <PasswordField prefHeight="47.0" prefWidth="268.0" />
+                                       <PasswordField prefHeight="47.0" prefWidth="268.0" fx:id="edCPassword"/>
                                     </children>
                                  </VBox>
                                  <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="160.0" styleClass="home-btn" text="Submit" textFill="WHITE">

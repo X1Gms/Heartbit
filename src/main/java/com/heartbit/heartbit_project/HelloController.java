@@ -1,6 +1,7 @@
 package com.heartbit.heartbit_project;
 
 import com.heartbit.heartbit_project.components.MultiDropdown;
+import com.heartbit.heartbit_project.pages.landingPage.Register;
 import com.heartbit.heartbit_project.visual_functions.Images;
 import com.heartbit.heartbit_project.visual_functions.Transitions;
 import javafx.event.ActionEvent;
@@ -10,6 +11,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
@@ -23,11 +25,23 @@ import javafx.scene.text.Font;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 
 public class HelloController implements Initializable {
 
+    //-+-+-+-+-+- Landing Page Variables -+-+-+-+-+-
+    @FXML
+    private TextField loginEmail;
+    @FXML
+    private PasswordField loginPassword;
+    @FXML
+    private TextField registerName;
+    @FXML
+    private TextField registerEmail;
+    @FXML
+    private PasswordField registerPassword;
+    @FXML
+    private PasswordField registerCPassword;
     @FXML
     private Pane myPane;
     @FXML
@@ -38,6 +52,8 @@ public class HelloController implements Initializable {
     private VBox homePage;
     @FXML
     private VBox RegisterForm;
+
+    //-+-+-+-+-+- HomePage Variables -+-+-+-+-+-
     @FXML
     private ImageView homeImg;
     @FXML
@@ -54,8 +70,8 @@ public class HelloController implements Initializable {
     private FlowPane account;
     @FXML
     private FlowPane results;
-    @FXML
-    private MultiDropdown multiDropdown;
+
+    //-+-+-+-+-+- Account Variables -+-+-+-+-+-
     @FXML
     private FlowPane editAccount;
     @FXML
@@ -66,13 +82,33 @@ public class HelloController implements Initializable {
     private Pane paneEditAccount;
     @FXML
     private VBox ed_add_textfields;
+    //-+-+-+-+-+- Edit Account Variables -+-+-+-+-+-
 
-    private List<String> dropdownItems;
+    @FXML
+    private TextField edName;
+    @FXML
+    private TextField edEmail;
+    @FXML
+    private TextField edPhN;
+    @FXML
+    private TextField edEPhN;
+    @FXML
+    private TextField edPassword;
+    @FXML
+    private TextField edCPassword;
 
+    //-+-+-+-+-+- Edit Account Diseases -+-+-+-+-+-
+    @FXML
+    private MultiDropdown multiDropdown;
+
+    @FXML
+    private void createAccount(MouseEvent event){
+        Register.register(registerName.getText(), registerEmail.getText(), registerPassword.getText(), registerCPassword.getText());
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        dropdownItems = List.of(
+        List<String> dropdownItems = List.of(
                 "Diabetes",
                 "Hypertension",
                 "Asthma",
