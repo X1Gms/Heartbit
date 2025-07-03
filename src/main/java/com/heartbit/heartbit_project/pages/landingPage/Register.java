@@ -1,8 +1,7 @@
 package com.heartbit.heartbit_project.pages.landingPage;
 import org.mindrot.jbcrypt.BCrypt;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
+import javax.crypto.*;
+import java.sql.*;
 
 public class Register {
 
@@ -15,19 +14,21 @@ public class Register {
         registerPasswordConfirm = registerPasswordConfirm.trim();
 
         if (registerName.isEmpty()) {
-            System.out.println("Insert a name for the register.");
+            System.out.println("Name field is empty. Insert a name.");
         }
         else if (!registerEmail.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\\\.[a-zA-Z]{2,}$")) {
-            System.out.println("Incorrect email address.");
+            System.out.println("Incorrect email address. Insert a valid email address.");
         }
         else if (!(registerPassword.length() < 12 && registerPassword.contains("^[0-9._%+-]"))) {
-            System.out.println("Password is not valid.");
+            System.out.println("Password is not valid. Insert a valid password.");
         }
 
         else if (!registerPassword.matches(registerPasswordConfirm)) {
-            System.out.println("Password confirmation is not valid.");
+            System.out.println("Password confirmation doesn't match Password.");
         }
         else {
+            registerName = registerName.trim();
+            registerEmail = registerEmail.trim();
             registerPassword = (BCrypt.hashpw(registerPassword, BCrypt.gensalt(12)));
             String url = "jdbc:mysql://localhost:3306/pcmr";
             String username = "root";

@@ -14,10 +14,10 @@ public class Login {
         loginPassword = loginPassword.trim();
 
         if (!loginEmail.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\\\.[a-zA-Z]{2,}$")) {
-            System.out.println("Invalid email address.");
+            System.out.println("Invalid email address. Insert a valid email address.");
         }
         else if (loginPassword.isEmpty()) {
-            System.out.println("Password is empty.");
+            System.out.println("Password is empty. Insert a password.");
         }
         else {
             String url = "jdbc:mysql://localhost:3306/pcmr";
