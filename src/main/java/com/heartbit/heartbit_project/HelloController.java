@@ -118,14 +118,21 @@ public class HelloController implements Initializable {
         String email = registerEmail.getText().trim();
         String password = registerPassword.getText().trim();
         String confirmPassword = registerCPassword.getText().trim();
-        String message = Register.validateRegisterForm(name, email, password, confirmPassword);
+        Register registerData = new Register(name, email, password, confirmPassword);
+        String message = registerData.validateRegisterForm();
         if (!message.isEmpty()) {
             textError.setText(message);
             Transitions.FadeIn(errorToast,350, Transitions.Direction.TO_LEFT, 500);
         }
         else{
-            Transitions.FadeIn(home,1,Transitions.Direction.TO_LEFT,500);
-            Transitions.FadeOutIn(landingPage, homePage,650, Transitions.Direction.TO_TOP, 500);
+            message = registerData.insertDataRegister();
+            if (!message.isEmpty()) {
+                textError.setText(message);
+                Transitions.FadeIn(errorToast,350, Transitions.Direction.TO_LEFT, 500);
+            } else {
+                Transitions.FadeIn(home,1,Transitions.Direction.TO_LEFT,500);
+                Transitions.FadeOutIn(landingPage, homePage,650, Transitions.Direction.TO_TOP, 500);
+            }
         }
     }
 
