@@ -101,9 +101,32 @@ public class HelloController implements Initializable {
     @FXML
     private MultiDropdown multiDropdown;
 
+    //-+-+-+-+-+- Toasts -+-+-+-+-+-
+
     @FXML
-    private void createAccount(MouseEvent event){
-        Register.register(registerName.getText(), registerEmail.getText(), registerPassword.getText(), registerCPassword.getText());
+    private HBox successToast;
+    @FXML
+    private Label successMessage;
+    @FXML
+    private HBox errorToast;
+    @FXML
+    private Label textError;
+
+    @FXML
+    private void createAccount(ActionEvent event){
+        String name = registerName.getText().trim();
+        String email = registerEmail.getText().trim();
+        String password = registerPassword.getText().trim();
+        String confirmPassword = registerCPassword.getText().trim();
+        String message = Register.validateRegisterForm(name, email, password, confirmPassword);
+        if (!message.isEmpty()) {
+            textError.setText(message);
+            Transitions.FadeIn(errorToast,350, Transitions.Direction.TO_LEFT, 500);
+        }
+        else{
+            Transitions.FadeIn(home,1,Transitions.Direction.TO_LEFT,500);
+            Transitions.FadeOutIn(landingPage, homePage,650, Transitions.Direction.TO_TOP, 500);
+        }
     }
 
     @Override
@@ -254,5 +277,15 @@ public class HelloController implements Initializable {
     private void disSidebar(){
         Transitions.FadeOut(sidebar,400, Transitions.Direction.TO_RIGHT, 500);
         Transitions.FadeOut(dialogBg,400, Transitions.Direction.TO_TOP, 0);
+    }
+
+    @FXML
+    private void closeError(MouseEvent event) {
+        Transitions.FadeOut(errorToast,400, Transitions.Direction.TO_LEFT, 500);
+    }
+
+    @FXML
+    private void closeSuccess(MouseEvent event) {
+        Transitions.FadeOut(successToast,400, Transitions.Direction.TO_LEFT, 500);
     }
 }

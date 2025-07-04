@@ -5,61 +5,59 @@ import java.sql.*;
 
 public class Register {
 
-    public static void register(String registerName, String registerEmail, String registerPassword, String registerPasswordConfirm) {
+    public static String validateRegisterForm(String registerName, String registerEmail, String registerPassword, String registerPasswordConfirm) {
         //Validações
 
-        registerName = registerName.trim();
-        registerEmail = registerEmail.trim();
-        registerPassword = registerPassword.trim();
-        registerPasswordConfirm = registerPasswordConfirm.trim();
-
         if (registerName.isEmpty()) {
-            System.out.println("Name field is empty. Insert a name.");
+            return "Name field is empty";
         }
-        else if (!registerEmail.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\\\.[a-zA-Z]{2,}$")) {
-            System.out.println("Incorrect email address. Insert a valid email address.");
+        else if (!registerEmail.matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
+            return "Invalid e-mail address.";
         }
-        else if (!(registerPassword.length() < 12 && registerPassword.contains("^[0-9._%+-]"))) {
-            System.out.println("Password is not valid. Insert a valid password.");
+        else if (!(registerPassword.matches("^(?=.*[!@#$%^&*()_\\-+=\\[\\]{};':\"\\\\|,.<>/?])(?=.*\\d).{12,}$"))) {
+            return "Password is not valid. Check password requirements";
         }
 
         else if (!registerPassword.matches(registerPasswordConfirm)) {
-            System.out.println("Password confirmation doesn't match Password.");
+            return "Passwords do not match";
         }
         else {
-            registerName = registerName.trim();
-            registerEmail = registerEmail.trim();
-            registerPassword = (BCrypt.hashpw(registerPassword, BCrypt.gensalt(12)));
-            String url = "jdbc:mysql://localhost:3306/pcmr";
-            String username = "root";
-            String password = "";
-
-            try {
-                Connection con = DriverManager.getConnection(url, username, password);
-                String insert = "insert into `user`(user_name, user_email, user_password, user_phone, user_eme_phone) values (?, ?, ?, ?, ?)";
-
-                PreparedStatement ps = con.prepareStatement(insert); {
-                    ps.setString(1, registerName);
-                    ps.setString(2, registerEmail);
-                    ps.setString(3, registerPassword);
-                    ps.setInt(4, 0);
-                    ps.setInt(5, 0);
-                    ps.executeUpdate();
-                }
-                ps.close();
-                System.out.println("New insertion successful.");
-                con.close();
-            }
-            catch(Exception e) {
-                System.out.println("Connection error: " + e.getMessage());
-            }
+            return "";
         }
-
         //Errado: Toast
 
         //Certo:
         //Inserir dados tabela user
         //Redireciona HomePage
 
+    }
+
+    public static void insertDataRegister(String registerName, String registerEmail, String registerPassword, String registerPasswordConfirm) {
+        registerName = registerName.trim();
+        registerEmail = registerEmail.trim();
+        registerPassword = (BCrypt.hashpw(registerPassword, BCrypt.gensalt(12)));
+        String url = "jdbc:mysql://localhost:3306/pcmr";
+        String username = "root";
+        String password = "";
+
+        try {
+            Connection con = DriverManager.getConnection(url, username, password);
+            String insert = "insert into `user`(user_name, user_email, user_password, user_phone, user_eme_phone) values (?, ?, ?, ?, ?)";
+
+            PreparedStatement ps = con.prepareStatement(insert); {
+                ps.setString(1, registerName);
+                ps.setString(2, registerEmail);
+                ps.setString(3, registerPassword);
+                ps.setInt(4, 0);
+                ps.setInt(5, 0);
+                ps.executeUpdate();
+            }
+            ps.close();
+            System.out.println("New insertion successful.");
+            con.close();
+        }
+        catch(Exception e) {
+            System.out.println("Connection error: " + e.getMessage());
+        }
     }
 }
