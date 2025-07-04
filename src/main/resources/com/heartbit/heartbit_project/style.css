@@ -2,6 +2,12 @@
     -fx-background-color: #f00;
 }
 
+.chart-series-line {             /* Cor da linha */
+    -fx-stroke-width: 2px;               /* Espessura da linha */
+    -fx-stroke-line-cap: round;          /* Pontas arredondadas */
+    -fx-stroke-line-join: round;         /* Junções suaves (sem cantos) */
+}
+
 .home-title{
     -fx-font-weight: 700;
     -fx-font-size: 28px;

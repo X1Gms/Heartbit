@@ -3,22 +3,29 @@ package com.heartbit.heartbit_project;
 import com.heartbit.heartbit_project.components.MultiDropdown;
 import com.heartbit.heartbit_project.visual_functions.Images;
 import com.heartbit.heartbit_project.visual_functions.Transitions;
+import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.util.Duration;
 
 import java.net.URL;
 import java.util.List;
@@ -69,6 +76,30 @@ public class HelloController implements Initializable {
 
     private List<String> dropdownItems;
 
+    @FXML
+    private LineChart<String, Number> lineChart; // Tem de coincidir com o fx:id do FXML
+
+    private XYChart.Series<String, Number> bpmSeries;
+    private int bpmCount = 0; // Para controlar o número da leitura
+
+    @FXML
+    private VBox bpmBox; // VBox com a borda (a que tem o styleClass "circle")
+
+    @FXML
+    private Label stateLabel; // Label que mostra o texto tipo "Stable", "Warning", "Danger"
+
+    @FXML
+    private Label bpmLabel; // Label que mostra o número BPM
+
+    @FXML
+    private VBox bpmBox2; // VBox com a borda (a que tem o styleClass "circle")
+
+    @FXML
+    private Label stateLabel2; // Label que mostra o texto tipo "Stable", "Warning", "Danger"
+
+    @FXML
+    private Label bpmLabel2; // Label que mostra o número BPM
+
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -81,7 +112,93 @@ public class HelloController implements Initializable {
         );
 
         multiDropdown.setItems(dropdownItems);
+
+        bpmSeries = new XYChart.Series<>();
+        bpmSeries.setName("BPM");
+        lineChart.getData().add(bpmSeries);
+        lineChart.setLegendVisible(false);
+
+
     }
+    @FXML
+    private void testeBPM(ActionEvent event) {
+            Timeline loop = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+                int bpm = 40 + (int)(Math.random() * 91); // Gera entre 40 e 130
+                updateChart(bpm);
+                updateBPMDisplay(bpm);
+            }));
+            loop.setCycleCount(Timeline.INDEFINITE); // Loop infinito
+            loop.play(); // Inicia
+        }
+
+    public void updateBPMDisplay(int bpm) {
+        bpmLabel.setText(String.valueOf(bpm));
+        bpmLabel2.setText(String.valueOf(bpm));
+
+        String borderColor;
+        String stateText;
+        String textColor;
+
+        if (bpm >= 60 && bpm <= 100) {
+            // Verde – Estável
+            borderColor = "#B3FFB9";
+            textColor = "#84DF8B";
+            stateText = "Stable";
+        } else if ((bpm >= 41 && bpm <= 59) || (bpm >= 101 && bpm <= 129)) {
+            // Amarelo – Aviso
+            borderColor = "#FFE5BA";
+            textColor = "#E1AD4C";
+            stateText = "Potencial Risk";
+        } else {
+            // Vermelho – Perigo
+            borderColor = "#FE9F9F";
+            textColor = "#E25C5C";
+            stateText = "Critical";
+        }
+
+        bpmBox.setStyle("-fx-border-color: " + borderColor + ";");
+        stateLabel.setText(stateText);
+        stateLabel.setStyle("-fx-text-fill: " + textColor + ";");
+
+        bpmBox2.setStyle("-fx-border-color: " + borderColor + ";");
+        stateLabel2.setText(stateText);
+        stateLabel2.setStyle("-fx-text-fill: " + textColor + ";");
+    }
+
+    public void updateChart(int bpm) {
+        bpmSeries.getData().add(new XYChart.Data<>("L" + bpmCount, bpm));
+        bpmCount++;
+
+        if (bpmSeries.getData().size() > 4) {
+            PauseTransition pause = new PauseTransition(Duration.millis(100));
+            pause.setOnFinished(e -> bpmSeries.getData().remove(0));
+            pause.play();
+        }
+        NumberAxis yAxis = (NumberAxis) lineChart.getYAxis();
+
+        // Valores visíveis
+        List<Number> valores = bpmSeries.getData().stream()
+                .map(XYChart.Data::getYValue)
+                .collect(Collectors.toList());
+
+        double max = valores.stream().mapToDouble(Number::doubleValue).max().orElse(110);
+
+        // LowerBound fixo em 0
+        yAxis.setLowerBound(0);
+
+        // UpperBound dinâmico
+        if (max <= 110) {
+            yAxis.setUpperBound(110);
+        } else {
+            // Arredonda para o múltiplo de 10 acima
+            double roundedMax = Math.ceil(max / 10.0) * 10;
+            yAxis.setUpperBound(roundedMax);
+        }
+
+        yAxis.setAutoRanging(false); // garante que o gráfico respeita os limites definidos
+
+    }
+
 
     @FXML
     private void AddTextField(ActionEvent event) {

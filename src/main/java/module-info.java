@@ -2,6 +2,8 @@ module com.heartbit.heartbit_project {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.desktop;
+    requires org.eclipse.paho.client.mqttv3;
+    requires org.json;
 
     opens com.heartbit.heartbit_project to javafx.fxml;
     opens com.heartbit.heartbit_project.components to javafx.fxml;
