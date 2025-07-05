@@ -402,17 +402,19 @@
                                                 <font>
                                                    <Font name="System Bold" size="12.0" />
                                                 </font></Label>
-                                             <LineChart maxWidth="1000.0" minWidth="200.0" prefWidth="500.0" VBox.vgrow="SOMETIMES">
+                                             <LineChart fx:id="lineChart" maxWidth="1000.0" minWidth="200.0" prefWidth="500.0" VBox.vgrow="SOMETIMES">
                                                <xAxis>
-                                                 <CategoryAxis side="BOTTOM" />
+                                                     <CategoryAxis fx:id="xAxis" label="Times Read" side="BOTTOM" />
                                                </xAxis>
                                                <yAxis>
-                                                 <NumberAxis side="LEFT" />
+                                                  <NumberAxis fx:id="yAxis" label="Heart Rate (bpm)" side="LEFT" />
                                                </yAxis>
                                                 <VBox.margin>
                                                    <Insets bottom="50.0" top="20.0" />
                                                 </VBox.margin>
                                              </LineChart>
+                                             <Button text="Adicionar BPM" onAction="#testeBPM" />
+
                                           </children>
                                           <FlowPane.margin>
                                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
@@ -423,18 +425,18 @@
                                        <VBox alignment="TOP_CENTER" styleClass="form-register">
                                           <children>
                                              <Label maxWidth="400.0" prefWidth="400.0" styleClass="dash-welcome" text="HeartBit" VBox.vgrow="ALWAYS" />
-                                             <VBox alignment="CENTER" maxHeight="150.0" maxWidth="150.0" prefHeight="150.0" prefWidth="150.0" style="-fx-border-color: B3FFB9;" styleClass="circle" VBox.vgrow="ALWAYS">
+                                             <VBox fx:id="bpmBox"  alignment="CENTER" maxHeight="150.0" maxWidth="150.0" prefHeight="150.0" prefWidth="150.0" style="-fx-border-color: B3FFB9;" styleClass="circle" VBox.vgrow="ALWAYS">
                                                 <VBox.margin>
                                                    <Insets top="15.0" />
                                                 </VBox.margin>
                                                 <children>
-                                                   <Label alignment="CENTER" maxWidth="200.0" styleClass="bpm" text="78" VBox.vgrow="ALWAYS" />
+                                                   <Label fx:id="bpmLabel" alignment="CENTER" maxWidth="200.0" styleClass="bpm" text="" VBox.vgrow="ALWAYS" />
                                                    <Label styleClass="bpm-label" text="bpm" />
                                                 </children></VBox>
                                              <HBox alignment="CENTER">
                                                 <children>
                                                    <Label styleClass="state-label" text="State: " />
-                                                   <Label style="-fx-text-fill: #84DF8B;" styleClass="state-label-state" text="Stable" />
+                                                   <Label fx:id="stateLabel" style="-fx-text-fill: #84DF8B;" styleClass="state-label-state" text="Stable" />
                                                 </children>
                                                 <VBox.margin>
                                                    <Insets bottom="15.0" top="15.0" />
@@ -568,12 +570,12 @@
                                                 <Font name="Tahoma Bold" size="14.0" />
                                              </font>
                                           </Label>
-                                          <VBox alignment="CENTER" maxHeight="130.0" maxWidth="130.0" prefHeight="130.0" prefWidth="130.0" style="-fx-border-color: B3FFB9;" styleClass="circle" VBox.vgrow="ALWAYS">
+                                          <VBox fx:id="bpmBox2" alignment="CENTER" maxHeight="130.0" maxWidth="130.0" prefHeight="130.0" prefWidth="130.0" style="-fx-border-color: B3FFB9;" styleClass="circle" VBox.vgrow="ALWAYS">
                                              <VBox.margin>
                                                 <Insets top="15.0" />
                                              </VBox.margin>
                                              <children>
-                                                <Label alignment="CENTER" maxWidth="200.0" text="78" VBox.vgrow="ALWAYS">
+                                                <Label fx:id="bpmLabel2" alignment="CENTER" maxWidth="200.0" text="78" VBox.vgrow="ALWAYS">
                                                    <font>
                                                       <Font name="System Bold" size="22.0" />
                                                    </font></Label>
@@ -585,7 +587,7 @@
                                           <HBox alignment="CENTER">
                                              <children>
                                                 <Label styleClass="state-label" text="State: " />
-                                                <Label style="-fx-text-fill: #84DF8B;" styleClass="state-label-state" text="Stable" />
+                                                <Label fx:id="stateLabel2" style="-fx-text-fill: #84DF8B;" styleClass="state-label-state" text="Stable" />
                                              </children>
                                              <VBox.margin>
                                                 <Insets bottom="15.0" top="15.0" />
