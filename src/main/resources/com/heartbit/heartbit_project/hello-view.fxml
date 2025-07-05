@@ -57,7 +57,7 @@
                                                       <Insets left="15.0" />
                                                    </VBox.margin>
                                                 </Label>
-                                                <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" />
+                                                <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" fx:id="loginEmail" />
                                              </children>
                                           </VBox>
                                           <VBox layoutX="40.0" layoutY="98.0" prefHeight="100.0" prefWidth="268.0">
@@ -67,7 +67,7 @@
                                                       <Insets left="15.0" />
                                                    </VBox.margin>
                                                 </Label>
-                                                <PasswordField prefHeight="47.0" prefWidth="268.0" />
+                                                <PasswordField prefHeight="47.0" prefWidth="268.0" fx:id="loginPassword"/>
                                              </children>
                                           </VBox>
                                           <Button mnemonicParsing="false" onAction="#enterHomePage" prefHeight="60.0" prefWidth="268.0" styleClass="home-btn" text="Sign In" textFill="WHITE">
@@ -95,7 +95,7 @@
                                                    <VBox.margin>
                                                       <Insets left="15.0" />
                                                    </VBox.margin></Label>
-                                                <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" />
+                                                <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" fx:id="registerName"/>
                                              </children>
                                           </VBox>
                                           <VBox layoutX="40.0" layoutY="98.0" prefHeight="80.0" prefWidth="268.0">
@@ -105,7 +105,7 @@
                                                       <Insets left="15.0" />
                                                    </VBox.margin>
                                                 </Label>
-                                                <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" />
+                                                <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" fx:id="registerEmail"/>
                                              </children>
                                           </VBox>
                                           <VBox layoutX="12.0" layoutY="90.0" prefHeight="90.0" prefWidth="268.0">
@@ -131,7 +131,7 @@
                                                       <Insets bottom="2.0" />
                                                    </VBox.margin>
                                                 </HBox>
-                                                <PasswordField prefHeight="47.0" prefWidth="268.0" />
+                                                <PasswordField prefHeight="47.0" prefWidth="268.0" fx:id="registerPassword"/>
                                              </children>
                                           </VBox>
                                           <VBox layoutX="55.0" layoutY="204.0" prefHeight="90.0" prefWidth="268.0">
@@ -141,10 +141,10 @@
                                                       <Insets left="15.0" />
                                                    </VBox.margin>
                                                 </Label>
-                                                <PasswordField prefHeight="47.0" prefWidth="268.0" />
+                                                <PasswordField prefHeight="47.0" prefWidth="268.0" fx:id="registerCPassword"/>
                                              </children>
                                           </VBox>
-                                          <Button mnemonicParsing="false" onAction="#enterHomePage" prefHeight="60.0" prefWidth="268.0" styleClass="home-btn" text="Create Account" textFill="WHITE">
+                                          <Button mnemonicParsing="false" onAction="#createAccount" prefHeight="60.0" prefWidth="268.0" styleClass="home-btn" text="Create Account" textFill="WHITE">
                                              <font>
                                                 <Font name="Tahoma Bold" size="18.0" />
                                              </font>
@@ -270,7 +270,7 @@
                                              <Insets left="15.0" />
                                           </VBox.margin>
                                        </Label>
-                                       <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" />
+                                       <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" fx:id="edName"/>
                                     </children>
                                  </VBox>
                                  <Region prefHeight="100.0" prefWidth="51.0" />
@@ -281,7 +281,7 @@
                                              <Insets left="15.0" />
                                           </VBox.margin>
                                        </Label>
-                                       <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" />
+                                       <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" fx:id="edEmail"/>
                                     </children>
                                  </VBox>
                                  <VBox layoutX="12.0" layoutY="10.0" prefHeight="80.0" prefWidth="230.0">
@@ -291,7 +291,7 @@
                                              <Insets left="15.0" />
                                           </VBox.margin>
                                        </Label>
-                                       <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" />
+                                       <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" fx:id="edPhN"/>
                                     </children>
                                  </VBox>
                                  <Region prefHeight="100.0" prefWidth="51.0" />
@@ -302,7 +302,7 @@
                                              <Insets left="15.0" />
                                           </VBox.margin>
                                        </Label>
-                                       <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" />
+                                       <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" fx:id="edEPhN"/>
                                     </children>
                                  </VBox>
                                  <VBox layoutX="12.0" layoutY="90.0" prefHeight="80.0" prefWidth="230.0">
@@ -328,7 +328,7 @@
                                                 <Insets bottom="2.0" />
                                              </VBox.margin>
                                           </HBox>
-                                       <PasswordField prefHeight="47.0" prefWidth="268.0" />
+                                       <PasswordField prefHeight="47.0" prefWidth="268.0" fx:id="edPassword"/>
                                     </children>
                                  </VBox>
                                  <Region layoutX="280.0" layoutY="90.0" prefHeight="120.0" prefWidth="51.0" />
@@ -339,7 +339,7 @@
                                              <Insets bottom="2.0" left="15.0" />
                                           </VBox.margin>
                                        </Label>
-                                       <PasswordField prefHeight="47.0" prefWidth="268.0" />
+                                       <PasswordField prefHeight="47.0" prefWidth="268.0" fx:id="edCPassword"/>
                                     </children>
                                  </VBox>
                                  <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="160.0" styleClass="home-btn" text="Submit" textFill="WHITE">
@@ -982,7 +982,7 @@
 
    <!-- =================== START: Success Toast =================== -->
 
-   <HBox fx:id="sucessToast" alignment="CENTER_LEFT" managed="false" minHeight="69.0" minWidth="200.0" prefHeight="73.0" prefWidth="324.0" style="-fx-background-color: #fff; -fx-border-radius: 10; -fx-background-radius: 10;" visible="false" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+   <HBox fx:id="successToast" alignment="CENTER_LEFT" managed="false" minHeight="69.0" minWidth="200.0" prefHeight="73.0" prefWidth="324.0" style="-fx-background-color: #fff; -fx-border-radius: 10; -fx-background-radius: 10;" visible="false" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
       <effect>
          <DropShadow height="30.0" radius="14.5" width="30.0">
             <color>
@@ -992,7 +992,7 @@
       </effect>
       <children>
          <Pane minWidth="11.0" prefHeight="69.0" prefWidth="11.0" style="-fx-background-color: #00F040; -fx-background-radius: 10 0 0 10;" />
-         <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+         <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" onMouseClicked="#closeSuccess">
             <image>
                <Image url="@images/icons/circleCheck.png" />
             </image>
@@ -1021,7 +1021,7 @@
 
    <!-- =================== START: Error Toast =================== -->
 
-   <HBox fx:id="errorToast" alignment="CENTER_LEFT" managed="false" minHeight="69.0" minWidth="200.0" prefHeight="73.0" prefWidth="324.0" style="-fx-background-color: #fff; -fx-border-radius: 10; -fx-background-radius: 10;" visible="false" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+   <HBox fx:id="errorToast" alignment="CENTER_LEFT" managed="false" minHeight="69.0" minWidth="200.0" prefHeight="73.0" prefWidth="364.0" style="-fx-background-color: #fff; -fx-border-radius: 10; -fx-background-radius: 10;" visible="false" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
       <effect>
          <DropShadow height="30.0" radius="14.5" width="30.0">
             <color>
@@ -1039,14 +1039,14 @@
                <Insets left="10.0" right="10.0" />
             </HBox.margin>
          </ImageView>
-         <Label minWidth="90.0" prefHeight="56.0" prefWidth="219.0" text="Message" wrapText="true">
+         <Label fx:id="textError" minWidth="90.0" prefHeight="56.0" prefWidth="256.0" text="Message" wrapText="true">
             <font>
                <Font name="Tahoma Bold" size="16.0" />
             </font>
          </Label>
          <VBox alignment="TOP_RIGHT" prefHeight="73.0" prefWidth="35.0">
             <children>
-               <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+               <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" onMouseClicked="#closeError">
                   <VBox.margin>
                      <Insets right="5.0" top="5.0" />
                   </VBox.margin>

@@ -1,7 +1,9 @@
 module com.heartbit.heartbit_project {
+    requires jbcrypt;
     requires javafx.controls;
     requires javafx.fxml;
     requires java.desktop;
+    requires java.sql;
     requires org.eclipse.paho.client.mqttv3;
     requires org.json;
 
