@@ -32,6 +32,7 @@ import javafx.util.Duration;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 
 public class HelloController implements Initializable {
@@ -49,6 +50,10 @@ public class HelloController implements Initializable {
     private PasswordField registerPassword;
     @FXML
     private PasswordField registerCPassword;
+    @FXML
+    private TextField phN;
+    @FXML
+    private TextField ePhN;
     @FXML
     private Pane myPane;
     @FXML
@@ -117,30 +122,8 @@ public class HelloController implements Initializable {
     private HBox errorToast;
     @FXML
     private Label textError;
-
     @FXML
-    private void createAccount(ActionEvent event){
-        String name = registerName.getText().trim();
-        String email = registerEmail.getText().trim();
-        String password = registerPassword.getText().trim();
-        String confirmPassword = registerCPassword.getText().trim();
-        Register registerData = new Register(name, email, password, confirmPassword);
-        String message = registerData.validateRegisterForm();
-        if (!message.isEmpty()) {
-            textError.setText(message);
-            Transitions.FadeIn(errorToast,350, Transitions.Direction.TO_LEFT, 500);
-        }
-        else{
-            message = registerData.insertDataRegister();
-            if (!message.isEmpty()) {
-                textError.setText(message);
-                Transitions.FadeIn(errorToast,350, Transitions.Direction.TO_LEFT, 500);
-            } else {
-                Transitions.FadeIn(home,1,Transitions.Direction.TO_LEFT,500);
-                Transitions.FadeOutIn(landingPage, homePage,650, Transitions.Direction.TO_TOP, 500);
-            }
-        }
-    }
+    private Register user;
 
     @FXML
     private LineChart<String, Number> lineChart; // Tem de coincidir com o fx:id do FXML
@@ -166,6 +149,9 @@ public class HelloController implements Initializable {
     @FXML
     private Label bpmLabel2; // Label que mostra o número BPM
 
+    @FXML
+    private VBox phoneForm;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         List<String> dropdownItems = List.of(
@@ -182,19 +168,79 @@ public class HelloController implements Initializable {
         bpmSeries.setName("BPM");
         lineChart.getData().add(bpmSeries);
         lineChart.setLegendVisible(false);
-
-
     }
     @FXML
-    private void testeBPM(ActionEvent event) {
-            Timeline loop = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
-                int bpm = 40 + (int)(Math.random() * 91); // Gera entre 40 e 130
-                updateChart(bpm);
-                updateBPMDisplay(bpm);
-            }));
-            loop.setCycleCount(Timeline.INDEFINITE); // Loop infinito
-            loop.play(); // Inicia
+    private void createAccount(ActionEvent event){
+        String phoneNumber = phN.getText().trim();
+        String ePhoneNumber = ePhN.getText().trim();
+        user.setPhoneNumber(phoneNumber);
+        user.setEmergencyPhoneNumber(ePhoneNumber);
+        String message = user.validatePhoneForm();
+        if (!message.isEmpty()) {
+            textError.setText(message);
+            Transitions.FadeIn(errorToast,350, Transitions.Direction.TO_LEFT, 500);
         }
+        else{
+            message = user.insertDataRegister();
+            if (!message.isEmpty()) {
+                textError.setText(message);
+                Transitions.FadeIn(errorToast,350, Transitions.Direction.TO_LEFT, 500);
+            } else {
+                Transitions.FadeIn(home,1,Transitions.Direction.TO_LEFT,500);
+                Transitions.FadeOutIn(landingPage, homePage,650, Transitions.Direction.TO_TOP, 500);
+                user = null;
+            }
+        }
+    }
+
+    @FXML
+    private void AddTextField(ActionEvent event) {
+        // Criar o Label
+        Label label = new Label("Other Disease");
+        label.setPrefWidth(240.0);
+        label.getStyleClass().add("form-login-input");
+        VBox.setMargin(label, new Insets(30, 0, 0, 15));
+
+        // Criar o TextField
+        TextField textField = new TextField();
+        textField.setPrefHeight(47.0);
+        textField.setPrefWidth(268.0);
+        textField.getStyleClass().add("text-field");
+
+        // Botão para remover
+        Button removeBtn = new Button("-");
+        removeBtn.setPrefSize(52, 52);
+        removeBtn.setMinWidth(52);
+        removeBtn.setMinHeight(52);
+        removeBtn.getStyleClass().add("home-btn");
+        removeBtn.setTextFill(Color.WHITE);
+        removeBtn.setFont(Font.font("Tahoma", 20));
+
+        // HBox contêiner
+        HBox hbox = new HBox(10, new VBox(label, textField), removeBtn);
+        hbox.setAlignment(Pos.BOTTOM_LEFT);
+        hbox.setPrefSize(200,100);
+
+        // Associar ação de remover
+        removeBtn.setOnAction(e -> {
+            VBox parentVBox = (VBox) hbox.getParent();
+            parentVBox.getChildren().remove(hbox);
+        });
+
+        // Adicionar ao container principal
+        ed_add_textfields.getChildren().add(hbox);
+    }
+
+    @FXML
+    private void testeBPM(ActionEvent event) {
+        Timeline loop = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+            int bpm = 40 + (int)(Math.random() * 91); // Gera entre 40 e 130
+            updateChart(bpm);
+            updateBPMDisplay(bpm);
+        }));
+        loop.setCycleCount(Timeline.INDEFINITE); // Loop infinito
+        loop.play(); // Inicia
+    }
 
     public void updateBPMDisplay(int bpm) {
         bpmLabel.setText(String.valueOf(bpm));
@@ -264,45 +310,6 @@ public class HelloController implements Initializable {
 
     }
 
-
-    @FXML
-    private void AddTextField(ActionEvent event) {
-        // Criar o Label
-        Label label = new Label("Other Disease");
-        label.setPrefWidth(240.0);
-        label.getStyleClass().add("form-login-input");
-        VBox.setMargin(label, new Insets(30, 0, 0, 15));
-
-        // Criar o TextField
-        TextField textField = new TextField();
-        textField.setPrefHeight(47.0);
-        textField.setPrefWidth(268.0);
-        textField.getStyleClass().add("text-field");
-
-        // Botão para remover
-        Button removeBtn = new Button("-");
-        removeBtn.setPrefSize(52, 52);
-        removeBtn.setMinWidth(52);
-        removeBtn.setMinHeight(52);
-        removeBtn.getStyleClass().add("home-btn");
-        removeBtn.setTextFill(Color.WHITE);
-        removeBtn.setFont(Font.font("Tahoma", 20));
-
-        // HBox contêiner
-        HBox hbox = new HBox(10, new VBox(label, textField), removeBtn);
-        hbox.setAlignment(Pos.BOTTOM_LEFT);
-        hbox.setPrefSize(200,100);
-
-        // Associar ação de remover
-        removeBtn.setOnAction(e -> {
-            VBox parentVBox = (VBox) hbox.getParent();
-            parentVBox.getChildren().remove(hbox);
-        });
-
-        // Adicionar ao container principal
-        ed_add_textfields.getChildren().add(hbox);
-    }
-
     //Login/Register
     @FXML
     private void AppearLogin(ActionEvent event) {
@@ -313,6 +320,26 @@ public class HelloController implements Initializable {
     private void AppearRegister(MouseEvent event) {
         Transitions.FadeOutIn(LoginForm, RegisterForm,650, Transitions.Direction.TO_RIGHT, 500);
     }
+
+    @FXML
+    private void MoveToPhoneForm(ActionEvent event) {
+        String name = registerName.getText().trim();
+        String email = registerEmail.getText().trim();
+        String password = registerPassword.getText().trim();
+        String confirmPassword = registerCPassword.getText().trim();
+        user = new Register(name, email, password, confirmPassword);
+        String message = user.validateRegisterForm();
+        if (!message.isEmpty()) {
+            textError.setText(message);
+            Transitions.FadeIn(errorToast,350, Transitions.Direction.TO_LEFT, 500);
+        }
+        else{
+            Transitions.FadeOutIn(RegisterForm, phoneForm,650, Transitions.Direction.TO_RIGHT, 500);
+        }
+
+    }
+
+
 
     @FXML
     private void AppearLoginAgain(MouseEvent event) {
@@ -332,6 +359,7 @@ public class HelloController implements Initializable {
         Transitions.FadeOut(results,0,Transitions.Direction.TO_LEFT,0);
         Transitions.FadeOut(home,0,Transitions.Direction.TO_LEFT,0);
         Transitions.FadeOut(RegisterForm,0,Transitions.Direction.TO_LEFT,0);
+        Transitions.FadeOut(phoneForm,0,Transitions.Direction.TO_LEFT,0);
         Transitions.FadeOut(LoginForm,0,Transitions.Direction.TO_LEFT,0);
         Transitions.FadeIn(myPane,1,Transitions.Direction.TO_LEFT,0);
         Transitions.FadeOutIn(homePage, landingPage,650, Transitions.Direction.TO_TOP, 500);

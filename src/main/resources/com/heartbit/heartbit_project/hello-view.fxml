@@ -57,7 +57,7 @@
                                                       <Insets left="15.0" />
                                                    </VBox.margin>
                                                 </Label>
-                                                <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" fx:id="loginEmail" />
+                                                <TextField fx:id="loginEmail" prefHeight="47.0" prefWidth="268.0" styleClass="text-field" />
                                              </children>
                                           </VBox>
                                           <VBox layoutX="40.0" layoutY="98.0" prefHeight="100.0" prefWidth="268.0">
@@ -67,7 +67,7 @@
                                                       <Insets left="15.0" />
                                                    </VBox.margin>
                                                 </Label>
-                                                <PasswordField prefHeight="47.0" prefWidth="268.0" fx:id="loginPassword"/>
+                                                <PasswordField fx:id="loginPassword" prefHeight="47.0" prefWidth="268.0" />
                                              </children>
                                           </VBox>
                                           <Button mnemonicParsing="false" onAction="#enterHomePage" prefHeight="60.0" prefWidth="268.0" styleClass="home-btn" text="Sign In" textFill="WHITE">
@@ -95,7 +95,7 @@
                                                    <VBox.margin>
                                                       <Insets left="15.0" />
                                                    </VBox.margin></Label>
-                                                <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" fx:id="registerName"/>
+                                                <TextField fx:id="registerName" prefHeight="47.0" prefWidth="268.0" styleClass="text-field" />
                                              </children>
                                           </VBox>
                                           <VBox layoutX="40.0" layoutY="98.0" prefHeight="80.0" prefWidth="268.0">
@@ -105,7 +105,7 @@
                                                       <Insets left="15.0" />
                                                    </VBox.margin>
                                                 </Label>
-                                                <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" fx:id="registerEmail"/>
+                                                <TextField fx:id="registerEmail" prefHeight="47.0" prefWidth="268.0" styleClass="text-field" />
                                              </children>
                                           </VBox>
                                           <VBox layoutX="12.0" layoutY="90.0" prefHeight="90.0" prefWidth="268.0">
@@ -131,7 +131,7 @@
                                                       <Insets bottom="2.0" />
                                                    </VBox.margin>
                                                 </HBox>
-                                                <PasswordField prefHeight="47.0" prefWidth="268.0" fx:id="registerPassword"/>
+                                                <PasswordField fx:id="registerPassword" prefHeight="47.0" prefWidth="268.0" />
                                              </children>
                                           </VBox>
                                           <VBox layoutX="55.0" layoutY="204.0" prefHeight="90.0" prefWidth="268.0">
@@ -141,10 +141,10 @@
                                                       <Insets left="15.0" />
                                                    </VBox.margin>
                                                 </Label>
-                                                <PasswordField prefHeight="47.0" prefWidth="268.0" fx:id="registerCPassword"/>
+                                                <PasswordField fx:id="registerCPassword" prefHeight="47.0" prefWidth="268.0" />
                                              </children>
                                           </VBox>
-                                          <Button mnemonicParsing="false" onAction="#createAccount" prefHeight="60.0" prefWidth="268.0" styleClass="home-btn" text="Create Account" textFill="WHITE">
+                                          <Button mnemonicParsing="false" onAction="#MoveToPhoneForm" prefHeight="60.0" prefWidth="268.0" styleClass="home-btn" text="Next" textFill="WHITE">
                                              <font>
                                                 <Font name="Tahoma Bold" size="18.0" />
                                              </font>
@@ -154,6 +154,49 @@
                                                 <Font size="18.0" />
                                              </font>
                                           </Label>
+                                       </children>
+                                    </VBox>
+                                    <VBox fx:id="phoneForm" alignment="TOP_CENTER" layoutX="130.0" layoutY="63.0" prefHeight="500.0" prefWidth="351.0" styleClass="form-login" visible="false" managed="false">
+                                       <children>
+                                          <Label styleClass="form-login-label" text="Final Steps">
+                                             <font>
+                                                <Font name="Tahoma" size="12.0" />
+                                             </font>
+                                          </Label>
+                                       <Label prefHeight="51.0" prefWidth="261.0" text="Ensure to include the phone number country code" textAlignment="CENTER" textFill="#727171" wrapText="true">
+                                          <font>
+                                             <Font size="16.0" />
+                                          </font>
+                                          <VBox.margin>
+                                             <Insets top="10.0" />
+                                          </VBox.margin>
+                                       </Label>
+                                          <Pane prefHeight="22.0" prefWidth="268.0" />
+                                          <VBox prefHeight="93.0" prefWidth="268.0">
+                                             <children>
+                                                <Label styleClass="form-login-input" text="Phone Number">
+                                                   <VBox.margin>
+                                                      <Insets left="15.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <TextField fx:id="phN" prefHeight="47.0" prefWidth="268.0" styleClass="text-field" />
+                                             </children>
+                                          </VBox>
+                                          <VBox layoutX="40.0" layoutY="98.0" prefHeight="100.0" prefWidth="268.0">
+                                             <children>
+                                                <Label styleClass="form-login-input" text="Emergency Phone Number">
+                                                   <VBox.margin>
+                                                      <Insets left="15.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <TextField fx:id="ePhN" prefHeight="47.0" prefWidth="268.0" />
+                                             </children>
+                                          </VBox>
+                                          <Button mnemonicParsing="false" onAction="#createAccount" prefHeight="60.0" prefWidth="268.0" styleClass="home-btn" text="Create Account" textFill="WHITE">
+                                             <font>
+                                                <Font name="Tahoma Bold" size="18.0" />
+                                             </font>
+                                          </Button>
                                        </children>
                                     </VBox>
                                     <Pane maxHeight="66.0" prefHeight="66.0" prefWidth="214.0" />
@@ -182,7 +225,7 @@
 
          <!-- =================== END: Landing Page =================== -->
          <!-- =================== START: Navbar =================== -->
-         <VBox fx:id="homePage" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #fff;" managed="false" visible="false">
+         <VBox fx:id="homePage" managed="false" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #fff;" visible="false">
             <HBox fx:id="navbar" prefHeight="52.0" prefWidth="1218.0" spacing="10.0">
                <children>
                   <VBox fx:id="hamburger" minHeight="50.0" minWidth="59.0" onMouseClicked="#enSideBar" prefHeight="50.0" prefWidth="59.0" HBox.hgrow="NEVER">
@@ -216,7 +259,7 @@
                   <children>
                      <!-- =================== START: Account =================== -->
 
-                     <FlowPane fx:id="account" alignment="TOP_CENTER" maxWidth="600.0" prefWidth="637.0" styleClass="form-eda" VBox.vgrow="ALWAYS" visible="false" managed="false">
+                     <FlowPane fx:id="account" alignment="TOP_CENTER" managed="false" maxWidth="600.0" prefWidth="637.0" styleClass="form-eda" visible="false" VBox.vgrow="ALWAYS">
                         <VBox.margin>
                            <Insets bottom="80.0" top="30.0" />
                         </VBox.margin>
@@ -270,7 +313,7 @@
                                              <Insets left="15.0" />
                                           </VBox.margin>
                                        </Label>
-                                       <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" fx:id="edName"/>
+                                       <TextField fx:id="edName" prefHeight="47.0" prefWidth="268.0" styleClass="text-field" />
                                     </children>
                                  </VBox>
                                  <Region prefHeight="100.0" prefWidth="51.0" />
@@ -281,7 +324,7 @@
                                              <Insets left="15.0" />
                                           </VBox.margin>
                                        </Label>
-                                       <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" fx:id="edEmail"/>
+                                       <TextField fx:id="edEmail" prefHeight="47.0" prefWidth="268.0" styleClass="text-field" />
                                     </children>
                                  </VBox>
                                  <VBox layoutX="12.0" layoutY="10.0" prefHeight="80.0" prefWidth="230.0">
@@ -291,7 +334,7 @@
                                              <Insets left="15.0" />
                                           </VBox.margin>
                                        </Label>
-                                       <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" fx:id="edPhN"/>
+                                       <TextField fx:id="edPhN" prefHeight="47.0" prefWidth="268.0" styleClass="text-field" />
                                     </children>
                                  </VBox>
                                  <Region prefHeight="100.0" prefWidth="51.0" />
@@ -302,7 +345,7 @@
                                              <Insets left="15.0" />
                                           </VBox.margin>
                                        </Label>
-                                       <TextField prefHeight="47.0" prefWidth="268.0" styleClass="text-field" fx:id="edEPhN"/>
+                                       <TextField fx:id="edEPhN" prefHeight="47.0" prefWidth="268.0" styleClass="text-field" />
                                     </children>
                                  </VBox>
                                  <VBox layoutX="12.0" layoutY="90.0" prefHeight="80.0" prefWidth="230.0">
@@ -328,7 +371,7 @@
                                                 <Insets bottom="2.0" />
                                              </VBox.margin>
                                           </HBox>
-                                       <PasswordField prefHeight="47.0" prefWidth="268.0" fx:id="edPassword"/>
+                                       <PasswordField fx:id="edPassword" prefHeight="47.0" prefWidth="268.0" />
                                     </children>
                                  </VBox>
                                  <Region layoutX="280.0" layoutY="90.0" prefHeight="120.0" prefWidth="51.0" />
@@ -339,7 +382,7 @@
                                              <Insets bottom="2.0" left="15.0" />
                                           </VBox.margin>
                                        </Label>
-                                       <PasswordField prefHeight="47.0" prefWidth="268.0" fx:id="edCPassword"/>
+                                       <PasswordField fx:id="edCPassword" prefHeight="47.0" prefWidth="268.0" />
                                     </children>
                                  </VBox>
                                  <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="160.0" styleClass="home-btn" text="Submit" textFill="WHITE">
@@ -349,7 +392,7 @@
                                  </Button>
                               </children></FlowPane>
                            <!-- =================== START: Edit Diseases =================== -->
-                           <VBox fx:id="editDiseases" alignment="TOP_CENTER" maxWidth="260.0" prefWidth="260.0" managed="false" visible="false">
+                           <VBox fx:id="editDiseases" alignment="TOP_CENTER" managed="false" maxWidth="260.0" prefWidth="260.0" visible="false">
                                  <VBox prefHeight="30.0" prefWidth="240.0" />
                               <MultiDropdown fx:id="multiDropdown" maxWidth="260.0" />
                                  <HBox alignment="BOTTOM_LEFT" prefHeight="100.0" prefWidth="200.0">
@@ -404,7 +447,7 @@
                                                 </font></Label>
                                              <LineChart fx:id="lineChart" maxWidth="1000.0" minWidth="200.0" prefWidth="500.0" VBox.vgrow="SOMETIMES">
                                                <xAxis>
-                                                     <CategoryAxis fx:id="xAxis" label="Times Read" side="BOTTOM" />
+                                                     <CategoryAxis label="Times Read" side="BOTTOM" fx:id="xAxis" />
                                                </xAxis>
                                                <yAxis>
                                                   <NumberAxis fx:id="yAxis" label="Heart Rate (bpm)" side="LEFT" />
@@ -413,7 +456,7 @@
                                                    <Insets bottom="50.0" top="20.0" />
                                                 </VBox.margin>
                                              </LineChart>
-                                             <Button text="Adicionar BPM" onAction="#testeBPM" />
+                                             <Button onAction="#testeBPM" text="Adicionar BPM" />
 
                                           </children>
                                           <FlowPane.margin>
@@ -425,7 +468,7 @@
                                        <VBox alignment="TOP_CENTER" styleClass="form-register">
                                           <children>
                                              <Label maxWidth="400.0" prefWidth="400.0" styleClass="dash-welcome" text="HeartBit" VBox.vgrow="ALWAYS" />
-                                             <VBox fx:id="bpmBox"  alignment="CENTER" maxHeight="150.0" maxWidth="150.0" prefHeight="150.0" prefWidth="150.0" style="-fx-border-color: B3FFB9;" styleClass="circle" VBox.vgrow="ALWAYS">
+                                             <VBox fx:id="bpmBox" alignment="CENTER" maxHeight="150.0" maxWidth="150.0" prefHeight="150.0" prefWidth="150.0" style="-fx-border-color: B3FFB9;" styleClass="circle" VBox.vgrow="ALWAYS">
                                                 <VBox.margin>
                                                    <Insets top="15.0" />
                                                 </VBox.margin>
@@ -992,7 +1035,7 @@
       </effect>
       <children>
          <Pane minWidth="11.0" prefHeight="69.0" prefWidth="11.0" style="-fx-background-color: #00F040; -fx-background-radius: 10 0 0 10;" />
-         <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" onMouseClicked="#closeSuccess">
+         <ImageView fitHeight="40.0" fitWidth="40.0" onMouseClicked="#closeSuccess" pickOnBounds="true" preserveRatio="true">
             <image>
                <Image url="@images/icons/circleCheck.png" />
             </image>
@@ -1046,7 +1089,7 @@
          </Label>
          <VBox alignment="TOP_RIGHT" prefHeight="73.0" prefWidth="35.0">
             <children>
-               <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" onMouseClicked="#closeError">
+               <ImageView fitHeight="25.0" fitWidth="25.0" onMouseClicked="#closeError" pickOnBounds="true" preserveRatio="true">
                   <VBox.margin>
                      <Insets right="5.0" top="5.0" />
                   </VBox.margin>
