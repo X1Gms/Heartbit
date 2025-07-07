@@ -1,7 +1,7 @@
 package com.heartbit.heartbit_project.pages.landingPage;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import org.mindrot.jbcrypt.BCrypt;
-import io.github.cdmascio.dotenv.Dotenv;
 
 import java.sql.*;
 
