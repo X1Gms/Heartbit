@@ -82,6 +82,8 @@ public class HelloController implements Initializable {
     private FlowPane account;
     @FXML
     private FlowPane results;
+    @FXML
+    private Label nameField;
 
     //-+-+-+-+-+- Account Variables -+-+-+-+-+-
     @FXML
@@ -186,10 +188,46 @@ public class HelloController implements Initializable {
                 textError.setText(message);
                 Transitions.FadeIn(errorToast,350, Transitions.Direction.TO_LEFT, 500);
             } else {
+                user = user.getUserDetails();
+                if (!user.getName().isEmpty()){
+                    nameField.setText(user.getName());
+                }
                 Transitions.FadeIn(home,1,Transitions.Direction.TO_LEFT,500);
                 Transitions.FadeOutIn(landingPage, homePage,650, Transitions.Direction.TO_TOP, 500);
-                user = null;
             }
+        }
+    }
+
+    @FXML
+    private void editAccount(ActionEvent event){
+        String name = edName.getText().trim();
+        String email = edEmail.getText().trim();
+        String password = edPassword.getText() == null ? "" : edPassword.getText().trim();
+        String cPassword = edCPassword.getText().trim();
+        String phN = edPhN.getText().trim();
+        String ePhN = edEPhN.getText().trim();
+
+        User tempUser = user;
+        tempUser.setName(name);
+        tempUser.setEmail(email);
+        tempUser.setPassword(password);
+        tempUser.setPasswordConfirm(cPassword);
+        tempUser.setPhoneNumber(phN);
+        tempUser.setEmergencyPhoneNumber(ePhN);
+        String message = tempUser.editProfile();
+
+        if (!message.isEmpty()) {
+            textError.setText(message);
+            Transitions.FadeIn(errorToast,350, Transitions.Direction.TO_LEFT, 500);
+        }else{
+            user = user.getUserDetails();
+            if (!user.getName().isEmpty()){
+                nameField.setText(user.getName());
+                enHome();
+                successMessage.setText("User successfully edited");
+                Transitions.FadeIn(successToast,350, Transitions.Direction.TO_LEFT, 500);
+            }
+
         }
     }
 
@@ -327,7 +365,8 @@ public class HelloController implements Initializable {
         String email = registerEmail.getText().trim();
         String password = registerPassword.getText().trim();
         String confirmPassword = registerCPassword.getText().trim();
-        user = new User(name, email, password, confirmPassword);
+        user = new User(name, email, password);
+        user.setPasswordConfirm(confirmPassword);
         String message = user.validateRegisterForm();
         if (!message.isEmpty()) {
             textError.setText(message);
@@ -348,12 +387,28 @@ public class HelloController implements Initializable {
 
     @FXML
     private void enterHomePage(ActionEvent event) {
-        Transitions.FadeIn(home,1,Transitions.Direction.TO_LEFT,500);
-        Transitions.FadeOutIn(landingPage, homePage,650, Transitions.Direction.TO_TOP, 500);
+        String email = loginEmail.getText().trim();
+        String password = loginPassword.getText().trim();
+        user = new User(email, password);
+        String message = user.Login();
+        if (!message.isEmpty()) {
+            textError.setText(message);
+            Transitions.FadeIn(errorToast,350, Transitions.Direction.TO_LEFT, 500);
+        }
+        else{
+            user = user.getUserDetails();
+            if (!user.getName().isEmpty()){
+                nameField.setText(user.getName());
+            }
+            Transitions.FadeIn(home,1,Transitions.Direction.TO_LEFT,500);
+            Transitions.FadeOutIn(landingPage, homePage,650, Transitions.Direction.TO_TOP, 500);
+        }
+
     }
 
     @FXML
     private void exitHomePage(ActionEvent event) {
+        user = null;
         disSidebar();
         Transitions.FadeOut(account,0,Transitions.Direction.TO_LEFT,0);
         Transitions.FadeOut(results,0,Transitions.Direction.TO_LEFT,0);
@@ -387,8 +442,7 @@ public class HelloController implements Initializable {
         Transitions.FadeIn(editDiseases,1,Transitions.Direction.TO_LEFT,0);
     }
 
-    @FXML
-    private void HomeEnabled(MouseEvent event) {
+    private void enHome(){
         Images.HomeEnabled(homeImg,accountImg,resultsImg);
         Transitions.FadeOut(account,0,Transitions.Direction.TO_LEFT,0);
         Transitions.FadeOut(results,0,Transitions.Direction.TO_LEFT,0);
@@ -397,11 +451,25 @@ public class HelloController implements Initializable {
     }
 
     @FXML
+    private void HomeEnabled(MouseEvent event) {
+        enHome();
+    }
+
+    @FXML
     private void AccountEnabled(MouseEvent event) {
         Images.AccountEnabled(homeImg,accountImg,resultsImg);
         Transitions.FadeOut(home,0,Transitions.Direction.TO_LEFT,0);
         Transitions.FadeOut(results,0,Transitions.Direction.TO_LEFT,0);
         Transitions.FadeIn(account,700,Transitions.Direction.TO_LEFT,500);
+        user = user.getUserDetails();
+        if (user != null){
+            edName.setText(user.getName());
+            edEmail.setText(user.getEmail());
+            edPassword.setText(user.getPassword());
+            edPhN.setText(user.getPhoneNumber());
+            edEPhN.setText(user.getEmergencyPhoneNumber());
+            edCPassword.setText("");
+        }
         disSidebar();
     }
 
