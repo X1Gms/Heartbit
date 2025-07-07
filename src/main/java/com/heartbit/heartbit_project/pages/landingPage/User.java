@@ -1,5 +1,6 @@
 package com.heartbit.heartbit_project.pages.landingPage;
 
+import com.heartbit.heartbit_project.Validations;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -43,10 +44,10 @@ public class User {
         if (name.isEmpty()) {
             return "Name field is empty.";
         }
-        else if (!email.matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
+        else if (!Validations.isValidEmail(email)) {
             return "Invalid e-mail address.";
         }
-        else if (!(password.matches("^(?=.*[!@#$%^&*()_\\-+=\\[\\]{};':\"\\\\|,.<>/?])(?=.*\\d).{12,}$"))) {
+        else if (!Validations.isValidPassword(password)) {
             return "Password is not valid. Check password requirements.";
         }
         else if (!password.matches(passwordConfirm)) {
@@ -58,11 +59,9 @@ public class User {
     }
 
     public String validatePhoneForm() {
-        String regex = "^\\+\\d{1,3}(?:[ -]\\d{2,4}){2,4}$";
-
-        if (!phoneNumber.matches(regex)) {
+        if (!Validations.isValidPhoneNumber(phoneNumber)) {
             return "Invalid Personal Phone Number.";
-        } else if (!emergencyPhoneNumber.matches(regex)) {
+        } else if (!Validations.isValidPhoneNumber(emergencyPhoneNumber)) {
             return "Invalid Emergency Phone Number.";
         } else if (phoneNumber.matches(emergencyPhoneNumber)) {
             return "Phone numbers can't be the same.";
@@ -107,11 +106,11 @@ public class User {
     }
 
     public String Login() {
-        if (!email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\\\.[a-zA-Z]{2,}$")) {
-            return "Invalid email address. Insert a valid email address.";
+        if (!Validations.isValidEmail(email)) {
+            return "Invalid email address.";
         }
         else if (password.isEmpty()) {
-            return "Password is empty. Insert a password.";
+            return "Password is empty.";
         }
         else {
             try {
@@ -152,10 +151,10 @@ public class User {
         if (name.isEmpty()) {
             return "Name field is empty.";
         }
-        else if (!email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\\\.[a-zA-Z]{2,}$")) {
+        else if (!Validations.isValidEmail(email)) {
             return "Incorrect email address.";
         }
-        else if (!(password.matches("^(?=.*[!@#$%^&*()_\\-+=\\[\\]{};':\"\\\\|,.<>/?])(?=.*\\d).{12,}$"))) {
+        else if (!Validations.isValidPassword(password)) {
             return "Invalid Password.";
         }
         else if (!password.matches(passwordConfirm)) {
@@ -164,7 +163,7 @@ public class User {
         else if (phoneNumber.matches(emergencyPhoneNumber)) {
             return "Phone numbers can't be the same.";
         }
-        else if (!phoneNumber.matches("^\\+?[0-9]{1,3}?[-.\\s]?(?:\\(?[0-9]{1,4}\\)?[-.\\s]?)[0-9]{1,4}-[0-9]{1,9}$") && !emergencyPhoneNumber.matches("^\\+?[0-9]{1,3}?[-.\\s]?(?:\\(?[0-9]{1,4}\\)?[-.\\s]?)[0-9]{1,4}-[0-9]{1,9}$")) {
+        else if (!(Validations.isValidPhoneNumber(phoneNumber)) && (Validations.isValidPhoneNumber(emergencyPhoneNumber))) {
             return "Invalid phone number.";
         }
         else {

@@ -7,6 +7,7 @@ module com.heartbit.heartbit_project {
     requires org.eclipse.paho.client.mqttv3;
     requires io.github.cdimascio.dotenv.java;
     requires org.json;
+    requires jakarta.mail;
 
     opens com.heartbit.heartbit_project to javafx.fxml;
     opens com.heartbit.heartbit_project.components to javafx.fxml;
