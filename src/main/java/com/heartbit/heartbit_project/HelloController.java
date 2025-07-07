@@ -1,7 +1,7 @@
 package com.heartbit.heartbit_project;
 
 import com.heartbit.heartbit_project.components.MultiDropdown;
-import com.heartbit.heartbit_project.pages.landingPage.Register;
+import com.heartbit.heartbit_project.pages.landingPage.User;
 import com.heartbit.heartbit_project.visual_functions.Images;
 import com.heartbit.heartbit_project.visual_functions.Transitions;
 import javafx.animation.KeyFrame;
@@ -123,7 +123,7 @@ public class HelloController implements Initializable {
     @FXML
     private Label textError;
     @FXML
-    private Register user;
+    private User user;
 
     @FXML
     private LineChart<String, Number> lineChart; // Tem de coincidir com o fx:id do FXML
@@ -327,7 +327,7 @@ public class HelloController implements Initializable {
         String email = registerEmail.getText().trim();
         String password = registerPassword.getText().trim();
         String confirmPassword = registerCPassword.getText().trim();
-        user = new Register(name, email, password, confirmPassword);
+        user = new User(name, email, password, confirmPassword);
         String message = user.validateRegisterForm();
         if (!message.isEmpty()) {
             textError.setText(message);
