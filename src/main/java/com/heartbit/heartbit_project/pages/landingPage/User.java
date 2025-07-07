@@ -168,14 +168,35 @@ public class User {
             return "Invalid phone number.";
         }
         else {
+            String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt(12));
+            String message = "";
+
             try {
                 Connection con = DriverManager.getConnection(dbUrl, dbUsername, dbPass);
-                PreparedStatement statement = con.prepareStatement("update `user` set user_password = ? where user_email = ?");
-                return "";
+                PreparedStatement statement = con.prepareStatement("update `user` set user_name = ?, user_email = ?, user_password = ?, user_phone = ?, user_eme_phone where user_email = ?");
+
+                statement.setString(1, name);
+                statement.setString(2, email);
+                statement.setString(3, hashedPassword);
+                statement.setString(4, phoneNumber);
+                statement.setString(5, emergencyPhoneNumber);
+
+                int rowsAffected = statement.executeUpdate();
+                if (rowsAffected > 0) {
+//                  message = "Registration successful!";
+                } else {
+                    message = "Registration failed. No rows affected.";
+                }
+            } catch (SQLIntegrityConstraintViolationException e) {
+                message = "Error: Email or Phone Number already exists.";
+            } catch (SQLException e) {
+                System.out.println("Database error: " + e.getMessage());
+                message = "Database Error";
             } catch (Exception e) {
-                System.out.println("Connection Error: " + e.getMessage());
+                System.out.println(e.getMessage());
                 return "Unexpected Error. Try Again.";
             }
+            return message;
         }
     }
 }
