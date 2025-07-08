@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
@@ -30,6 +31,7 @@ import javafx.scene.text.Font;
 import javafx.util.Duration;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -113,6 +115,8 @@ public class HelloController implements Initializable {
     //-+-+-+-+-+- Edit Account Diseases -+-+-+-+-+-
     @FXML
     private MultiDropdown multiDropdown;
+    @FXML
+    private TextField otherDisease;
 
     //-+-+-+-+-+- Toasts -+-+-+-+-+-
 
@@ -137,7 +141,7 @@ public class HelloController implements Initializable {
     private VBox bpmBox; // VBox com a borda (a que tem o styleClass "circle")
 
     @FXML
-    private Label stateLabel; // Label que mostra o texto tipo "Stable", "Warning", "Danger"
+    private Label stateLabel; // Label que mostra o texto tipo "Stable", "Potencial Risk", "Critical"
 
     @FXML
     private Label bpmLabel; // Label que mostra o número BPM
@@ -146,7 +150,7 @@ public class HelloController implements Initializable {
     private VBox bpmBox2; // VBox com a borda (a que tem o styleClass "circle")
 
     @FXML
-    private Label stateLabel2; // Label que mostra o texto tipo "Stable", "Warning", "Danger"
+    private Label stateLabel2; // Label que mostra o texto tipo "Stable", "Potencial Risk", "Critical"
 
     @FXML
     private Label bpmLabel2; // Label que mostra o número BPM
@@ -163,14 +167,73 @@ public class HelloController implements Initializable {
                 "Arthritis",
                 "Depression"
         );
-
         multiDropdown.setItems(dropdownItems);
-
         bpmSeries = new XYChart.Series<>();
         bpmSeries.setName("BPM");
         lineChart.getData().add(bpmSeries);
         lineChart.setLegendVisible(false);
     }
+
+    @FXML
+    private void submitDiseases(ActionEvent event) {
+        List<String> diseaseInputs = new ArrayList<>();
+        boolean hasCustomFields = false;
+        boolean hasEmptyField = false;
+
+        for (Node node : ed_add_textfields.getChildren()) {
+            if (node instanceof HBox) {
+                HBox hbox = (HBox) node;
+
+                if (!hbox.getChildren().isEmpty()) {
+                    Node inner = hbox.getChildren().get(0);
+                    if (inner instanceof VBox) {
+                        VBox vbox = (VBox) inner;
+
+                        for (Node child : vbox.getChildren()) {
+                            if (child instanceof TextField) {
+                                hasCustomFields = true;
+                                String text = ((TextField) child).getText();
+                                if (text != null && !text.trim().isEmpty()) {
+                                    diseaseInputs.add(text.trim());
+                                } else {
+                                    hasEmptyField = true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        if (hasEmptyField) {
+            textError.setText("Empty Text Box\nDelete it to continue.");
+            Transitions.FadeIn(errorToast, 350, Transitions.Direction.TO_LEFT, 500);
+            return;
+        }
+
+        if (hasCustomFields) {
+            String otherDiseaseText = otherDisease.getText().trim();
+            if (!otherDiseaseText.isEmpty()) {
+                diseaseInputs.add(otherDiseaseText.trim());
+            } else {
+                textError.setText("Empty Text Box");
+                Transitions.FadeIn(errorToast, 350, Transitions.Direction.TO_LEFT, 500);
+                return;
+            }
+        } else {
+            String otherDiseaseText = otherDisease.getText().trim();
+            if (!otherDiseaseText.trim().isEmpty()) {
+                diseaseInputs.add(otherDiseaseText.trim());
+            }
+        }
+
+        diseaseInputs.addAll(multiDropdown.getValues());
+        System.out.println(diseaseInputs);
+    }
+
+
+
+
     @FXML
     private void createAccount(ActionEvent event){
         String phoneNumber = phN.getText().trim();
@@ -219,7 +282,7 @@ public class HelloController implements Initializable {
         if (!message.isEmpty()) {
             textError.setText(message);
             Transitions.FadeIn(errorToast,350, Transitions.Direction.TO_LEFT, 500);
-        }else{
+        } else {
             user = user.getUserDetails();
             if (!user.getName().isEmpty()){
                 nameField.setText(user.getName());

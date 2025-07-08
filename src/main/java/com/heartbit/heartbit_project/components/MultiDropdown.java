@@ -9,11 +9,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-
+import javafx.scene.Node;
+import javafx.scene.control.TextField;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.ArrayList;
 
 public class MultiDropdown extends AnchorPane {
 
@@ -52,17 +54,14 @@ public class MultiDropdown extends AnchorPane {
     }
 
     /**
-     * Returns zero-based indexes of checked items.
+     * Returns all the texts from selected CheckBoxes.
      */
-    public List<Integer> getSelectedIndexes() {
-        return IntStream.range(0, contentBox.getChildren().size())
-                .filter(i -> {
-                    var node = contentBox.getChildren().get(i);
-                    return node instanceof CheckBox && ((CheckBox) node).isSelected();
-                })
-                .boxed()
-                .collect(Collectors.toList());
-    }
+    public List<String> getValues() {
+        return contentBox.getChildren().stream()
+            .filter(node -> node instanceof CheckBox && ((CheckBox) node).isSelected())
+            .map(node -> ((CheckBox) node).getText())
+            .collect(Collectors.toList());
+}
 
     @FXML
     private void initialize() {
