@@ -1,6 +1,7 @@
 package com.heartbit.heartbit_project;
 
 import com.heartbit.heartbit_project.components.MultiDropdown;
+import com.heartbit.heartbit_project.pages.landingPage.Disease;
 import com.heartbit.heartbit_project.pages.landingPage.User;
 import com.heartbit.heartbit_project.visual_functions.Images;
 import com.heartbit.heartbit_project.visual_functions.Transitions;
@@ -31,7 +32,9 @@ import javafx.scene.text.Font;
 import javafx.util.Duration;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -130,6 +133,12 @@ public class HelloController implements Initializable {
     private Label textError;
     @FXML
     private User user;
+    @FXML
+    private Disease disease;
+
+    private final ArrayList<String> dropdownItems = new ArrayList<>(
+            Arrays.asList("Diabetes","Hypertension","Asthma","Arthritis","Depression")
+    );
 
     @FXML
     private LineChart<String, Number> lineChart; // Tem de coincidir com o fx:id do FXML
@@ -158,15 +167,10 @@ public class HelloController implements Initializable {
     @FXML
     private VBox phoneForm;
 
+
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        List<String> dropdownItems = List.of(
-                "Diabetes",
-                "Hypertension",
-                "Asthma",
-                "Arthritis",
-                "Depression"
-        );
         multiDropdown.setItems(dropdownItems);
         bpmSeries = new XYChart.Series<>();
         bpmSeries.setName("BPM");
@@ -174,9 +178,34 @@ public class HelloController implements Initializable {
         lineChart.setLegendVisible(false);
     }
 
+    private void populateDiseases(ArrayList<String> dbList) {
+        // 1) select known ones
+        if (dbList == null) dbList = new ArrayList<>();
+        ArrayList<String> knownMatches = new ArrayList<>();
+        for (String d : dbList) {
+            if (dropdownItems.contains(d)) {
+                knownMatches.add(d);
+            }
+        }
+        multiDropdown.setSelectedItems(knownMatches);
+
+        // 2) handle unknowns
+        boolean firstOther = true;
+        for (String d : dbList) {
+            if (!dropdownItems.contains(d)) {
+                if (firstOther) {
+                    otherDisease.setText(d);
+                    firstOther = false;
+                } else {
+                    AddOtherDisease(d);
+                }
+            }
+        }
+    }
+
     @FXML
     private void submitDiseases(ActionEvent event) {
-        List<String> diseaseInputs = new ArrayList<>();
+        ArrayList<String> diseaseInputs = new ArrayList<>();
         boolean hasCustomFields = false;
         boolean hasEmptyField = false;
 
@@ -205,12 +234,6 @@ public class HelloController implements Initializable {
             }
         }
 
-        if (hasEmptyField) {
-            textError.setText("Empty Text Box\nDelete it to continue.");
-            Transitions.FadeIn(errorToast, 350, Transitions.Direction.TO_LEFT, 500);
-            return;
-        }
-
         if (hasCustomFields) {
             String otherDiseaseText = otherDisease.getText().trim();
             if (!otherDiseaseText.isEmpty()) {
@@ -220,7 +243,15 @@ public class HelloController implements Initializable {
                 Transitions.FadeIn(errorToast, 350, Transitions.Direction.TO_LEFT, 500);
                 return;
             }
-        } else {
+        }
+
+        if (hasEmptyField) {
+            textError.setText("Empty Text Box\nDelete it to continue.");
+            Transitions.FadeIn(errorToast, 350, Transitions.Direction.TO_LEFT, 500);
+            return;
+        }
+
+        else {
             String otherDiseaseText = otherDisease.getText().trim();
             if (!otherDiseaseText.trim().isEmpty()) {
                 diseaseInputs.add(otherDiseaseText.trim());
@@ -228,11 +259,21 @@ public class HelloController implements Initializable {
         }
 
         diseaseInputs.addAll(multiDropdown.getValues());
-        System.out.println(diseaseInputs);
+        disease = new Disease(diseaseInputs, user);
+
+        String message = disease.syncUserDiseases();
+        if (!message.isEmpty()) {
+            textError.setText(message);
+            Transitions.FadeIn(errorToast,350, Transitions.Direction.TO_LEFT, 500);
+        } else {
+                enHome();
+                successMessage.setText("Diseases successfully edited");
+                multiDropdown.setSelectedItems(new ArrayList<>());
+                ed_add_textfields.getChildren().clear();
+                otherDisease.setText("");
+                Transitions.FadeIn(successToast,350, Transitions.Direction.TO_LEFT, 500);
+        }
     }
-
-
-
 
     @FXML
     private void createAccount(ActionEvent event){
@@ -254,6 +295,7 @@ public class HelloController implements Initializable {
                 user = user.getUserDetails();
                 if (!user.getName().isEmpty()){
                     nameField.setText(user.getName());
+
                 }
                 Transitions.FadeIn(home,1,Transitions.Direction.TO_LEFT,500);
                 Transitions.FadeOutIn(landingPage, homePage,650, Transitions.Direction.TO_TOP, 500);
@@ -294,8 +336,7 @@ public class HelloController implements Initializable {
         }
     }
 
-    @FXML
-    private void AddTextField(ActionEvent event) {
+    private void AddOtherDisease(String value){
         // Criar o Label
         Label label = new Label("Other Disease");
         label.setPrefWidth(240.0);
@@ -303,7 +344,7 @@ public class HelloController implements Initializable {
         VBox.setMargin(label, new Insets(30, 0, 0, 15));
 
         // Criar o TextField
-        TextField textField = new TextField();
+        TextField textField = new TextField(value);
         textField.setPrefHeight(47.0);
         textField.setPrefWidth(268.0);
         textField.getStyleClass().add("text-field");
@@ -330,6 +371,10 @@ public class HelloController implements Initializable {
 
         // Adicionar ao container principal
         ed_add_textfields.getChildren().add(hbox);
+    }
+    @FXML
+    private void AddTextField(ActionEvent event) {
+        AddOtherDisease("");
     }
 
     @FXML
@@ -519,12 +564,20 @@ public class HelloController implements Initializable {
     }
 
     @FXML
-    private void AccountEnabled(MouseEvent event) {
+    private void AccountEnabled(MouseEvent event) throws SQLException, ClassNotFoundException {
         Images.AccountEnabled(homeImg,accountImg,resultsImg);
         Transitions.FadeOut(home,0,Transitions.Direction.TO_LEFT,0);
         Transitions.FadeOut(results,0,Transitions.Direction.TO_LEFT,0);
         Transitions.FadeIn(account,700,Transitions.Direction.TO_LEFT,500);
         user = user.getUserDetails();
+        disease = new Disease(user);
+        disease.setDiseases(disease.getUserDiseases());
+        List<String> fetched = disease.getDiseases();            // might be null
+        ArrayList<String> dbList = new ArrayList<>();
+        if (fetched != null) {
+            dbList.addAll(fetched);
+        }
+        populateDiseases(dbList);
         if (user != null){
             edName.setText(user.getName());
             edEmail.setText(user.getEmail());
