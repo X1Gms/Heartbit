@@ -30,6 +30,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
+import javafx.scene.text.TextAlignment;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -38,6 +39,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class HeartBitController implements Initializable {
@@ -166,6 +171,19 @@ public class HeartBitController implements Initializable {
 
     @FXML
     private VBox phoneForm;
+
+    @FXML private Label minLabel;
+    @FXML private Label maxLabel;
+    @FXML private Label avgLabel;
+
+    @FXML private Pane minPane;
+    @FXML private Pane maxPane;
+    @FXML private Pane avgPane;
+
+    @FXML
+    private VBox eventList;
+
+    private final List<Integer> bpmHistory = new ArrayList<>();
 
 
 
@@ -383,6 +401,10 @@ public class HeartBitController implements Initializable {
             int bpm = 40 + (int)(Math.random() * 91); // Gera entre 40 e 130
             updateChart(bpm);
             updateBPMDisplay(bpm);
+            bpmHistory.add(bpm);
+            updateBPMStats();
+            addEvent(bpm, "Setúbal", LocalDateTime.now());
+
         }));
         loop.setCycleCount(Timeline.INDEFINITE); // Loop infinito
         loop.play(); // Inicia
@@ -428,7 +450,7 @@ public class HeartBitController implements Initializable {
 
         if (bpmSeries.getData().size() > 4) {
             PauseTransition pause = new PauseTransition(Duration.millis(100));
-            pause.setOnFinished(e -> bpmSeries.getData().remove(0));
+            pause.setOnFinished(e -> bpmSeries.getData().removeFirst());
             pause.play();
         }
         NumberAxis yAxis = (NumberAxis) lineChart.getYAxis();
@@ -436,7 +458,7 @@ public class HeartBitController implements Initializable {
         // Valores visíveis
         List<Number> valores = bpmSeries.getData().stream()
                 .map(XYChart.Data::getYValue)
-                .collect(Collectors.toList());
+                .toList();
 
         double max = valores.stream().mapToDouble(Number::doubleValue).max().orElse(110);
 
@@ -455,6 +477,100 @@ public class HeartBitController implements Initializable {
         yAxis.setAutoRanging(false); // garante que o gráfico respeita os limites definidos
 
     }
+
+    private void updateBPMStats() {
+        if (bpmHistory.isEmpty()) return;
+
+        int min = Collections.min(bpmHistory);
+        int max = Collections.max(bpmHistory);
+        int sum = bpmHistory.stream().mapToInt(Integer::intValue).sum();
+        int avg = sum / bpmHistory.size();
+
+        minLabel.setText(String.valueOf(min));
+        maxLabel.setText(String.valueOf(max));
+        avgLabel.setText(String.valueOf(avg));
+
+        minPane.setStyle("-fx-background-color: " + getColorForBPM(min) + ";");
+        maxPane.setStyle("-fx-background-color: " + getColorForBPM(max) + ";");
+        avgPane.setStyle("-fx-background-color: " + getColorForBPM(avg) + ";");
+    }
+
+    private String getColorForBPM(int bpm) {
+        if (bpm >= 60 && bpm <= 100) {
+            return "#B3FFB9"; // Verde
+        } else if ((bpm >= 41 && bpm <= 59) || (bpm >= 101 && bpm <= 129)) {
+            return "#FFE5BA"; // Amarelo
+        } else {
+            return "#FE9F9F"; // Vermelho
+        }
+    }
+
+
+    private void addEvent(int bpm, String location, LocalDateTime timestamp) {
+        String status;
+        String color;
+
+        if ((bpm >= 41 && bpm <= 59) || (bpm >= 101 && bpm <= 129)) {
+            status = "Potencial Risk";
+            color = "#FFF3F3";
+        } else if (bpm <= 40 || bpm >= 130) {
+            status = "Crítico";
+            color = "#FFBDBD";
+        } else {
+            return; // Normal values don't add event
+        }
+
+        HBox row = new HBox();
+        row.setStyle("-fx-background-color: " + color + "; -fx-padding: 10 15;");
+        row.setAlignment(Pos.CENTER_LEFT);
+        row.setSpacing(40); // espaço entre colunas
+        row.setPrefHeight(60);
+        row.setMinHeight(60);
+        row.setMaxHeight(60); // altura preferida
+
+
+        Label statusLabel = new Label(status);
+        statusLabel.setMinWidth(90);
+        statusLabel.setPrefWidth(90);
+        statusLabel.setMaxWidth(90);
+        statusLabel.setAlignment(Pos.CENTER);
+        statusLabel.setStyle("-fx-font-size: 14px; -fx-font-family: Tahoma;");
+
+        Label bpmLabel = new Label(String.valueOf(bpm));
+        bpmLabel.setMinWidth(60);
+        bpmLabel.setPrefWidth(60);
+        bpmLabel.setMaxWidth(60);
+        bpmLabel.setAlignment(Pos.CENTER);
+        bpmLabel.setStyle("-fx-font-size: 16px; -fx-font-family: Tahoma;");
+
+        Label locationLabel = new Label(location);
+        locationLabel.setMinWidth(90);
+        locationLabel.setPrefWidth(90);
+        locationLabel.setMaxWidth(90);
+        locationLabel.setWrapText(true);
+        locationLabel.setAlignment(Pos.CENTER);
+        locationLabel.setStyle("-fx-font-size: 14px; -fx-font-family: Tahoma;");
+
+        String dateStr = timestamp.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        String timeStr = timestamp.format(DateTimeFormatter.ofPattern("HH:mm"));
+        Label timeLabel = new Label(dateStr + "\n" + timeStr);
+        timeLabel.setMinWidth(90);
+        timeLabel.setPrefWidth(90);
+        timeLabel.setMaxWidth(90);
+        timeLabel.setAlignment(Pos.BASELINE_RIGHT);
+        timeLabel.setTextAlignment(TextAlignment.CENTER);
+        timeLabel.setWrapText(true);
+        timeLabel.setStyle("-fx-font-size: 14px; -fx-font-family: Tahoma;");
+
+        row.getChildren().addAll(statusLabel, bpmLabel, locationLabel, timeLabel);
+
+        eventList.getChildren().addFirst(row);
+    }
+
+
+
+
+
 
     //Login/Register
     @FXML

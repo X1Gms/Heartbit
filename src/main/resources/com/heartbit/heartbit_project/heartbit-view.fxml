@@ -618,7 +618,7 @@
                                                 <Insets top="15.0" />
                                              </VBox.margin>
                                              <children>
-                                                <Label fx:id="bpmLabel2" alignment="CENTER" maxWidth="200.0" text="78" VBox.vgrow="ALWAYS">
+                                                <Label fx:id="bpmLabel2" alignment="CENTER" maxWidth="200.0" text="" VBox.vgrow="ALWAYS">
                                                    <font>
                                                       <Font name="System Bold" size="22.0" />
                                                    </font></Label>
@@ -657,7 +657,7 @@
                                                          </font>
                                                       </Label>
                                                       <Pane prefHeight="35.0" prefWidth="9.0" />
-                                                      <Label alignment="TOP_RIGHT" prefHeight="20.0" text="80">
+                                                      <Label fx:id="maxLabel" alignment="TOP_RIGHT" prefHeight="20.0" text="">
                                                          <font>
                                                             <Font name="Tahoma Bold" size="16.0" />
                                                          </font>
@@ -667,7 +667,7 @@
                                                             <Font name="Tahoma Bold" size="12.0" />
                                                          </font>
                                                       </Label>
-                                                      <Pane prefWidth="65.0" style="-fx-background-color: B3FFB9;">
+                                                      <Pane  fx:id="maxPane" prefWidth="65.0" style="-fx-background-color: B3FFB9;">
                                                          <HBox.margin>
                                                             <Insets left="20.0" />
                                                          </HBox.margin></Pane>
@@ -684,7 +684,7 @@
                                                          </font>
                                                       </Label>
                                                       <Pane prefHeight="35.0" prefWidth="13.0" />
-                                                      <Label alignment="TOP_RIGHT" prefHeight="20.0" text="16">
+                                                      <Label fx:id="minLabel" alignment="TOP_RIGHT" prefHeight="20.0" text="">
                                                          <font>
                                                             <Font name="Tahoma Bold" size="16.0" />
                                                          </font>
@@ -694,7 +694,7 @@
                                                             <Font name="Tahoma Bold" size="12.0" />
                                                          </font>
                                                       </Label>
-                                                      <Pane prefWidth="65.0" style="-fx-background-color: FE9F9F;">
+                                                      <Pane fx:id="minPane" prefWidth="65.0" style="-fx-background-color: FE9F9F;">
                                                          <HBox.margin>
                                                             <Insets left="20.0" />
                                                          </HBox.margin>
@@ -712,7 +712,7 @@
                                                          </font>
                                                       </Label>
                                                       <Pane prefHeight="35.0" prefWidth="12.0" />
-                                                      <Label alignment="TOP_RIGHT" prefHeight="20.0" text="55">
+                                                      <Label fx:id="avgLabel" alignment="TOP_RIGHT" prefHeight="20.0" text="">
                                                          <font>
                                                             <Font name="Tahoma Bold" size="16.0" />
                                                          </font>
@@ -722,7 +722,7 @@
                                                             <Font name="Tahoma Bold" size="12.0" />
                                                          </font>
                                                       </Label>
-                                                      <Pane prefWidth="65.0" style="-fx-background-color: B3FFB9;">
+                                                      <Pane fx:id="avgPane" prefWidth="65.0" style="-fx-background-color: B3FFB9;">
                                                          <HBox.margin>
                                                             <Insets left="20.0" />
                                                          </HBox.margin>
@@ -750,259 +750,40 @@
                                           <Insets bottom="30.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <ScrollPane prefHeight="440.0" style="-fx-border-color: transparent; -fx-background-insets: 0; -fx-padding: 0; -fx-effect: null;">
+                                    <ScrollPane prefHeight="440.0" style="-fx-border-color: transparent; -fx-background-insets: 0; -fx-padding: 0;">
                                        <content>
                                           <VBox prefHeight="437.0" prefWidth="406.0" style="-fx-background-color: #fff;">
                                              <children>
-                                                <VBox style="-fx-background-color: FFF3F3;" VBox.vgrow="ALWAYS">
+                                                <!-- Cabeçalho fixo -->
+                                                <HBox alignment="CENTER" minHeight="51.0" prefHeight="51.0" style="-fx-background-color: #FF6E6E;">
                                                    <children>
-                                                      <HBox alignment="CENTER" minHeight="51.0" prefHeight="51.0" style="-fx-background-color: FF6E6E;">
-                                                         <children>
-                                                            <Label alignment="CENTER" minWidth="80.0" text="Event" textFill="WHITE">
-                                                               <font>
-                                                                  <Font name="Tahoma Bold" size="18.0" />
-                                                               </font>
-                                                            </Label>
-                                                            <Region minWidth="60.0" prefHeight="200.0" />
-                                                            <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" minWidth="45.0" text="BPM" textAlignment="CENTER" textFill="WHITE">
-                                                               <font>
-                                                                  <Font name="Tahoma Bold" size="18.0" />
-                                                               </font>
-                                                            </Label>
-                                                            <Region layoutX="285.0" layoutY="10.0" minWidth="60.0" prefHeight="200.0" />
-                                                            <Label alignment="CENTER" layoutX="196.0" layoutY="24.0" minWidth="90.0" text="Location" textAlignment="CENTER" textFill="WHITE">
-                                                               <font>
-                                                                  <Font name="Tahoma Bold" size="18.0" />
-                                                               </font>
-                                                            </Label>
-                                                            <Region minWidth="60.0" prefHeight="200.0" />
-                                                            <Label alignment="CENTER" layoutX="62.0" layoutY="10.0" minWidth="80.0" text="Time" textFill="WHITE">
-                                                               <font>
-                                                                  <Font name="Tahoma Bold" size="18.0" />
-                                                               </font>
-                                                            </Label>
-                                                         </children>
-                                                         <padding>
-                                                            <Insets left="10.0" right="10.0" />
-                                                         </padding></HBox>
-                                                      <HBox alignment="CENTER" minHeight="51.0">
-                                                         <children>
-                                                            <Label alignment="CENTER" minWidth="80.0" text="Potencial Risk">
-                                                               <font>
-                                                                  <Font name="Tahoma" size="12.0" />
-                                                               </font>
-                                                            </Label>
-                                                            <Region minWidth="60.0" prefHeight="51.0" />
-                                                            <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" minWidth="45.0" text="56">
-                                                               <font>
-                                                                  <Font name="Tahoma" size="16.0" />
-                                                               </font>
-                                                            </Label>
-                                                            <Region minWidth="60.0" prefHeight="51.0" />
-                                                            <Label alignment="CENTER" layoutX="210.0" layoutY="24.0" minWidth="90.0" text="Setúbal" textAlignment="CENTER" wrapText="true">
-                                                               <font>
-                                                                  <Font name="Tahoma" size="14.0" />
-                                                               </font>
-                                                            </Label>
-                                                            <Region layoutX="258.0" layoutY="10.0" minWidth="60.0" prefHeight="51.0" />
-                                                            <Label alignment="CENTER" contentDisplay="TOP" layoutX="62.0" layoutY="10.0" minWidth="80.0" text="09/09/2025 14:09" textAlignment="CENTER" wrapText="true">
-                                                               <font>
-                                                                  <Font name="Tahoma" size="14.0" />
-                                                               </font>
-                                                            </Label>
-                                                         </children>
-                                                         <padding>
-                                                            <Insets left="10.0" right="10.0" />
-                                                         </padding>
-                                                      </HBox>
-                                                      <HBox alignment="CENTER" layoutX="10.0" layoutY="61.0" minHeight="51.0">
-                                                         <children>
-                                                            <Label alignment="CENTER" minWidth="80.0" text="Potencial Risk">
-                                                               <font>
-                                                                  <Font name="Tahoma" size="12.0" />
-                                                               </font>
-                                                            </Label>
-                                                            <Region minWidth="60.0" prefHeight="51.0" />
-                                                            <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" minWidth="45.0" text="56">
-                                                               <font>
-                                                                  <Font name="Tahoma" size="16.0" />
-                                                               </font>
-                                                            </Label>
-                                                            <Region minWidth="60.0" prefHeight="51.0" />
-                                                            <Label alignment="CENTER" layoutX="210.0" layoutY="24.0" minWidth="90.0" text="Baixa da Banheira" textAlignment="CENTER" wrapText="true">
-                                                               <font>
-                                                                  <Font name="Tahoma" size="14.0" />
-                                                               </font>
-                                                            </Label>
-                                                            <Region layoutX="258.0" layoutY="10.0" minWidth="60.0" prefHeight="51.0" />
-                                                            <Label alignment="CENTER" contentDisplay="TOP" layoutX="62.0" layoutY="10.0" minWidth="80.0" text="09/09/2025 14:09" textAlignment="CENTER" wrapText="true">
-                                                               <font>
-                                                                  <Font name="Tahoma" size="14.0" />
-                                                               </font>
-                                                            </Label>
-                                                         </children>
-                                                         <padding>
-                                                            <Insets left="10.0" right="10.0" />
-                                                         </padding>
-                                                      </HBox>
-                                                      <HBox alignment="CENTER" layoutX="10.0" layoutY="112.0" minHeight="51.0">
-                                                         <children>
-                                                            <Label alignment="CENTER" minWidth="80.0" text="Potencial Risk">
-                                                               <font>
-                                                                  <Font name="Tahoma" size="12.0" />
-                                                               </font>
-                                                            </Label>
-                                                            <Region minWidth="60.0" prefHeight="51.0" />
-                                                            <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" minWidth="45.0" text="56">
-                                                               <font>
-                                                                  <Font name="Tahoma" size="16.0" />
-                                                               </font>
-                                                            </Label>
-                                                            <Region minWidth="60.0" prefHeight="51.0" />
-                                                            <Label alignment="CENTER" layoutX="210.0" layoutY="24.0" minWidth="90.0" text="Alhos Vedros" textAlignment="CENTER" wrapText="true">
-                                                               <font>
-                                                                  <Font name="Tahoma" size="14.0" />
-                                                               </font>
-                                                            </Label>
-                                                            <Region layoutX="258.0" layoutY="10.0" minWidth="60.0" prefHeight="51.0" />
-                                                            <Label alignment="CENTER" contentDisplay="TOP" layoutX="62.0" layoutY="10.0" minWidth="80.0" text="09/09/2025 14:09" textAlignment="CENTER" wrapText="true">
-                                                               <font>
-                                                                  <Font name="Tahoma" size="14.0" />
-                                                               </font>
-                                                            </Label>
-                                                         </children>
-                                                         <padding>
-                                                            <Insets left="10.0" right="10.0" />
-                                                         </padding>
-                                                      </HBox>
-                                                      <HBox alignment="CENTER" layoutX="10.0" layoutY="163.0" minHeight="51.0">
-                                                         <children>
-                                                            <Label alignment="CENTER" minWidth="80.0" text="Potencial Risk">
-                                                               <font>
-                                                                  <Font name="Tahoma" size="12.0" />
-                                                               </font>
-                                                            </Label>
-                                                            <Region minWidth="60.0" prefHeight="51.0" />
-                                                            <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" minWidth="45.0" text="56">
-                                                               <font>
-                                                                  <Font name="Tahoma" size="16.0" />
-                                                               </font>
-                                                            </Label>
-                                                            <Region minWidth="60.0" prefHeight="51.0" />
-                                                            <Label alignment="CENTER" layoutX="210.0" layoutY="24.0" minWidth="90.0" text="Odivelas" textAlignment="CENTER" wrapText="true">
-                                                               <font>
-                                                                  <Font name="Tahoma" size="14.0" />
-                                                               </font>
-                                                            </Label>
-                                                            <Region layoutX="258.0" layoutY="10.0" minWidth="60.0" prefHeight="51.0" />
-                                                            <Label alignment="CENTER" contentDisplay="TOP" layoutX="62.0" layoutY="10.0" minWidth="80.0" text="09/09/2025 14:09" textAlignment="CENTER" wrapText="true">
-                                                               <font>
-                                                                  <Font name="Tahoma" size="14.0" />
-                                                               </font>
-                                                            </Label>
-                                                         </children>
-                                                         <padding>
-                                                            <Insets left="10.0" right="10.0" />
-                                                         </padding>
-                                                      </HBox>
-                                                      <HBox alignment="CENTER" layoutX="10.0" layoutY="214.0" minHeight="51.0">
-                                                         <children>
-                                                            <Label alignment="CENTER" minWidth="80.0" text="Potencial Risk">
-                                                               <font>
-                                                                  <Font name="Tahoma" size="12.0" />
-                                                               </font>
-                                                            </Label>
-                                                            <Region minWidth="60.0" prefHeight="51.0" />
-                                                            <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" minWidth="45.0" text="56">
-                                                               <font>
-                                                                  <Font name="Tahoma" size="16.0" />
-                                                               </font>
-                                                            </Label>
-                                                            <Region minWidth="60.0" prefHeight="51.0" />
-                                                            <Label alignment="CENTER" layoutX="210.0" layoutY="24.0" minWidth="90.0" text="Corroios" textAlignment="CENTER" wrapText="true">
-                                                               <font>
-                                                                  <Font name="Tahoma" size="14.0" />
-                                                               </font>
-                                                            </Label>
-                                                            <Region layoutX="258.0" layoutY="10.0" minWidth="60.0" prefHeight="51.0" />
-                                                            <Label alignment="CENTER" contentDisplay="TOP" layoutX="62.0" layoutY="10.0" minWidth="80.0" text="09/09/2025 14:09" textAlignment="CENTER" wrapText="true">
-                                                               <font>
-                                                                  <Font name="Tahoma" size="14.0" />
-                                                               </font>
-                                                            </Label>
-                                                         </children>
-                                                         <padding>
-                                                            <Insets left="10.0" right="10.0" />
-                                                         </padding>
-                                                      </HBox>
-                                                      <HBox alignment="CENTER" layoutX="10.0" layoutY="265.0" minHeight="51.0" style="-fx-background-color: FFBDBD;">
-                                                         <children>
-                                                            <Label alignment="CENTER" minWidth="80.0" text="Critical">
-                                                               <font>
-                                                                  <Font name="Tahoma" size="12.0" />
-                                                               </font>
-                                                            </Label>
-                                                            <Region minWidth="60.0" prefHeight="51.0" />
-                                                            <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" minWidth="45.0" text="16">
-                                                               <font>
-                                                                  <Font name="Tahoma" size="16.0" />
-                                                               </font>
-                                                            </Label>
-                                                            <Region minWidth="60.0" prefHeight="51.0" />
-                                                            <Label alignment="CENTER" layoutX="210.0" layoutY="24.0" minWidth="90.0" text="Caneira" textAlignment="CENTER" wrapText="true">
-                                                               <font>
-                                                                  <Font name="Tahoma" size="14.0" />
-                                                               </font>
-                                                            </Label>
-                                                            <Region layoutX="258.0" layoutY="10.0" minWidth="60.0" prefHeight="51.0" />
-                                                            <Label alignment="CENTER" contentDisplay="TOP" layoutX="62.0" layoutY="10.0" minWidth="80.0" text="09/09/2025 14:09" textAlignment="CENTER" wrapText="true">
-                                                               <font>
-                                                                  <Font name="Tahoma" size="14.0" />
-                                                               </font>
-                                                            </Label>
-                                                         </children>
-                                                         <padding>
-                                                            <Insets left="10.0" right="10.0" />
-                                                         </padding>
-                                                      </HBox>
-                                                      <HBox alignment="CENTER" layoutX="10.0" layoutY="316.0" minHeight="51.0">
-                                                         <children>
-                                                            <Label alignment="CENTER" minWidth="80.0" text="Potencial Risk">
-                                                               <font>
-                                                                  <Font name="Tahoma" size="12.0" />
-                                                               </font>
-                                                            </Label>
-                                                            <Region minWidth="60.0" prefHeight="51.0" />
-                                                            <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" minWidth="45.0" text="56">
-                                                               <font>
-                                                                  <Font name="Tahoma" size="16.0" />
-                                                               </font>
-                                                            </Label>
-                                                            <Region minWidth="60.0" prefHeight="51.0" />
-                                                            <Label alignment="CENTER" layoutX="210.0" layoutY="24.0" minWidth="90.0" text="Vila do Conde" textAlignment="CENTER" wrapText="true">
-                                                               <font>
-                                                                  <Font name="Tahoma" size="14.0" />
-                                                               </font>
-                                                            </Label>
-                                                            <Region layoutX="258.0" layoutY="10.0" minWidth="60.0" prefHeight="51.0" />
-                                                            <Label alignment="CENTER" contentDisplay="TOP" layoutX="62.0" layoutY="10.0" minWidth="80.0" text="09/09/2025 14:09" textAlignment="CENTER" wrapText="true">
-                                                               <font>
-                                                                  <Font name="Tahoma" size="14.0" />
-                                                               </font>
-                                                            </Label>
-                                                         </children>
-                                                         <padding>
-                                                            <Insets left="10.0" right="10.0" />
-                                                         </padding>
-                                                      </HBox>
+                                                      <Label alignment="CENTER" minWidth="80.0" text="Event" textFill="WHITE">
+                                                         <font><Font name="Tahoma Bold" size="18.0" /></font>
+                                                      </Label>
+                                                      <Region minWidth="60.0" prefHeight="200.0" />
+                                                      <Label alignment="CENTER" minWidth="45.0" text="BPM" textAlignment="CENTER" textFill="WHITE">
+                                                         <font><Font name="Tahoma Bold" size="18.0" /></font>
+                                                      </Label>
+                                                      <Region minWidth="60.0" prefHeight="200.0" />
+                                                      <Label alignment="CENTER" minWidth="90.0" text="Location" textAlignment="CENTER" textFill="WHITE">
+                                                         <font><Font name="Tahoma Bold" size="18.0" /></font>
+                                                      </Label>
+                                                      <Region minWidth="60.0" prefHeight="200.0" />
+                                                      <Label alignment="CENTER_LEFT" minWidth="80.0" text="Time" textAlignment="CENTER" textFill="WHITE">
+                                                         <font><Font name="Tahoma Bold" size="18.0" /></font>
+                                                      </Label>
                                                    </children>
-                                                </VBox>
-                                             </children></VBox>
-                                       </content>
-                                       <VBox.margin>
-                                          <Insets left="10.0" right="10.0" />
-                                       </VBox.margin></ScrollPane>
+                                                   <padding>
+                                                      <Insets left="10.0" right="10.0" />
+                                                   </padding>
+                                                </HBox>
 
+                                                <!-- Lista de eventos dinâmica -->
+                                                <VBox fx:id="eventList" style="-fx-background-color: transparent;" />
+                                             </children>
+                                          </VBox>
+                                       </content>
+                                    </ScrollPane>
                                  </children>
                            </VBox>
                         </children>
