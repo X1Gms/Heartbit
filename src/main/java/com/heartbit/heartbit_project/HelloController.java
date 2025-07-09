@@ -1,7 +1,8 @@
 package com.heartbit.heartbit_project;
 
 import com.heartbit.heartbit_project.components.MultiDropdown;
-import com.heartbit.heartbit_project.pages.landingPage.Register;
+import com.heartbit.heartbit_project.pages.landingPage.Disease;
+import com.heartbit.heartbit_project.pages.landingPage.User;
 import com.heartbit.heartbit_project.visual_functions.Images;
 import com.heartbit.heartbit_project.visual_functions.Transitions;
 import javafx.animation.KeyFrame;
@@ -12,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
@@ -30,6 +32,9 @@ import javafx.scene.text.Font;
 import javafx.util.Duration;
 
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -82,6 +87,8 @@ public class HelloController implements Initializable {
     private FlowPane account;
     @FXML
     private FlowPane results;
+    @FXML
+    private Label nameField;
 
     //-+-+-+-+-+- Account Variables -+-+-+-+-+-
     @FXML
@@ -111,6 +118,8 @@ public class HelloController implements Initializable {
     //-+-+-+-+-+- Edit Account Diseases -+-+-+-+-+-
     @FXML
     private MultiDropdown multiDropdown;
+    @FXML
+    private TextField otherDisease;
 
     //-+-+-+-+-+- Toasts -+-+-+-+-+-
 
@@ -123,7 +132,13 @@ public class HelloController implements Initializable {
     @FXML
     private Label textError;
     @FXML
-    private Register user;
+    private User user;
+    @FXML
+    private Disease disease;
+
+    private final ArrayList<String> dropdownItems = new ArrayList<>(
+            Arrays.asList("Diabetes","Hypertension","Asthma","Arthritis","Depression")
+    );
 
     @FXML
     private LineChart<String, Number> lineChart; // Tem de coincidir com o fx:id do FXML
@@ -135,7 +150,7 @@ public class HelloController implements Initializable {
     private VBox bpmBox; // VBox com a borda (a que tem o styleClass "circle")
 
     @FXML
-    private Label stateLabel; // Label que mostra o texto tipo "Stable", "Warning", "Danger"
+    private Label stateLabel; // Label que mostra o texto tipo "Stable", "Potencial Risk", "Critical"
 
     @FXML
     private Label bpmLabel; // Label que mostra o número BPM
@@ -144,7 +159,7 @@ public class HelloController implements Initializable {
     private VBox bpmBox2; // VBox com a borda (a que tem o styleClass "circle")
 
     @FXML
-    private Label stateLabel2; // Label que mostra o texto tipo "Stable", "Warning", "Danger"
+    private Label stateLabel2; // Label que mostra o texto tipo "Stable", "Potencial Risk", "Critical"
 
     @FXML
     private Label bpmLabel2; // Label que mostra o número BPM
@@ -152,23 +167,114 @@ public class HelloController implements Initializable {
     @FXML
     private VBox phoneForm;
 
+
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        List<String> dropdownItems = List.of(
-                "Diabetes",
-                "Hypertension",
-                "Asthma",
-                "Arthritis",
-                "Depression"
-        );
-
         multiDropdown.setItems(dropdownItems);
-
         bpmSeries = new XYChart.Series<>();
         bpmSeries.setName("BPM");
         lineChart.getData().add(bpmSeries);
         lineChart.setLegendVisible(false);
     }
+
+    private void populateDiseases(ArrayList<String> dbList) {
+        // 1) select known ones
+        if (dbList == null) dbList = new ArrayList<>();
+        ArrayList<String> knownMatches = new ArrayList<>();
+        for (String d : dbList) {
+            if (dropdownItems.contains(d)) {
+                knownMatches.add(d);
+            }
+        }
+        multiDropdown.setSelectedItems(knownMatches);
+
+        // 2) handle unknowns
+        boolean firstOther = true;
+        for (String d : dbList) {
+            if (!dropdownItems.contains(d)) {
+                if (firstOther) {
+                    otherDisease.setText(d);
+                    firstOther = false;
+                } else {
+                    AddOtherDisease(d);
+                }
+            }
+        }
+    }
+
+    @FXML
+    private void submitDiseases(ActionEvent event) {
+        ArrayList<String> diseaseInputs = new ArrayList<>();
+        boolean hasCustomFields = false;
+        boolean hasEmptyField = false;
+
+        for (Node node : ed_add_textfields.getChildren()) {
+            if (node instanceof HBox) {
+                HBox hbox = (HBox) node;
+
+                if (!hbox.getChildren().isEmpty()) {
+                    Node inner = hbox.getChildren().get(0);
+                    if (inner instanceof VBox) {
+                        VBox vbox = (VBox) inner;
+
+                        for (Node child : vbox.getChildren()) {
+                            if (child instanceof TextField) {
+                                hasCustomFields = true;
+                                String text = ((TextField) child).getText();
+                                if (text != null && !text.trim().isEmpty()) {
+                                    diseaseInputs.add(text.trim());
+                                } else {
+                                    hasEmptyField = true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        if (hasCustomFields) {
+            String otherDiseaseText = otherDisease.getText().trim();
+            if (!otherDiseaseText.isEmpty()) {
+                diseaseInputs.add(otherDiseaseText.trim());
+            } else {
+                textError.setText("Empty Text Box");
+                Transitions.FadeIn(errorToast, 350, Transitions.Direction.TO_LEFT, 500);
+                return;
+            }
+        }
+
+        if (hasEmptyField) {
+            textError.setText("Empty Text Box\nDelete it to continue.");
+            Transitions.FadeIn(errorToast, 350, Transitions.Direction.TO_LEFT, 500);
+            return;
+        }
+
+        else {
+            String otherDiseaseText = otherDisease.getText().trim();
+            if (!otherDiseaseText.trim().isEmpty()) {
+                diseaseInputs.add(otherDiseaseText.trim());
+            }
+        }
+
+        diseaseInputs.addAll(multiDropdown.getValues());
+        disease = new Disease(diseaseInputs, user);
+
+        String message = disease.syncUserDiseases();
+        if (!message.isEmpty()) {
+            textError.setText(message);
+            Transitions.FadeIn(errorToast,350, Transitions.Direction.TO_LEFT, 500);
+        } else {
+                enHome();
+                successMessage.setText("Diseases successfully edited");
+                multiDropdown.setSelectedItems(new ArrayList<>());
+                ed_add_textfields.getChildren().clear();
+                otherDisease.setText("");
+                Transitions.FadeIn(successToast,350, Transitions.Direction.TO_LEFT, 500);
+        }
+    }
+
     @FXML
     private void createAccount(ActionEvent event){
         String phoneNumber = phN.getText().trim();
@@ -186,15 +292,51 @@ public class HelloController implements Initializable {
                 textError.setText(message);
                 Transitions.FadeIn(errorToast,350, Transitions.Direction.TO_LEFT, 500);
             } else {
+                user = user.getUserDetails();
+                if (!user.getName().isEmpty()){
+                    nameField.setText(user.getName());
+
+                }
                 Transitions.FadeIn(home,1,Transitions.Direction.TO_LEFT,500);
                 Transitions.FadeOutIn(landingPage, homePage,650, Transitions.Direction.TO_TOP, 500);
-                user = null;
             }
         }
     }
 
     @FXML
-    private void AddTextField(ActionEvent event) {
+    private void editAccount(ActionEvent event){
+        String name = edName.getText().trim();
+        String email = edEmail.getText().trim();
+        String password = edPassword.getText() == null ? "" : edPassword.getText().trim();
+        String cPassword = edCPassword.getText().trim();
+        String phN = edPhN.getText().trim();
+        String ePhN = edEPhN.getText().trim();
+
+        User tempUser = user;
+        tempUser.setName(name);
+        tempUser.setEmail(email);
+        tempUser.setPassword(password);
+        tempUser.setPasswordConfirm(cPassword);
+        tempUser.setPhoneNumber(phN);
+        tempUser.setEmergencyPhoneNumber(ePhN);
+        String message = tempUser.editProfile();
+
+        if (!message.isEmpty()) {
+            textError.setText(message);
+            Transitions.FadeIn(errorToast,350, Transitions.Direction.TO_LEFT, 500);
+        } else {
+            user = user.getUserDetails();
+            if (!user.getName().isEmpty()){
+                nameField.setText(user.getName());
+                enHome();
+                successMessage.setText("User successfully edited");
+                Transitions.FadeIn(successToast,350, Transitions.Direction.TO_LEFT, 500);
+            }
+
+        }
+    }
+
+    private void AddOtherDisease(String value){
         // Criar o Label
         Label label = new Label("Other Disease");
         label.setPrefWidth(240.0);
@@ -202,7 +344,7 @@ public class HelloController implements Initializable {
         VBox.setMargin(label, new Insets(30, 0, 0, 15));
 
         // Criar o TextField
-        TextField textField = new TextField();
+        TextField textField = new TextField(value);
         textField.setPrefHeight(47.0);
         textField.setPrefWidth(268.0);
         textField.getStyleClass().add("text-field");
@@ -229,6 +371,10 @@ public class HelloController implements Initializable {
 
         // Adicionar ao container principal
         ed_add_textfields.getChildren().add(hbox);
+    }
+    @FXML
+    private void AddTextField(ActionEvent event) {
+        AddOtherDisease("");
     }
 
     @FXML
@@ -327,7 +473,8 @@ public class HelloController implements Initializable {
         String email = registerEmail.getText().trim();
         String password = registerPassword.getText().trim();
         String confirmPassword = registerCPassword.getText().trim();
-        user = new Register(name, email, password, confirmPassword);
+        user = new User(name, email, password);
+        user.setPasswordConfirm(confirmPassword);
         String message = user.validateRegisterForm();
         if (!message.isEmpty()) {
             textError.setText(message);
@@ -348,12 +495,28 @@ public class HelloController implements Initializable {
 
     @FXML
     private void enterHomePage(ActionEvent event) {
-        Transitions.FadeIn(home,1,Transitions.Direction.TO_LEFT,500);
-        Transitions.FadeOutIn(landingPage, homePage,650, Transitions.Direction.TO_TOP, 500);
+        String email = loginEmail.getText().trim();
+        String password = loginPassword.getText().trim();
+        user = new User(email, password);
+        String message = user.Login();
+        if (!message.isEmpty()) {
+            textError.setText(message);
+            Transitions.FadeIn(errorToast,350, Transitions.Direction.TO_LEFT, 500);
+        }
+        else{
+            user = user.getUserDetails();
+            if (!user.getName().isEmpty()){
+                nameField.setText(user.getName());
+            }
+            Transitions.FadeIn(home,1,Transitions.Direction.TO_LEFT,500);
+            Transitions.FadeOutIn(landingPage, homePage,650, Transitions.Direction.TO_TOP, 500);
+        }
+
     }
 
     @FXML
     private void exitHomePage(ActionEvent event) {
+        user = null;
         disSidebar();
         Transitions.FadeOut(account,0,Transitions.Direction.TO_LEFT,0);
         Transitions.FadeOut(results,0,Transitions.Direction.TO_LEFT,0);
@@ -387,8 +550,7 @@ public class HelloController implements Initializable {
         Transitions.FadeIn(editDiseases,1,Transitions.Direction.TO_LEFT,0);
     }
 
-    @FXML
-    private void HomeEnabled(MouseEvent event) {
+    private void enHome(){
         Images.HomeEnabled(homeImg,accountImg,resultsImg);
         Transitions.FadeOut(account,0,Transitions.Direction.TO_LEFT,0);
         Transitions.FadeOut(results,0,Transitions.Direction.TO_LEFT,0);
@@ -397,11 +559,33 @@ public class HelloController implements Initializable {
     }
 
     @FXML
-    private void AccountEnabled(MouseEvent event) {
+    private void HomeEnabled(MouseEvent event) {
+        enHome();
+    }
+
+    @FXML
+    private void AccountEnabled(MouseEvent event) throws SQLException, ClassNotFoundException {
         Images.AccountEnabled(homeImg,accountImg,resultsImg);
         Transitions.FadeOut(home,0,Transitions.Direction.TO_LEFT,0);
         Transitions.FadeOut(results,0,Transitions.Direction.TO_LEFT,0);
         Transitions.FadeIn(account,700,Transitions.Direction.TO_LEFT,500);
+        user = user.getUserDetails();
+        disease = new Disease(user);
+        disease.setDiseases(disease.getUserDiseases());
+        List<String> fetched = disease.getDiseases();            // might be null
+        ArrayList<String> dbList = new ArrayList<>();
+        if (fetched != null) {
+            dbList.addAll(fetched);
+        }
+        populateDiseases(dbList);
+        if (user != null){
+            edName.setText(user.getName());
+            edEmail.setText(user.getEmail());
+            edPassword.setText(user.getPassword());
+            edPhN.setText(user.getPhoneNumber());
+            edEPhN.setText(user.getEmergencyPhoneNumber());
+            edCPassword.setText("");
+        }
         disSidebar();
     }
 

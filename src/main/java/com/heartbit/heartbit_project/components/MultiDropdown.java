@@ -9,11 +9,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-
+import javafx.scene.Node;
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class MultiDropdown extends AnchorPane {
 
@@ -23,7 +21,6 @@ public class MultiDropdown extends AnchorPane {
     @FXML private VBox contentBox;
 
     private static final String packagePath = "/com/heartbit/heartbit_project";
-
     private boolean open = false;
 
     public MultiDropdown() {
@@ -38,9 +35,7 @@ public class MultiDropdown extends AnchorPane {
         }
     }
 
-    /**
-     * Call this to populate the dropdown with your list of labels.
-     */
+    /** Populate the dropdown with your list of labels. */
     public void setItems(List<String> items) {
         contentBox.getChildren().clear();
         for (String name : items) {
@@ -51,25 +46,27 @@ public class MultiDropdown extends AnchorPane {
         }
     }
 
-    /**
-     * Returns zero-based indexes of checked items.
-     */
-    public List<Integer> getSelectedIndexes() {
-        return IntStream.range(0, contentBox.getChildren().size())
-                .filter(i -> {
-                    var node = contentBox.getChildren().get(i);
-                    return node instanceof CheckBox && ((CheckBox) node).isSelected();
-                })
-                .boxed()
-                .collect(Collectors.toList());
+    /** Programmatically check the given items (by text). */
+    public void setSelectedItems(List<String> toSelect) {
+        for (Node node : contentBox.getChildren()) {
+            if (node instanceof CheckBox cb) {
+                cb.setSelected(toSelect.contains(cb.getText()));
+            }
+        }
+    }
+
+    /** Returns all the texts from selected CheckBoxes. */
+    public List<String> getValues() {
+        return contentBox.getChildren().stream()
+                .filter(n -> n instanceof CheckBox cb && cb.isSelected())
+                .map(n -> ((CheckBox) n).getText())
+                .toList();
     }
 
     @FXML
     private void initialize() {
-        // start hidden
         scrollPane.setVisible(false);
         scrollPane.setManaged(false);
-
         header.setOnMouseClicked(evt -> {
             open = !open;
             scrollPane.setVisible(open);
