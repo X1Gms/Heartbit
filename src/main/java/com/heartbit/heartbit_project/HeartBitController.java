@@ -1,8 +1,8 @@
 package com.heartbit.heartbit_project;
 
 import com.heartbit.heartbit_project.components.MultiDropdown;
-import com.heartbit.heartbit_project.pages.landingPage.Disease;
-import com.heartbit.heartbit_project.pages.landingPage.User;
+import com.heartbit.heartbit_project.db.Disease;
+import com.heartbit.heartbit_project.db.User;
 import com.heartbit.heartbit_project.visual_functions.Images;
 import com.heartbit.heartbit_project.visual_functions.Transitions;
 import javafx.animation.KeyFrame;
@@ -40,7 +40,7 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 
-public class HelloController implements Initializable {
+public class HeartBitController implements Initializable {
 
     //-+-+-+-+-+- Landing Page Variables -+-+-+-+-+-
     @FXML

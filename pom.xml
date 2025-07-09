@@ -107,7 +107,7 @@
                     <execution>
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.heartbit.heartbit_project.HelloApplication</mainClass>
+                            <mainClass>com.heartbit.heartbit_project.HeartBitApplication</mainClass>
                             <launcher>app</launcher>
                             <args>
                                 <arg>--enable-native-access=javafx.graphics,javafx.media,javafx.web</arg>

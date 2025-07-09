@@ -1,4 +1,4 @@
-package com.heartbit.heartbit_project.pages.landingPage;
+package com.heartbit.heartbit_project.db;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import java.sql.*;
