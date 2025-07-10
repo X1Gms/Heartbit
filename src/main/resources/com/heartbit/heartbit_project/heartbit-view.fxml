@@ -657,7 +657,7 @@
                                                          </font>
                                                       </Label>
                                                       <Pane prefHeight="35.0" prefWidth="9.0" />
-                                                      <Label fx:id="maxLabel" alignment="TOP_RIGHT" prefHeight="20.0" text="">
+                                                      <Label fx:id="maxLabel" alignment="TOP_LEFT" prefHeight="20.0" text="" prefWidth="35">
                                                          <font>
                                                             <Font name="Tahoma Bold" size="16.0" />
                                                          </font>
@@ -684,7 +684,7 @@
                                                          </font>
                                                       </Label>
                                                       <Pane prefHeight="35.0" prefWidth="13.0" />
-                                                      <Label fx:id="minLabel" alignment="TOP_RIGHT" prefHeight="20.0" text="">
+                                                      <Label fx:id="minLabel" alignment="TOP_LEFT" prefHeight="20.0" prefWidth="35" text="">
                                                          <font>
                                                             <Font name="Tahoma Bold" size="16.0" />
                                                          </font>
@@ -694,7 +694,7 @@
                                                             <Font name="Tahoma Bold" size="12.0" />
                                                          </font>
                                                       </Label>
-                                                      <Pane fx:id="minPane" prefWidth="65.0" style="-fx-background-color: FE9F9F;">
+                                                      <Pane fx:id="minPane" prefWidth="65.0" style="-fx-background-color: B3FFB9;">
                                                          <HBox.margin>
                                                             <Insets left="20.0" />
                                                          </HBox.margin>
@@ -712,12 +712,12 @@
                                                          </font>
                                                       </Label>
                                                       <Pane prefHeight="35.0" prefWidth="12.0" />
-                                                      <Label fx:id="avgLabel" alignment="TOP_RIGHT" prefHeight="20.0" text="">
+                                                      <Label fx:id="avgLabel"  alignment="TOP_LEFT" prefHeight="20.0" prefWidth="35" text="">
                                                          <font>
                                                             <Font name="Tahoma Bold" size="16.0" />
                                                          </font>
                                                       </Label>
-                                                      <Label alignment="TOP_RIGHT" prefHeight="15.0" prefWidth="33.0" text="bpm">
+                                                      <Label alignment="TOP_RIGHT" prefHeight="15.0" prefWidth="33.0" text="bpm" >
                                                          <font>
                                                             <Font name="Tahoma Bold" size="12.0" />
                                                          </font>
