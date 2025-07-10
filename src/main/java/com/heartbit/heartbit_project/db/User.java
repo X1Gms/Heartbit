@@ -1,5 +1,6 @@
 package com.heartbit.heartbit_project.db;
 
+import com.heartbit.heartbit_project.components.Validation;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -20,14 +21,13 @@ public class User {
     private final String dbUsername = dotenv.get("DB_USERNAME");
     private final String dbPass = dotenv.get("DB_PASSWORD");
 
-    private final String rgxEmail = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
-    private final String rgxPassword = "^(?=.*[0-9])(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?])(?=.*[a-zA-Z]).{12,}$";
-    private final String rgxPhone = "^\\+(?=(?:.*\\d){7,15}$)[0-9][0-9\\- ]*\\d$";
+    private final Validation validation;
 
     public User(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
+        this.validation = new Validation();
     }
 
     public User(int id, String name, String email, String phoneNumber, String emergencyPhoneNumber) {
@@ -36,11 +36,13 @@ public class User {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.emergencyPhoneNumber = emergencyPhoneNumber;
+        this.validation = new Validation();
     }
 
     public User(String email, String password) {
         this.email = email;
         this.password = password;
+        this.validation = new Validation();
     }
 
     public User(String name, String email, String password, String passwordConfirm, String phoneNumber, String emergencyPhoneNumber) {
@@ -50,6 +52,7 @@ public class User {
         this.passwordConfirm = passwordConfirm;
         this.phoneNumber = phoneNumber;
         this.emergencyPhoneNumber = emergencyPhoneNumber;
+        this.validation = new Validation();
     }
 
     public int getId() {
@@ -107,9 +110,9 @@ public class User {
     public String validateRegisterForm() {
         if (getName().isEmpty()) {
             return "Name field is empty.";
-        } else if (!getEmail().matches(rgxEmail)) {
+        } else if (!getEmail().matches(validation.getRgxEmail())) {
             return "Invalid e-mail address.";
-        } else if (!getPassword().matches(rgxPassword)) {
+        } else if (!getPassword().matches(validation.getRgxPassword())) {
             return "Password is not valid. Check password requirements.";
         } else if (!getPassword().equals(getPasswordConfirm())) {
             return "Passwords do not match.";
@@ -128,9 +131,9 @@ public class User {
             return "Emergency Number is required.";
         } else if (phone.trim().equals(emergencyPhone.trim())) {
             return "Phone numbers can't be the same.";
-        } else if (!phone.matches(rgxPhone)) {
+        } else if (!phone.matches(validation.getRgxPhone())) {
             return "Invalid Phone Number format.";
-        } else if (!emergencyPhone.matches(rgxPhone)) {
+        } else if (!emergencyPhone.matches(validation.getRgxPhone())) {
             return "Invalid Emergency Number format.";
         } else {
             return "";
@@ -156,7 +159,6 @@ public class User {
 
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected > 0) {
-//                message = "Registration successful!";
             } else {
                 message = "Registration failed. No rows affected.";
             }
@@ -198,7 +200,7 @@ public class User {
     }
 
     public String Login() {
-        if (!email.matches(rgxEmail)) {
+        if (!email.matches(validation.getRgxEmail())) {
             return "Invalid email address.";
         } else if (password.isEmpty()) {
             return "Password is empty.";
@@ -230,16 +232,15 @@ public class User {
     }
 
     public String editProfile() {
-        System.out.println(getPhoneNumber() + "\n"+getEmergencyPhoneNumber());
         if (getName().isEmpty()) {
             return "Name field is empty.";
-        } else if (!getEmail().matches(rgxEmail)) {
+        } else if (!getEmail().matches(validation.getRgxEmail())) {
             return "Invalid e-mail address.";
         }else if (!validatePhoneForm().isEmpty()) {
             return validatePhoneForm();
         }else if (getPassword().isEmpty()) {
 
-        } else if (!getPassword().matches(rgxPassword)) {
+        } else if (!getPassword().matches(validation.getRgxPassword())) {
             return "Password is not valid. Check password requirements.";
         }
 
@@ -271,7 +272,7 @@ public class User {
         if (!password.isEmpty()) {
             // password is the new password input
             // passwordConfirmNew is the confirmation of the new password
-            if (!password.matches(rgxPassword)) {
+            if (!password.matches(validation.getRgxPassword())) {
                 return "New password does not meet complexity requirements.";
             }
             // **Hash the new password once** and store it

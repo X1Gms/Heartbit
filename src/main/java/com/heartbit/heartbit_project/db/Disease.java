@@ -8,7 +8,7 @@ public class Disease {
 
     private ArrayList<String> diseases;
     private final Dotenv dotenv = Dotenv.load();
-    private User user;
+    private final User user;
     private final String dbUrl = dotenv.get("DB_URL");
     private final String dbUsername = dotenv.get("DB_USERNAME");
     private final String dbPass = dotenv.get("DB_PASSWORD");
