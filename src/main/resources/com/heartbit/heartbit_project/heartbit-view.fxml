@@ -249,7 +249,7 @@
                   <VBox nodeOrientation="RIGHT_TO_LEFT" prefHeight="97.0" prefWidth="171.0">
                      <children>
                         <Label minWidth="79.0" prefHeight="28.0" prefWidth="79.0" styleClass="dash-welcome" text="Welcome," />
-                        <Label alignment="TOP_LEFT" minWidth="250.0" prefHeight="51.0" prefWidth="164.0" styleClass="dash-name" text="Lorem Ipsum" fx:id="nameField"/>
+                        <Label alignment="TOP_LEFT" minWidth="250.0" prefHeight="51.0" prefWidth="164.0" styleClass="dash-name"  fx:id="nameField"/>
                      </children>
                   </VBox>
                </children></HBox>
@@ -453,10 +453,22 @@
                                                   <NumberAxis fx:id="yAxis" label="Heart Rate (bpm)" side="LEFT" />
                                                </yAxis>
                                                 <VBox.margin>
-                                                   <Insets bottom="50.0" top="20.0" />
+                                                   <Insets bottom="20.0" top="20.0" />
                                                 </VBox.margin>
                                              </LineChart>
-                                             <Button onAction="#testeBPM" text="Adicionar BPM" />
+                                             <Button fx:id="myButton2"
+                                                     mnemonicParsing="false"
+                                                     prefHeight="60.0"
+                                                     prefWidth="160.0"
+                                                     styleClass="home-btn"
+                                                     text="Offline Data"
+                                                     textFill="WHITE"
+                                                     visible="false"
+                                                     onAction="#handleButtonClick">
+                                                <font>
+                                                   <Font name="Tahoma Bold" size="20.0" />
+                                                </font>
+                                             </Button>
 
                                           </children>
                                           <FlowPane.margin>
@@ -473,7 +485,7 @@
                                                    <Insets top="15.0" />
                                                 </VBox.margin>
                                                 <children>
-                                                   <Label fx:id="bpmLabel" alignment="CENTER" maxWidth="200.0" styleClass="bpm" text="" VBox.vgrow="ALWAYS" />
+                                                   <Label fx:id="bpmLabel" alignment="CENTER" maxWidth="200.0" styleClass="bpm" text="0" VBox.vgrow="ALWAYS" />
                                                    <Label styleClass="bpm-label" text="bpm" />
                                                 </children></VBox>
                                              <HBox alignment="CENTER">
@@ -618,7 +630,7 @@
                                                 <Insets top="15.0" />
                                              </VBox.margin>
                                              <children>
-                                                <Label fx:id="bpmLabel2" alignment="CENTER" maxWidth="200.0" text="" VBox.vgrow="ALWAYS">
+                                                <Label fx:id="bpmLabel2" alignment="CENTER" maxWidth="200.0" text="0" VBox.vgrow="ALWAYS">
                                                    <font>
                                                       <Font name="System Bold" size="22.0" />
                                                    </font></Label>
@@ -955,7 +967,7 @@
             <Insets bottom="30.0" top="30.0" />
          </VBox.margin>
       </HBox>
-      <HBox fx:id="exportBtn" layoutX="35.0" layoutY="187.0">
+      <HBox fx:id="exportBtn" layoutX="35.0" layoutY="187.0" onMouseClicked="#exportPDF">
          <children>
             <HBox alignment="CENTER_LEFT">
                <children>

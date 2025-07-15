@@ -1,7 +1,5 @@
 package com.heartbit.heartbit_project.db;
 
-import com.heartbit.heartbit_project.components.Validation;
-import io.github.cdimascio.dotenv.Dotenv;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.*;
@@ -14,20 +12,14 @@ public class User {
     private String passwordConfirm;
     private String phoneNumber;
     private String emergencyPhoneNumber;
-    private final Dotenv dotenv = Dotenv.load();
     private int id;
-
-    private final String dbUrl = dotenv.get("DB_URL");
-    private final String dbUsername = dotenv.get("DB_USERNAME");
-    private final String dbPass = dotenv.get("DB_PASSWORD");
-
-    private final Validation validation;
+    private final Validation validation = new Validation();
+    private final HeartEnv heartEnv = new HeartEnv();
 
     public User(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.validation = new Validation();
     }
 
     public User(int id, String name, String email, String phoneNumber, String emergencyPhoneNumber) {
@@ -36,23 +28,11 @@ public class User {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.emergencyPhoneNumber = emergencyPhoneNumber;
-        this.validation = new Validation();
     }
 
     public User(String email, String password) {
         this.email = email;
         this.password = password;
-        this.validation = new Validation();
-    }
-
-    public User(String name, String email, String password, String passwordConfirm, String phoneNumber, String emergencyPhoneNumber) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.passwordConfirm = passwordConfirm;
-        this.phoneNumber = phoneNumber;
-        this.emergencyPhoneNumber = emergencyPhoneNumber;
-        this.validation = new Validation();
     }
 
     public int getId() {
@@ -143,13 +123,13 @@ public class User {
 
     public String insertDataRegister() {
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt(12));
-        String message = "";
+        String message;
 
         try {
             String insert = "INSERT INTO `user`(user_name, user_email, user_password, user_phone, user_eme_phone) VALUES (?, ?, ?, ?, ?)";
 
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection(dbUrl, dbUsername, dbPass);
+            Connection con = DriverManager.getConnection(heartEnv.getDbUrl(), heartEnv.getDbUsername(), heartEnv.getDbPass());
             PreparedStatement ps = con.prepareStatement(insert);
             ps.setString(1, name);
             ps.setString(2, email);
@@ -159,6 +139,7 @@ public class User {
 
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected > 0) {
+                message = "";
             } else {
                 message = "Registration failed. No rows affected.";
             }
@@ -178,7 +159,7 @@ public class User {
     public User getUserDetails() {
         String sql = "SELECT user_id, user_name, user_email, user_phone, user_eme_phone FROM user WHERE user_email = ?";
 
-        try (Connection conn = DriverManager.getConnection(dbUrl, dbUsername, dbPass);
+        try (Connection conn = DriverManager.getConnection(heartEnv.getDbUrl(), heartEnv.getDbUsername(), heartEnv.getDbPass());
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, email); // Set parameter
@@ -206,7 +187,7 @@ public class User {
             return "Password is empty.";
         } else {
             try {
-                Connection con = DriverManager.getConnection(dbUrl, dbUsername, dbPass);
+                Connection con = DriverManager.getConnection(heartEnv.getDbUrl(), heartEnv.getDbUsername(), heartEnv.getDbPass());
                 PreparedStatement statement = con.prepareStatement("select user_name, user_password from `user` where user_email = ?");
                 statement.setString(1, email);
                 ResultSet rs = statement.executeQuery();
@@ -239,13 +220,16 @@ public class User {
         }else if (!validatePhoneForm().isEmpty()) {
             return validatePhoneForm();
         }else if (getPassword().isEmpty()) {
-
-        } else if (!getPassword().matches(validation.getRgxPassword())) {
+        }
+        else if (!getPassword().matches(validation.getRgxPassword())) {
             return "Password is not valid. Check password requirements.";
+        }
+        else if (!getPasswordConfirm().matches(validation.getRgxPassword())) {
+            return "Current password is incorrect.";
         }
 
         String storedHash;
-        try (Connection con = DriverManager.getConnection(dbUrl, dbUsername, dbPass);
+        try (Connection con = DriverManager.getConnection(heartEnv.getDbUrl(), heartEnv.getDbUsername(), heartEnv.getDbPass());
              PreparedStatement ps = con.prepareStatement(
                      "SELECT user_password FROM `user` WHERE user_id = ?"
              )) {
@@ -292,7 +276,7 @@ public class User {
            AND user_password = ?
         """;
 
-        try (Connection con = DriverManager.getConnection(dbUrl, dbUsername, dbPass);
+        try (Connection con = DriverManager.getConnection(heartEnv.getDbUrl(), heartEnv.getDbUsername(), heartEnv.getDbPass());
              PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setString(1, getName());

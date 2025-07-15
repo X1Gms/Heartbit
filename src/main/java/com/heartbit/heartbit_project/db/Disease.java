@@ -1,17 +1,13 @@
 package com.heartbit.heartbit_project.db;
 
-import io.github.cdimascio.dotenv.Dotenv;
 import java.sql.*;
 import java.util.*;
 
 public class Disease {
 
     private ArrayList<String> diseases;
-    private final Dotenv dotenv = Dotenv.load();
+    private final HeartEnv heartEnv = new HeartEnv();
     private final User user;
-    private final String dbUrl = dotenv.get("DB_URL");
-    private final String dbUsername = dotenv.get("DB_USERNAME");
-    private final String dbPass = dotenv.get("DB_PASSWORD");
 
     public Disease(ArrayList<String> diseases, User user) {
         this.diseases = diseases;
@@ -38,7 +34,7 @@ public class Disease {
         // Ensure driver is loaded
         Class.forName("com.mysql.cj.jdbc.Driver");
 
-        try (Connection con = DriverManager.getConnection(dbUrl, dbUsername, dbPass);
+        try (Connection con = DriverManager.getConnection(heartEnv.getDbUrl(), heartEnv.getDbUsername(), heartEnv.getDbPass());
              PreparedStatement ps = con.prepareStatement(selectSql)) {
 
             ps.setInt(1, user.getId());
@@ -62,7 +58,7 @@ public class Disease {
         Connection con = null;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection(dbUrl, dbUsername, dbPass);
+            con = DriverManager.getConnection(heartEnv.getDbUrl(), heartEnv.getDbUsername(), heartEnv.getDbPass());
             con.setAutoCommit(false);
 
             // 1) Load existing diseases

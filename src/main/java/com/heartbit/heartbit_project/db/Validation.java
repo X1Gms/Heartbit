@@ -1,4 +1,4 @@
-package com.heartbit.heartbit_project.components;
+package com.heartbit.heartbit_project.db;
 
 public class Validation {
 

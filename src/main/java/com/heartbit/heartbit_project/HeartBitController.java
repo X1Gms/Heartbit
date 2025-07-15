@@ -1,13 +1,16 @@
 package com.heartbit.heartbit_project;
 
 import com.heartbit.heartbit_project.components.MultiDropdown;
-import com.heartbit.heartbit_project.db.Disease;
-import com.heartbit.heartbit_project.db.User;
+import com.heartbit.heartbit_project.db.*;
+import com.heartbit.heartbit_project.network.*;
+import com.heartbit.heartbit_project.network.JsonHandler;
+import com.heartbit.heartbit_project.network.PDFGenerator;
+import com.heartbit.heartbit_project.service.ReverseGeocoder;
 import com.heartbit.heartbit_project.visual_functions.Images;
 import com.heartbit.heartbit_project.visual_functions.Transitions;
-import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
-import javafx.animation.Timeline;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -31,19 +34,21 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
 import javafx.scene.text.TextAlignment;
+import org.json.JSONObject;
 
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.stream.Collectors;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Collections;
-
+import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.UUID;
 
 public class HeartBitController implements Initializable {
 
@@ -140,10 +145,45 @@ public class HeartBitController implements Initializable {
     private User user;
     @FXML
     private Disease disease;
+    EmergencyLog log;
+    @FXML
+    private JsonHandler heartBitJsonHandler;
+
+    private HeartEnv heartEnv = new HeartEnv();
+
+    private ArrayList<Integer> bpmOffline = new ArrayList<Integer>();
+
+    // MQTT Integration
+    private ConnectionHandler connectionHandler;
+    private final AtomicBoolean jaProcessou = new AtomicBoolean(false);
+    private ReverseGeocoder geocoder = new ReverseGeocoder();
+    private final String nonEmergencyURL = heartEnv.getNonEmergencyURL();
+    private final String emergencyURL = heartEnv.getEmergencyURL();
+    private final String MQTT_TOPIC = "heartbit/bpm";
+    private final String CMD_TOPIC = "heartbit/cmd";
+    private final String CLIENT_ID = UUID.randomUUID().toString();
+    private final String DES_KEY = "12345678";
+    private ArrayList<Integer> bpms = new ArrayList<>();
 
     private final ArrayList<String> dropdownItems = new ArrayList<>(
-            Arrays.asList("Diabetes","Hypertension","Asthma","Arthritis","Depression")
+            Arrays.asList(
+                    "Coronary Artery",
+                    "Previous Infarction",
+                    "Heart Failure",
+                    "Tachycardia",
+                    "Fibrillation",
+                    "Bradycardia",
+                    "Heart Block",
+                    "Hypertension",
+                    "Hyperlipidemia",
+                    "Valvular Heart ",
+                    "Dilated Cardiomyopathy",
+                    "Congenital Heart ",
+                    "Pericarditis",
+                    "Cardiac Surgery"
+            )
     );
+
 
     @FXML
     private LineChart<String, Number> lineChart; // Tem de coincidir com o fx:id do FXML
@@ -183,9 +223,12 @@ public class HeartBitController implements Initializable {
     @FXML
     private VBox eventList;
 
+    @FXML
+    private Button myButton2;
+
     private final List<Integer> bpmHistory = new ArrayList<>();
 
-
+    private record EventData(int bpm, String location, Timestamp ts) {}
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -196,8 +239,164 @@ public class HeartBitController implements Initializable {
         lineChart.setLegendVisible(false);
     }
 
+    // Initialize MQTT Connection
+    private void setupMQTT() {
+        MessageListener listener = new MessageListener() {
+            @Override
+            public void onHeartbeat(JsonHandler data) {
+                Platform.runLater(() -> {
+                    System.out.println("\n📥 Heartbeat:\n" + data.toString() + "\n");
+                    bpms.add(data.getBpm());
+
+                    // Store BPM in database
+                    Bpm bpmInst = new Bpm(user, data.getBpm());
+                    int bpmId = bpmInst.insertBpmData();
+                    bpmInst.setId(bpmId);
+
+                    updateChart(data.getBpm());
+                    updateBPMDisplay(bpmInst);
+
+                    try {
+                        updateBPMStats();
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
+
+                    if (bpms.size() >= 5) {
+                        bpms.clear();
+                    }
+
+                    // Handle emergency status
+                    if (data.getStatus().equalsIgnoreCase("4")) {
+                        if (jaProcessou.compareAndSet(false, true)) {
+                            String location = geocoder.lookup(data.getLat(), data.getLon()).address();
+                            String payload = """
+                                {
+                                  "embeds": [
+                                    {
+                                      "author": {
+                                        "name": "HeartBit",
+                                        "icon_url": "https://cdn.discordapp.com/attachments/1392568327724994682/1394023438217252924/ChatGPT_Image_16_06_2025_16_16_18_1-removebg-preview.png?ex=68754cff&is=6873fb7f&hm=7700a926c921f33f48a977b5322878f5b30cd6ba3590c9d1719053a571dfaff8&"
+                                      },
+                                      "description": "The hearbit system detected a POSSIBLE HEART FAILURE.\\nThis is a **Emergency**, please send medical help to: """
+                                    + location +
+                                    """
+                                                  .\\nHearbit System's will always monitor its users.",
+                                                  "title": "Heartbit - Detected Emergency",
+                                                  "color": 15158332
+                                                }
+                                              ]
+                                            }
+                                            """;
+
+                            sendWebhook(emergencyURL, payload);
+
+                            // Create emergency log
+                            EmergencyLog emergencyLog = new EmergencyLog(bpmInst, 0,
+                                    String.valueOf(data.getLat()),
+                                    String.valueOf(data.getLon()));
+                            emergencyLog.insertEmergencyData();
+                        }
+                    }
+                    else if (data.getStatus().equalsIgnoreCase("1")) {
+                        if (jaProcessou.compareAndSet(false, true)) {
+                            String payload = """
+                                {
+                                  "embeds": [
+                                    {
+                                      "author": {
+                                        "name": "HeartBit",
+                                        "icon_url": "https://cdn.discordapp.com/attachments/1392568327724994682/1394023438217252924/ChatGPT_Image_16_06_2025_16_16_18_1-removebg-preview.png?ex=68754cff&is=6873fb7f&hm=7700a926c921f33f48a977b5322878f5b30cd6ba3590c9d1719053a571dfaff8&"
+                                      },
+                                      "description": "The hearbit system detected an occurenced, which was canceled by the user.\\nThis is a **Non Emergency**, but we recommend to contact the user.\\nHearbit System's will always monitor its users.",
+                                      "title": "Heartbit - Canceled Emergency",
+                                      "color": 15859456
+                                    }
+                                  ]
+                                }
+                                """;
+                            sendWebhook(nonEmergencyURL, payload);
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onCacheDetected(Boolean hasCache) {
+                Platform.runLater(() -> {
+                    System.out.println("Has Cache: " + hasCache);
+                    myButton2.setVisible(hasCache);
+                });
+            }
+
+            // Supondo que bpmOffline é um campo da classe:
+            private final List<Integer> bpmOffline = new ArrayList<>();
+
+            @Override
+            public void onOfflineData(List<DataPoint> dataPoints) {
+                for (DataPoint d : dataPoints) {
+                    bpmOffline.add(d.bpm());
+
+                    if (bpmOffline.size() >= 5) {
+                        enviarMediaParaBD();
+                        bpmOffline.clear();
+                    }
+                }
+
+                if (!bpmOffline.isEmpty()) {
+                    enviarMediaParaBD();
+                    bpmOffline.clear();
+                }
+            }
+
+            private void enviarMediaParaBD() {
+                int soma = 0;
+                for (int bpm : bpmOffline) {
+                    soma += bpm;
+                }
+                int media = soma / bpmOffline.size();
+
+                Bpm bpmInst = new Bpm(user, media);
+                bpmInst.insertBpmData();
+            }
+
+        };
+
+        connectionHandler = new ConnectionHandler(
+                "localhost",
+                1883,
+                MQTT_TOPIC,
+                CMD_TOPIC,
+                CLIENT_ID,
+                DES_KEY,
+                listener
+        );
+        connectionHandler.start();
+    }
+
+    private void sendWebhook(String urlString, String payload) {
+        try {
+            URL url = new URL(urlString);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type", "application/json");
+            connection.setDoOutput(true);
+
+            try (OutputStream os = connection.getOutputStream()) {
+                os.write(payload.getBytes());
+                os.flush();
+            }
+
+            int responseCode = connection.getResponseCode();
+            System.out.println("Webhook sent. Response code: " + responseCode);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void populateDiseases(ArrayList<String> dbList) {
-        // 1) select known ones
+        ed_add_textfields.getChildren().clear();
         if (dbList == null) dbList = new ArrayList<>();
         ArrayList<String> knownMatches = new ArrayList<>();
         for (String d : dbList) {
@@ -207,7 +406,6 @@ public class HeartBitController implements Initializable {
         }
         multiDropdown.setSelectedItems(knownMatches);
 
-        // 2) handle unknowns
         boolean firstOther = true;
         for (String d : dbList) {
             if (!dropdownItems.contains(d)) {
@@ -284,17 +482,17 @@ public class HeartBitController implements Initializable {
             textError.setText(message);
             Transitions.FadeIn(errorToast,350, Transitions.Direction.TO_LEFT, 500);
         } else {
-                enHome();
-                successMessage.setText("Diseases successfully edited");
-                multiDropdown.setSelectedItems(new ArrayList<>());
-                ed_add_textfields.getChildren().clear();
-                otherDisease.setText("");
-                Transitions.FadeIn(successToast,350, Transitions.Direction.TO_LEFT, 500);
+            enHome();
+            successMessage.setText("Diseases successfully edited");
+            multiDropdown.setSelectedItems(new ArrayList<>());
+            ed_add_textfields.getChildren().clear();
+            otherDisease.setText("");
+            Transitions.FadeIn(successToast,350, Transitions.Direction.TO_LEFT, 500);
         }
     }
 
     @FXML
-    private void createAccount(ActionEvent event){
+    private void createAccount(ActionEvent event) throws SQLException, ClassNotFoundException {
         String phoneNumber = phN.getText().trim();
         String ePhoneNumber = ePhN.getText().trim();
         user.setPhoneNumber(phoneNumber);
@@ -315,8 +513,18 @@ public class HeartBitController implements Initializable {
                     nameField.setText(user.getName());
 
                 }
+                registerEmail.setText("");
+                registerCPassword.setText("");
+                registerName.setText("");
+                phN.setText("");
+                ePhN.setText("");
+                disease = new Disease(user);
+                disease.setDiseases(disease.getUserDiseases());
                 Transitions.FadeIn(home,1,Transitions.Direction.TO_LEFT,500);
                 Transitions.FadeOutIn(landingPage, homePage,650, Transitions.Direction.TO_TOP, 500);
+                setupMQTT(); // Start MQTT after successful registration
+                updateBPMStats();
+                retrieveEvents();
             }
         }
     }
@@ -352,6 +560,17 @@ public class HeartBitController implements Initializable {
             }
 
         }
+    }
+
+    @FXML
+    private void exportPDF(MouseEvent event) throws SQLException {
+        Bpm bpmCollection = new Bpm();
+        bpmCollection.getBpmStatus(user.getId());
+        PDFGenerator pdfGenerator = new PDFGenerator(user, disease, log.getEmergencyReadings(), bpmCollection);
+        String userName = user.getName(); // e.g., "John"
+        String date = new SimpleDateFormat("ddMMyyyy").format(new Date());
+        String fileName = "myReport" + userName + date + ".pdf";
+        pdfGenerator.promptAndGeneratePDF(fileName);
     }
 
     private void AddOtherDisease(String value){
@@ -396,43 +615,41 @@ public class HeartBitController implements Initializable {
     }
 
     @FXML
-    private void testeBPM(ActionEvent event) {
-        Timeline loop = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
-            int bpm = 40 + (int)(Math.random() * 91); // Gera entre 40 e 130
-            updateChart(bpm);
-            updateBPMDisplay(bpm);
-            bpmHistory.add(bpm);
-            updateBPMStats();
-            addEvent(bpm, "Setúbal", LocalDateTime.now());
-
-        }));
-        loop.setCycleCount(Timeline.INDEFINITE); // Loop infinito
-        loop.play(); // Inicia
+    private void handleButtonClick() {
+        if (myButton2.isVisible()) {
+            String cmd = JsonHandler.generateCommandPrompt("send_offline_data");
+            DESHandler desH = new DESHandler("12345678");
+            cmd = desH.encrypt(cmd);
+            connectionHandler.publish(cmd, CMD_TOPIC);
+            myButton2.setVisible(false);
+        }
     }
 
-    public void updateBPMDisplay(int bpm) {
-        bpmLabel.setText(String.valueOf(bpm));
-        bpmLabel2.setText(String.valueOf(bpm));
+    public void updateBPMDisplay(Bpm bpm) {
+        bpmLabel.setText(String.valueOf(bpm.getValue()));
+        bpmLabel2.setText(String.valueOf(bpm.getValue()));
 
         String borderColor;
         String stateText;
         String textColor;
 
-        if (bpm >= 60 && bpm <= 100) {
+        if (bpm.getValue() >= 60 && bpm.getValue() <= 100) {
             // Verde – Estável
             borderColor = "#B3FFB9";
             textColor = "#84DF8B";
             stateText = "Stable";
-        } else if ((bpm >= 41 && bpm <= 59) || (bpm >= 101 && bpm <= 129)) {
-            // Amarelo – Aviso
-            borderColor = "#FFE5BA";
-            textColor = "#E1AD4C";
-            stateText = "Potencial Risk";
         } else {
-            // Vermelho – Perigo
-            borderColor = "#FE9F9F";
-            textColor = "#E25C5C";
-            stateText = "Critical";
+            if ((bpm.getValue() >= 41 && bpm.getValue() <= 59) || (bpm.getValue() >= 101 && bpm.getValue() <= 129)) {
+                // Amarelo – Aviso
+                borderColor = "#FFE5BA";
+                textColor = "#E1AD4C";
+                stateText = "Potential Risk";
+            } else {
+                // Vermelho – Perigo
+                borderColor = "#FE9F9F";
+                textColor = "#E25C5C";
+                stateText = "Critical";
+            }
         }
 
         bpmBox.setStyle("-fx-border-color: " + borderColor + ";");
@@ -443,6 +660,7 @@ public class HeartBitController implements Initializable {
         stateLabel2.setText(stateText);
         stateLabel2.setStyle("-fx-text-fill: " + textColor + ";");
     }
+
 
     public void updateChart(int bpm) {
         bpmSeries.getData().add(new XYChart.Data<>("L" + bpmCount, bpm));
@@ -478,13 +696,16 @@ public class HeartBitController implements Initializable {
 
     }
 
-    private void updateBPMStats() {
-        if (bpmHistory.isEmpty()) return;
+    private void updateBPMStats() throws SQLException {
+        if (user == null)
+            return;
 
-        int min = Collections.min(bpmHistory);
-        int max = Collections.max(bpmHistory);
-        int sum = bpmHistory.stream().mapToInt(Integer::intValue).sum();
-        int avg = sum / bpmHistory.size();
+        Bpm bpmCollection = new Bpm();
+        bpmCollection.getBpmStatus(user.getId());
+
+        int min = bpmCollection.getMinBPM();
+        int max = bpmCollection.getMaxBPM();
+        int avg = bpmCollection.getAvgBPM();
 
         minLabel.setText(String.valueOf(min));
         maxLabel.setText(String.valueOf(max));
@@ -505,8 +726,47 @@ public class HeartBitController implements Initializable {
         }
     }
 
+    private void retrieveEvents() {
+        Task<List<EventData>> task = new Task<>() {
+            @Override
+            protected List<EventData> call() throws Exception {
 
-    private void addEvent(int bpm, String location, LocalDateTime timestamp) {
+                if (user == null) {
+                    return List.of();       // nothing to do
+                }
+
+                log = new EmergencyLog();
+                log.getEmergencyReadingsForUser(user.getId());
+
+                ReverseGeocoder geocoder = new ReverseGeocoder();
+                List<EventData> out = new ArrayList<>();
+
+                for (EmergencyReading r : log.getEmergencyReadings()) {
+                    var loc = geocoder.lookup(
+                            Double.parseDouble(r.getLat()),
+                            Double.parseDouble(r.getLon()));
+
+                    out.add(new EventData(r.getBpmValue(), loc.city(), r.getDateTime()));
+                }
+                return out;                 // = value of task
+            }
+        };
+        task.setOnSucceeded(e -> {
+            eventList.getChildren().clear(); // Clear existing events
+            task.getValue().forEach(ev ->
+                    addEvent(ev.bpm(), ev.location(), ev.ts()));
+        });
+
+        task.setOnFailed(e -> {
+            task.getException().printStackTrace();
+        });
+
+        Thread t = new Thread(task, "retrieve-events");
+        t.setDaemon(true);
+        t.start();
+    }
+
+    private void addEvent(int bpm, String location, Timestamp timestamp) {
         String status;
         String color;
 
@@ -514,20 +774,19 @@ public class HeartBitController implements Initializable {
             status = "Potencial Risk";
             color = "#FFF3F3";
         } else if (bpm <= 40 || bpm >= 130) {
-            status = "Crítico";
+            status = "Critical";
             color = "#FFBDBD";
         } else {
-            return; // Normal values don't add event
+            return;
         }
 
         HBox row = new HBox();
         row.setStyle("-fx-background-color: " + color + "; -fx-padding: 10 15;");
         row.setAlignment(Pos.CENTER_LEFT);
-        row.setSpacing(40); // espaço entre colunas
+        row.setSpacing(40);
         row.setPrefHeight(60);
         row.setMinHeight(60);
-        row.setMaxHeight(60); // altura preferida
-
+        row.setMaxHeight(60);
 
         Label statusLabel = new Label(status);
         statusLabel.setMinWidth(90);
@@ -551,8 +810,12 @@ public class HeartBitController implements Initializable {
         locationLabel.setAlignment(Pos.CENTER);
         locationLabel.setStyle("-fx-font-size: 14px; -fx-font-family: Tahoma;");
 
-        String dateStr = timestamp.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        String timeStr = timestamp.format(DateTimeFormatter.ofPattern("HH:mm"));
+        // Convert Timestamp to LocalDateTime
+        LocalDateTime dateTime = timestamp.toLocalDateTime();
+
+        String dateStr = dateTime.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        String timeStr = dateTime.format(DateTimeFormatter.ofPattern("HH:mm"));
+
         Label timeLabel = new Label(dateStr + "\n" + timeStr);
         timeLabel.setMinWidth(90);
         timeLabel.setPrefWidth(90);
@@ -566,11 +829,6 @@ public class HeartBitController implements Initializable {
 
         eventList.getChildren().addFirst(row);
     }
-
-
-
-
-
 
     //Login/Register
     @FXML
@@ -602,15 +860,13 @@ public class HeartBitController implements Initializable {
 
     }
 
-
-
     @FXML
     private void AppearLoginAgain(MouseEvent event) {
         Transitions.FadeOutIn(RegisterForm, LoginForm,650, Transitions.Direction.TO_RIGHT, 500);
     }
 
     @FXML
-    private void enterHomePage(ActionEvent event) {
+    private void enterHomePage(ActionEvent event) throws SQLException, ClassNotFoundException {
         String email = loginEmail.getText().trim();
         String password = loginPassword.getText().trim();
         user = new User(email, password);
@@ -624,15 +880,27 @@ public class HeartBitController implements Initializable {
             if (!user.getName().isEmpty()){
                 nameField.setText(user.getName());
             }
+            loginEmail.setText("");
+            loginPassword.setText("");
+            disease = new Disease(user);
+            disease.setDiseases(disease.getUserDiseases());
             Transitions.FadeIn(home,1,Transitions.Direction.TO_LEFT,500);
             Transitions.FadeOutIn(landingPage, homePage,650, Transitions.Direction.TO_TOP, 500);
+            setupMQTT(); // Start MQTT after successful login
+            updateBPMStats();
+            retrieveEvents();
         }
 
     }
 
     @FXML
     private void exitHomePage(ActionEvent event) {
+        if (connectionHandler != null) {
+            connectionHandler = null;
+        }
         user = null;
+        disease = null;
+        log = null;
         disSidebar();
         Transitions.FadeOut(account,0,Transitions.Direction.TO_LEFT,0);
         Transitions.FadeOut(results,0,Transitions.Direction.TO_LEFT,0);
@@ -644,8 +912,6 @@ public class HeartBitController implements Initializable {
         Transitions.FadeOutIn(homePage, landingPage,650, Transitions.Direction.TO_TOP, 500);
         Images.HomeEnabled(homeImg,accountImg,resultsImg);
     }
-
-
 
     //Sidebar
     //Is Enabled Functions
@@ -712,6 +978,7 @@ public class HeartBitController implements Initializable {
         Transitions.FadeOut(account,0,Transitions.Direction.TO_LEFT,0);
         Transitions.FadeIn(results,700,Transitions.Direction.TO_LEFT,500);
         disSidebar();
+        retrieveEvents(); // Refresh events when results page is opened
     }
 
     @FXML
